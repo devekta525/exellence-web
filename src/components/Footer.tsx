@@ -16,11 +16,11 @@ export default function Footer() {
                 E
               </div>
               <span className="text-2xl font-bold font-outfit">
-                Excellence
+                Dviora
               </span>
             </Link>
             <p className="text-sm text-gray-400 font-medium mb-4">
-              Digital Marketing Excellence
+              Digital Marketing Dviora
             </p>
             <p className="text-gray-400 leading-relaxed max-w-sm">
               Driving growth through innovative marketing strategies and cutting-edge digital solutions for modern businesses.
@@ -82,14 +82,14 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-gray-500">
-          <p>© 2026 <strong className="text-white">Excellence</strong>. All rights reserved.</p>
+          <p>© 2026 <strong className="text-white">Dviora</strong>. All rights reserved.</p>
           <div className="flex gap-6">
             <Link href="#" className="hover:text-white transition-colors">Privacy Policy</Link>
             <Link href="#" className="hover:text-white transition-colors">Terms of Service</Link>
             <Link href="#" className="hover:text-white transition-colors">Refund Policy</Link>
           </div>
           <p>
-            Made with <span className="text-red-500">♥</span> by Excellence Team
+            Made with <span className="text-red-500">♥</span> by Dviora Team
           </p>
         </div>
       </div>

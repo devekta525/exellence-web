@@ -80,9 +80,52 @@ export default function Hero() {
       ref={containerRef}
       className="relative min-h-screen flex flex-col items-center justify-center px-6 pt-20 overflow-hidden"
     >
+      {/* Background Marquees */}
+      <div className="absolute inset-0 z-0 pointer-events-none opacity-20 overflow-hidden flex justify-between px-[5%]">
+        {/* Left Marquee - Downward */}
+        <div className="w-32 md:w-48 hidden lg:block relative">
+          <div className="flex flex-col gap-6 animate-marquee-down py-6">
+            {[
+              "/images/marquee/agency_work_1_1778251712085.png",
+              "/images/marquee/agency_work_2_1778251734186.png",
+              "/images/marquee/agency_work_3_1778251754945.png",
+              "/images/marquee/agency_work_4_1778251776053.png",
+              "/images/marquee/agency_work_1_1778251712085.png",
+              "/images/marquee/agency_work_2_1778251734186.png",
+              "/images/marquee/agency_work_3_1778251754945.png",
+              "/images/marquee/agency_work_4_1778251776053.png",
+            ].map((src, i) => (
+              <div key={`left-${i}`} className="aspect-[4/5] w-full rounded-2xl overflow-hidden border border-white/10">
+                <img src={src} alt="Work" className="w-full h-full object-cover" />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Right Marquee - Upward */}
+        <div className="w-32 md:w-48 hidden lg:block relative">
+          <div className="flex flex-col gap-6 animate-marquee-up py-6">
+            {[
+              "/images/marquee/agency_work_4_1778251776053.png",
+              "/images/marquee/agency_work_3_1778251754945.png",
+              "/images/marquee/agency_work_2_1778251734186.png",
+              "/images/marquee/agency_work_1_1778251712085.png",
+              "/images/marquee/agency_work_4_1778251776053.png",
+              "/images/marquee/agency_work_3_1778251754945.png",
+              "/images/marquee/agency_work_2_1778251734186.png",
+              "/images/marquee/agency_work_1_1778251712085.png",
+            ].map((src, i) => (
+              <div key={`right-${i}`} className="aspect-[4/5] w-full rounded-2xl overflow-hidden border border-white/10">
+                <img src={src} alt="Work" className="w-full h-full object-cover" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
       {/* Background glow effects */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[radial-gradient(circle,rgba(56,189,248,0.1)_0%,transparent_70%)] rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute top-1/4 right-1/4 w-[400px] h-[400px] bg-[radial-gradient(circle,rgba(99,102,241,0.1)_0%,transparent_70%)] rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[radial-gradient(circle,rgba(56,189,248,0.1)_0%,transparent_70%)] rounded-full blur-3xl pointer-events-none z-0" />
+      <div className="absolute top-1/4 right-1/4 w-[400px] h-[400px] bg-[radial-gradient(circle,rgba(99,102,241,0.1)_0%,transparent_70%)] rounded-full blur-3xl pointer-events-none z-0" />
 
       <div className="max-w-4xl mx-auto text-center z-10 flex flex-col items-center mt-12">
         {/* Fixed height to prevent layout shift during animation */}
@@ -115,6 +158,7 @@ export default function Hero() {
           </button>
         </div>
       </div>
+
     </section>
   );
 }

@@ -118,7 +118,44 @@ export default function Process() {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 flex flex-col lg:flex-row gap-12 lg:gap-16">
-        {/* Left Sticky Sidebar */}
+        {/* Mobile Tabs Navigation */}
+        <div className="lg:hidden w-full overflow-x-auto no-scrollbar -mx-6 px-6 mb-8">
+          <div className="flex gap-3 min-w-max pb-4">
+            {processSteps.map((step) => {
+              const isActive = activeStep === step.id;
+              const Icon = step.icon;
+              return (
+                <button
+                  key={step.id}
+                  onClick={() => setActiveStep(step.id)}
+                  className={`flex items-center gap-3 px-6 py-3 rounded-full transition-all duration-300 border whitespace-nowrap ${
+                    isActive
+                      ? "bg-[#0c1a3d] border-white/20 shadow-lg scale-105"
+                      : "border-white/5 bg-white/[0.02] text-gray-500"
+                  }`}
+                  style={{
+                    borderColor: isActive ? `${step.hex}60` : undefined,
+                    boxShadow: isActive ? `0 0 15px ${step.hex}20` : "none",
+                  }}
+                >
+                  <Icon
+                    className="w-5 h-5"
+                    style={{ color: isActive ? step.hex : "inherit" }}
+                  />
+                  <span
+                    className={`text-sm font-bold tracking-wide ${
+                      isActive ? "text-white" : "text-gray-500"
+                    }`}
+                  >
+                    {step.title}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Left Sticky Sidebar (Desktop only) */}
         <div className="hidden lg:block w-[350px] shrink-0 relative">
           <div className="sticky top-32 space-y-3">
             {processSteps.map((step) => {

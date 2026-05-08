@@ -2,12 +2,55 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { ArrowRight, Mail, ChevronRight, X, Menu } from "lucide-react";
+import { ArrowRight, Mail, ChevronRight, X, Menu, Send, Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    website: "",
+    revenue: "Beginner (0-1 Lakh)",
+    message: "",
+  });
+
+  const router = useRouter();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      if (res.ok) {
+        setFormData({
+          name: "",
+          phone: "",
+          website: "",
+          revenue: "Beginner (0-1 Lakh)",
+          message: "",
+        });
+        setIsModalOpen(false);
+        router.push("/thank-you");
+      } else {
+        alert("Something went wrong. Please try again.");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Error submitting form.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -52,7 +95,7 @@ export default function Navbar() {
               </svg>
             </div>
             <span className="text-xl font-bold font-outfit tracking-wide text-white">
-              Excellence
+              Dviora
             </span>
           </Link>
 
@@ -178,7 +221,7 @@ export default function Navbar() {
 
           {/* Social / Footer Links in Menu */}
           <div className={`absolute bottom-12 left-0 right-0 flex justify-center gap-6 transition-all duration-700 delay-300 ${isMenuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
-            <span className="text-white/40 text-sm">© 2026 Excellence Agency</span>
+            <span className="text-white/40 text-sm">© 2026 Dviora Agency</span>
           </div>
         </div>
       </div>
@@ -193,7 +236,7 @@ export default function Navbar() {
           ></div>
 
           {/* Modal Content */}
-          <div className="relative w-full max-w-md bg-[#0c1a3d] border border-white/10 rounded-[20px] p-8 shadow-2xl animate-in fade-in zoom-in-95 duration-200">
+          <div className="relative w-full max-w-md lg:max-w-xl bg-[#0c1a3d] border border-white/10 rounded-[32px] p-8 md:p-12 shadow-2xl animate-in fade-in zoom-in-95 duration-200 overflow-y-auto max-h-[90vh] no-scrollbar">
             <button
               onClick={() => setIsModalOpen(false)}
               className="absolute top-5 right-5 text-gray-400 hover:text-white transition-colors"
@@ -201,41 +244,114 @@ export default function Navbar() {
               <X className="w-5 h-5" />
             </button>
 
-            <h2 className="text-2xl font-bold text-white mb-2">Get in Touch</h2>
-            <p className="text-gray-400 text-[15px] mb-8">
-              Choose your preferred way to contact us
+            <h2 className="text-3xl font-bold text-white mb-2 font-outfit">Get in Touch</h2>
+            <p className="text-gray-400 text-[14px] mb-8">
+              Fill out the form below and we'll get back to you shortly.
             </p>
 
-            <div className="space-y-4">
-              {/* Email Button */}
-              <a
-                href="mailto:hello@excellence.agency"
-                className="flex items-center justify-between w-full p-4 rounded-xl bg-gradient-to-r from-[#9327e9] to-[#eb1675] hover:opacity-90 transition-opacity text-white font-medium shadow-lg shadow-fuchsia-500/20"
-              >
-                <div className="flex items-center gap-3">
-                  <Mail className="w-5 h-5" />
-                  <span className="text-lg">Email Us</span>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="relative">
+                  <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em] mb-1.5 ml-1">
+                    Your Name <span className="text-rose-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-cyan-500/50 transition-all focus:bg-white/[0.08]"
+                    placeholder="John Doe"
+                  />
                 </div>
-                <ChevronRight className="w-5 h-5 opacity-80" />
-              </a>
+                <div className="relative">
+                  <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em] mb-1.5 ml-1">
+                    Phone Number <span className="text-rose-500">*</span>
+                  </label>
+                  <input
+                    type="tel"
+                    required
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-cyan-500/50 transition-all focus:bg-white/[0.08]"
+                    placeholder="+1 (555) 000-0000"
+                  />
+                </div>
+              </div>
 
-              {/* WhatsApp Button */}
-              <a
-                href="https://wa.me/1234567890"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-between w-full p-4 rounded-xl bg-[#0ab363] hover:bg-[#09a058] transition-colors text-white font-medium shadow-lg shadow-emerald-500/20"
-              >
-                <div className="flex items-center gap-3">
-                  {/* WhatsApp SVG Icon */}
-                  <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
-                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.888-.788-1.489-1.761-1.663-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z" />
-                  </svg>
-                  <span className="text-lg">WhatsApp</span>
+              <div className="relative">
+                <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em] mb-1.5 ml-1">
+                  Website Link <span className="text-rose-500">*</span>
+                </label>
+                <input
+                  type="url"
+                  required
+                  value={formData.website}
+                  onChange={(e) => setFormData({ ...formData, website: e.target.value })}
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-cyan-500/50 transition-all focus:bg-white/[0.08]"
+                  placeholder="https://yourwebsite.com"
+                />
+              </div>
+
+              <div className="relative">
+                <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em] mb-1.5 ml-1">
+                  Monthly Revenue <span className="text-rose-500">*</span>
+                </label>
+                <div className="relative group">
+                  <select
+                    required
+                    value={formData.revenue}
+                    onChange={(e) => setFormData({ ...formData, revenue: e.target.value })}
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-cyan-500/50 transition-all appearance-none cursor-pointer focus:bg-white/[0.08]"
+                  >
+                    <option className="bg-[#0c1a3d]" value="Beginner (0-1 Lakh)">Beginner (0-1 Lakh)</option>
+                    <option className="bg-[#0c1a3d]" value="Intermediate (1 Lakh - 5 Lakh)">Intermediate (1 Lakh - 5 Lakh)</option>
+                    <option className="bg-[#0c1a3d]" value="Growth (5 Lakh +)">Growth (5 Lakh +)</option>
+                  </select>
+                  <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500 group-focus-within:text-cyan-500 transition-colors">
+                    <ChevronRight className="w-4 h-4 rotate-90" />
+                  </div>
                 </div>
-                <ChevronRight className="w-5 h-5 opacity-80" />
-              </a>
-            </div>
+              </div>
+
+              <div className="relative">
+                <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em] mb-1.5 ml-1">
+                  Your Message <span className="text-gray-600 font-normal italic">(Optional)</span>
+                </label>
+                <textarea
+                  rows={3}
+                  value={formData.message}
+                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-cyan-500/50 transition-all resize-none focus:bg-white/[0.08]"
+                  placeholder="Tell us about your goals..."
+                ></textarea>
+              </div>
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full group relative flex items-center justify-center px-8 py-3.5 rounded-xl text-base font-bold overflow-hidden transition-all active:scale-[0.98] disabled:opacity-70 disabled:pointer-events-none"
+              >
+                {/* Gradient Border Background (Matching Book a call) */}
+                <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 via-fuchsia-500 to-cyan-400 rounded-xl animate-border-slide"></div>
+                {/* Inner Background (Matching Book a call) */}
+                <div className="absolute inset-[1.5px] bg-[#0c1a3d] rounded-[10px] group-hover:bg-[#162a5a] transition-colors duration-300"></div>
+
+                <span className="relative z-10 flex items-center gap-3 text-white">
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                      Processing...
+                    </>
+                  ) : (
+                    <>
+                      Submit Request
+                      <Send className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                    </>
+                  )}
+                </span>
+              </button>
+            </form>
           </div>
         </div>
       )}

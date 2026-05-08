@@ -100,7 +100,7 @@ export default function SplashScreen() {
 
         {/* Brand Text */}
         <div className="splash-text text-4xl tracking-[0.2em] font-light text-gray-300 uppercase">
-          Excellence
+          Dviora
         </div>
       </div>
     </div>

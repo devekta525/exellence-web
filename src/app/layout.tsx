@@ -4,7 +4,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "Excellence Web | Personal Portfolio",
+  title: "Dviora Web | Personal Portfolio",
   description: "A premium, minimal, dark-themed personal portfolio showcasing scroll-driven storytelling.",
 };
 

@@ -72,3 +72,69 @@ body {
   animation: border-slide 3s linear infinite;
   background-size: 200% auto;
 }
+
+@keyframes marquee-down {
+  0% {
+    transform: translateY(-50%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes marquee-up {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+.animate-marquee-down {
+  animation: marquee-down 40s linear infinite;
+}
+
+.animate-marquee-up {
+  animation: marquee-up 40s linear infinite;
+}
+
+@keyframes marquee-horizontal {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee-horizontal {
+  animation: marquee-horizontal 25s linear infinite;
+}
+
+.pause-hover:hover .animate-marquee-horizontal {
+  animation-play-state: paused;
+}
+
+.brand-logo-item {
+  opacity: 0.4;
+  filter: grayscale(100%) brightness(2);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.brand-logo-item:hover {
+  opacity: 1;
+  filter: grayscale(0%) brightness(1);
+  transform: scale(1.1);
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
