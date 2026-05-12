@@ -110,9 +110,6 @@ export default function Stats() {
 
   return (
     <section ref={containerRef} className="py-24 px-6 md:px-12 bg-transparent relative">
-      {/* Subtle top gradient */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-      
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-20 stats-header">
           <h2 className="text-4xl md:text-5xl font-bold font-outfit mb-4">

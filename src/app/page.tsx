@@ -1,6 +1,6 @@
 import Hero from "@/components/Hero";
 import Work from "@/components/Work";
-import Stats from "@/components/Stats";
+import Strengths from "@/components/Strengths";
 import Services from "@/components/Services";
 import Industries from "@/components/Industries";
 import Process from "@/components/Process";
@@ -13,7 +13,7 @@ export default function Home() {
       <SplashScreen />
       <Hero />
       <Work />
-      <Stats />
+      <Strengths />
       <Services />
       <Industries />
       <Process />
