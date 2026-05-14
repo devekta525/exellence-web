@@ -102,8 +102,8 @@ export default function Process() {
   const [activeStep, setActiveStep] = useState(1);
 
   return (
-    <section id="process" className="py-24 bg-transparent relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 w-full text-center mb-16">
+    <section id="process" className="py-12 md:py-20 bg-transparent relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 w-full text-center mb-10 md:mb-16">
         <h2 className="text-5xl md:text-6xl font-bold font-outfit mb-6 text-white">
           Our Process
         </h2>

@@ -1,20 +1,21 @@
-import { 
-  PieChart, 
-  Clapperboard, 
-  LayoutTemplate, 
+import {
+  PieChart,
   Globe2,
   Users,
   Target,
   Lightbulb,
-  PenTool,
-  Camera,
-  Heart,
-  Scissors,
-  LayoutGrid,
-  Share2,
   Megaphone,
   RefreshCw,
   LineChart,
+  Layout,
+  Smartphone,
+  ShoppingBag,
+  Code2,
+  Palette,
+  MessageSquare,
+  Share2,
+  TrendingUp,
+  Search,
   LucideIcon
 } from "lucide-react";
 
@@ -22,6 +23,7 @@ export interface ServiceItem {
   text: string;
   icon: LucideIcon;
   color: string;
+  description?: string;
 }
 
 export interface Service {
@@ -41,90 +43,131 @@ export interface Service {
 export const servicesData: Service[] = [
   {
     id: 1,
-    slug: "marketing-strategy",
-    title: "Marketing Strategy",
-    description: "Comprehensive audience mapping and brand positioning to drive long-term growth.",
-    longDescription: "Our marketing strategy service is the foundation of every successful campaign. We deep-dive into audience psychology, market trends, and competitor landscapes to build a roadmap that doesn't just reach people, but resonates with them. From brand positioning to micro-campaign development, we ensure every dollar spent is backed by data-driven insights.",
-    icon: PieChart,
+    slug: "performance-marketing",
+    title: "Performance Marketing",
+    description: "Data-driven advertising strategies focused on ROI and measurable growth.",
+    longDescription: "Our performance marketing vertical is engineered for scale. We combine technical expertise with creative testing to ensure your ad spend converts into profit. From search engines to social feeds, we dominate every touchpoint of your customer's journey.",
+    icon: TrendingUp,
     iconColor: "text-white",
     iconBg: "bg-blue-600",
     glowColorCode: "rgba(37, 99, 235, 0.15)",
     items: [
-      { text: "Audience Mapping & Market Research", icon: Users, color: "text-purple-400" },
-      { text: "Brand Positioning & Strategy", icon: Target, color: "text-red-400" },
-      { text: "MicroCampaign Development", icon: Lightbulb, color: "text-yellow-400" },
+      { 
+        text: "Google Ads (PPC)", 
+        icon: Search, 
+        color: "text-blue-400",
+        description: "Capture high-intent traffic through strategic search and display campaigns on the world's largest search engine."
+      },
+      { 
+        text: "Meta Ads (FB & IG)", 
+        icon: Megaphone, 
+        color: "text-pink-400",
+        description: "Scale your brand with highly targeted visual advertising across Facebook and Instagram feeds."
+      },
+      { 
+        text: "Retargeting Strategy", 
+        icon: RefreshCw, 
+        color: "text-yellow-400",
+        description: "Re-engage lost visitors and guide them back through the funnel with personalized ad sequences."
+      },
+      { 
+        text: "Conversion Optimization", 
+        icon: Target, 
+        color: "text-green-400",
+        description: "Analyze and improve your landing pages to turn more visitors into paying customers."
+      },
     ],
     benefits: [
-      "Targeted audience acquisition with 90% accuracy",
-      "Stable brand voice across all digital touchpoints",
-      "Optimized budget allocation for maximum ROI",
-      "Quarterly market shift analysis and pivots"
+      "Average 4.5x Return on Ad Spend (ROAS)",
+      "Daily campaign monitoring and optimization",
+      "Transparent real-time performance dashboards",
+      "Focus on lead quality over quantity"
     ]
   },
   {
     id: 2,
-    slug: "content-creation",
-    title: "Content Creation",
-    description: "High-fidelity storytelling designed to capture attention and build brand loyalty.",
-    longDescription: "In a world of infinite scrolling, content is the currency of attention. We specialize in high-production videography, strategic photography, and UGC that feels authentic. Our creative team doesn't just make 'posts'; we create brand assets that drive engagement and build a community around your business.",
-    icon: Clapperboard,
-    iconColor: "text-white",
-    iconBg: "bg-green-500",
-    glowColorCode: "rgba(34, 197, 94, 0.15)",
-    items: [
-      { text: "Content Writing & Ideation", icon: PenTool, color: "text-orange-400" },
-      { text: "Videography & Photography", icon: Camera, color: "text-purple-400" },
-      { text: "UGC & Influencer Collaboration", icon: Heart, color: "text-yellow-400" },
-    ],
-    benefits: [
-      "Consistent high-quality output on a monthly basis",
-      "Viral-ready creative hooks for Meta and TikTok",
-      "Strategic storytelling that drives emotional connection",
-      "Full ownership of all creative assets generated"
-    ]
-  },
-  {
-    id: 3,
-    slug: "editing-distribution",
-    title: "Editing & Distribution",
-    description: "Professional post-production and multi-platform publishing for maximum reach.",
-    longDescription: "The best content in the world is useless if it's not optimized for the platform it's on. Our editing team handles everything from SFX/VFX to platform-specific formatting. We ensure your message is delivered seamlessly across Instagram, LinkedIn, YouTube, and beyond, using a distribution strategy that maximizes organic and paid reach.",
-    icon: LayoutTemplate,
+    slug: "social-media-management",
+    title: "Social Media Management",
+    description: "Building brand authority and community through strategic social presence.",
+    longDescription: "Social media is more than just posting; it's about building a movement. We handle everything from high-level strategy to daily engagement, ensuring your brand stays relevant and resonant in a crowded digital landscape.",
+    icon: Users,
     iconColor: "text-white",
     iconBg: "bg-purple-600",
     glowColorCode: "rgba(147, 51, 234, 0.15)",
     items: [
-      { text: "Video Editing (SFX + VFX)", icon: Scissors, color: "text-red-400" },
-      { text: "Platform-Specific Formatting", icon: LayoutGrid, color: "text-blue-400" },
-      { text: "Cross-Platform Publishing", icon: Share2, color: "text-cyan-400" },
+      { 
+        text: "Content Strategy", 
+        icon: Lightbulb, 
+        color: "text-orange-400",
+        description: "A comprehensive roadmap for your brand's voice, aesthetic, and posting schedule across all platforms."
+      },
+      { 
+        text: "Community Management", 
+        icon: MessageSquare, 
+        color: "text-blue-300",
+        description: "Real-time engagement with your audience to build trust and foster a loyal brand community."
+      },
+      { 
+        text: "Influencer Marketing", 
+        icon: Share2, 
+        color: "text-red-400",
+        description: "Partner with authentic voices to expand your reach and gain instant credibility with new audiences."
+      },
+      { 
+        text: "Social Analytics", 
+        icon: LineChart, 
+        color: "text-green-300",
+        description: "In-depth reporting on growth, engagement, and reach to continuously refine your social strategy."
+      },
     ],
     benefits: [
-      "Cinematic editing quality that beats competitors",
-      "Multi-platform reach with zero extra effort for you",
-      "Data-backed publishing schedules for high engagement",
-      "Automated cross-posting workflows"
+      "Consistent 20%+ month-over-month growth",
+      "High-engagement content tailored for each platform",
+      "Proactive crisis and community management",
+      "Strategic alignment with overall business goals"
     ]
   },
   {
-    id: 4,
-    slug: "performance-marketing",
-    title: "Performance Marketing",
-    description: "Paid media scaling with a focus on ROAS, lead quality, and profitable growth.",
-    longDescription: "We don't just 'run ads'; we build profitable scaling machines. Our performance marketing team focuses on Meta funnel optimization, retargeting strategies, and deep analytics. We scale your spend confidently while maintaining lead quality and ensuring every campaign contributes to your bottom line.",
-    icon: Globe2,
+    id: 3,
+    slug: "website-designing",
+    title: "Website Designing",
+    description: "Crafting high-conversion digital experiences that captivate and convert.",
+    longDescription: "Your website is your 24/7 salesperson. We design and develop bespoke digital experiences that don't just look stunning but are engineered for speed, accessibility, and conversion.",
+    icon: Layout,
     iconColor: "text-white",
-    iconBg: "bg-red-500",
-    glowColorCode: "rgba(239, 68, 68, 0.2)",
+    iconBg: "bg-green-500",
+    glowColorCode: "rgba(34, 197, 94, 0.15)",
     items: [
-      { text: "Paid Media Planning & Execution", icon: Megaphone, color: "text-pink-400" },
-      { text: "Retargeting & Engagement Optimization", icon: RefreshCw, color: "text-blue-400" },
-      { text: "Performance Tracking & Optimization", icon: LineChart, color: "text-gray-300" },
+      { 
+        text: "UI/UX Design", 
+        icon: Palette, 
+        color: "text-purple-400",
+        description: "User-centric design that balances aesthetic beauty with intuitive functionality and flow."
+      },
+      { 
+        text: "Responsive Development", 
+        icon: Smartphone, 
+        color: "text-blue-400",
+        description: "High-performance websites that look and work perfectly on every device, from mobile to desktop."
+      },
+      { 
+        text: "E-commerce Solutions", 
+        icon: ShoppingBag, 
+        color: "text-orange-300",
+        description: "Scalable online stores designed to maximize sales through optimized checkout experiences."
+      },
+      { 
+        text: "Custom CMS Integration", 
+        icon: Code2, 
+        color: "text-cyan-400",
+        description: "Empower your team with easy-to-use content management systems like WordPress or Webflow."
+      },
     ],
     benefits: [
-      "4.2X Average ROAS across clients",
-      "60% reduction in average Cost-Per-Lead (CPL)",
-      "Daily campaign monitoring and real-time tweaks",
-      "Transparent reporting with zero vanity metrics"
+      "SEO-ready architecture from day one",
+      "Blazing fast loading speeds (90+ PageSpeed)",
+      "Mobile-first design philosophy",
+      "Seamless integration with marketing tools"
     ]
   },
 ];

@@ -100,12 +100,12 @@ export default function Industries() {
   }, { scope: sectionRef });
 
   return (
-    <section ref={sectionRef} id="industries" className="bg-transparent relative overflow-hidden py-24 w-full">
+    <section ref={sectionRef} id="industries" className="bg-transparent relative overflow-hidden py-12 md:py-20 w-full">
       {/* Background glow for the section */}
       <div className="absolute top-0 left-1/4 w-[1000px] h-[1000px] bg-[radial-gradient(circle,rgba(255,255,255,0.02)_0%,transparent_70%)] pointer-events-none" />
 
       {/* Header */}
-      <div className="max-w-7xl mx-auto px-6 md:px-12 w-full text-center mb-16 relative z-10">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 w-full text-center mb-10 md:mb-16 relative z-10">
         <h2 className="text-5xl md:text-6xl font-bold font-outfit mb-6 text-white">
           Industries We Serve
         </h2>
@@ -116,7 +116,7 @@ export default function Industries() {
 
       {/* Grid Container */}
       <div className="max-w-7xl mx-auto w-full relative z-10 px-6 md:px-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 pb-12 pt-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 pb-6 pt-4">
           {industries.map((industry) => {
             const Icon = industry.icon;
             return (

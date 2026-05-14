@@ -67,9 +67,9 @@ export default function Navbar() {
             <Link href="/#services" className="hover:text-white transition-colors">
               Services
             </Link>
-            <Link href="/#industries" className="hover:text-white transition-colors">
+            {/* <Link href="/#industries" className="hover:text-white transition-colors">
               Industries
-            </Link>
+            </Link> */}
             <Link href="/#process" className="hover:text-white transition-colors">
               Process
             </Link>
@@ -149,13 +149,13 @@ export default function Navbar() {
             >
               Services
             </Link>
-            <Link
+            {/* <Link
               href="/#industries"
               onClick={() => setIsMenuOpen(false)}
               className="text-3xl font-bold text-white hover:text-[#c5a059] transition-colors font-outfit"
             >
               Industries
-            </Link>
+            </Link> */}
             <Link
               href="/#process"
               onClick={() => setIsMenuOpen(false)}

@@ -4,11 +4,11 @@ import { MapPin, Mail, Phone, Share2, Send, Globe, Star } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer id="contact" className="relative border-t border-white/5 pt-20 pb-10 overflow-hidden">
+    <footer id="contact" className="relative border-t border-white/5 pt-12 md:pt-16 pb-10 overflow-hidden">
       <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-[radial-gradient(circle,rgba(56,189,248,0.08)_0%,transparent_70%)] rounded-full blur-3xl pointer-events-none" />
       
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mb-10 md:mb-16">
           {/* Brand Info */}
           <div>
             <Link href="/" className="flex items-center gap-2 mb-4 group">

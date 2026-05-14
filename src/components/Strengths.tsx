@@ -67,8 +67,8 @@ export default function Strengths() {
   };
 
   return (
-    <section id="strengths" ref={containerRef} className="py-24 bg-transparent overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 mb-12">
+    <section id="strengths" ref={containerRef} className="py-12 md:py-20 bg-transparent overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 mb-8 md:mb-12">
         <h2 className="text-3xl md:text-5xl font-bold font-outfit tracking-tight">
           Our <span className="text-gradient">Strengths</span>
         </h2>

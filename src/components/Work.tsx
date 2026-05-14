@@ -85,9 +85,9 @@ export default function Work() {
   };
 
   return (
-    <section id="work" ref={containerRef} className="py-24 px-6 md:px-12 overflow-hidden bg-slate-950/20">
+    <section id="work" ref={containerRef} className="py-12 md:py-20 px-6 md:px-12 overflow-hidden bg-slate-950/20">
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+        <div className="flex flex-col md:flex-row justify-between items-end mb-10 md:mb-16 gap-6">
           <div className="max-w-2xl">
             <p className="text-[var(--color-accent-start)] font-semibold uppercase tracking-widest mb-4">
               Our Success Stories
@@ -112,7 +112,7 @@ export default function Work() {
         >
           <div
             ref={sliderRef}
-            className="flex gap-6 overflow-x-hidden pb-12 pt-4 no-scrollbar cursor-pointer"
+            className="flex gap-6 overflow-x-hidden pb-8 pt-4 no-scrollbar cursor-pointer"
             style={{ 
               WebkitOverflowScrolling: 'touch'
             }}
