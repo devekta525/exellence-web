@@ -5,7 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Link from "next/link";
 import { caseStudies } from "@/data/case-studies";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 
 // Register ScrollTrigger
 gsap.registerPlugin(ScrollTrigger);
@@ -45,7 +45,7 @@ export default function Work() {
         // Create the continuous scroll animation
         scrollTween.current = gsap.to(slider, {
           scrollLeft: totalWidth,
-          duration: 30, // Adjust speed here
+          duration: 40, // Slower speed for better readability
           ease: "none",
           repeat: -1,
           onRepeat: () => {
@@ -84,24 +84,65 @@ export default function Work() {
     if (scrollTween.current) scrollTween.current.play();
   };
 
+  const scrollSlider = (direction: 'left' | 'right') => {
+    if (sliderRef.current) {
+      const scrollAmount = window.innerWidth > 768 ? 480 : 300;
+      const targetScroll = sliderRef.current.scrollLeft + (direction === 'left' ? -scrollAmount : scrollAmount);
+      
+      gsap.to(sliderRef.current, {
+        scrollLeft: targetScroll,
+        duration: 0.6,
+        ease: "power2.out",
+        onStart: () => {
+          if (scrollTween.current) scrollTween.current.pause();
+        },
+        onComplete: () => {
+          // Keep it paused for a bit so the user can see what they scrolled to
+          setTimeout(() => {
+            if (scrollTween.current && !sliderRef.current?.matches(':hover')) {
+              scrollTween.current.play();
+            }
+          }, 2000);
+        }
+      });
+    }
+  };
+
   return (
-    <section id="work" ref={containerRef} className="py-12 md:py-20 px-6 md:px-12 overflow-hidden bg-slate-950/20">
+    <section id="work" ref={containerRef} className="py-12 md:py-24 px-6 md:px-12 overflow-hidden bg-slate-950/20">
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-10 md:mb-16 gap-6">
+        <div className="flex flex-col md:flex-row justify-between items-center md:items-end mb-10 md:mb-16 gap-6 text-center md:text-left">
           <div className="max-w-2xl">
             <p className="text-[var(--color-accent-start)] font-semibold uppercase tracking-widest mb-4">
               Our Success Stories
             </p>
             <h2
               ref={headingRef}
-              className="text-5xl md:text-7xl font-bold font-outfit tracking-tight leading-[0.9]"
+              className="text-5xl md:text-8xl font-bold font-outfit tracking-tight leading-[0.85]"
             >
               Case <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--color-accent-start)] to-[var(--color-accent-end)]">Studies</span>
             </h2>
           </div>
-          <p className="text-white/60 text-lg max-w-sm">
-            Proven results across industries. We don't just run ads; we scale businesses profitably.
-          </p>
+          <div className="flex flex-col items-center md:items-end gap-6">
+            <p className="text-white/60 text-lg max-w-sm text-center md:text-right">
+              Proven results across industries. We don't just run ads; we scale businesses profitably.
+            </p>
+            {/* Desktop Navigation Arrows */}
+            <div className="hidden md:flex items-center gap-4">
+               <button 
+                onClick={() => scrollSlider('left')}
+                className="w-14 h-14 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/5 hover:border-white/20 transition-all text-white group"
+               >
+                 <ChevronLeft className="w-6 h-6 group-hover:-translate-x-1 transition-transform" />
+               </button>
+               <button 
+                onClick={() => scrollSlider('right')}
+                className="w-14 h-14 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/5 hover:border-white/20 transition-all text-white group"
+               >
+                 <ChevronRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
+               </button>
+            </div>
+          </div>
         </div>
 
         {/* Custom Horizontal Scroll Container */}
@@ -109,7 +150,30 @@ export default function Work() {
           className="relative group/slider"
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
+          onTouchStart={handleMouseEnter}
+          onTouchEnd={() => {
+            // Delay resume on mobile to allow reading
+            setTimeout(() => {
+              if (scrollTween.current) scrollTween.current.play();
+            }, 3000);
+          }}
         >
+          {/* Mobile Overlay Arrows */}
+          <div className="md:hidden absolute inset-y-0 -left-4 -right-4 z-20 flex items-center justify-between pointer-events-none px-2">
+            <button 
+              onClick={() => scrollSlider('left')}
+              className="w-12 h-12 rounded-full bg-slate-900/80 backdrop-blur-md border border-white/10 flex items-center justify-center text-white pointer-events-auto shadow-2xl active:scale-95 transition-transform"
+            >
+              <ChevronLeft className="w-6 h-6" />
+            </button>
+            <button 
+              onClick={() => scrollSlider('right')}
+              className="w-12 h-12 rounded-full bg-slate-900/80 backdrop-blur-md border border-white/10 flex items-center justify-center text-white pointer-events-auto shadow-2xl active:scale-95 transition-transform"
+            >
+              <ChevronRight className="w-6 h-6" />
+            </button>
+          </div>
+
           <div
             ref={sliderRef}
             className="flex gap-6 overflow-x-hidden pb-8 pt-4 no-scrollbar cursor-pointer"
@@ -121,7 +185,7 @@ export default function Work() {
               <Link
                 key={`${project.id}-${index}`}
                 href={`/case-studies/${project.slug}`}
-                className="case-study-card flex-none w-[85vw] md:w-[450px] aspect-[4/5] group/card relative overflow-hidden rounded-3xl transition-all duration-500 hover:shadow-2xl hover:shadow-[var(--color-accent-start)]/20"
+                className="case-study-card flex-none w-[85vw] md:w-[480px] aspect-[4/5.2] group/card relative overflow-hidden rounded-[32px] transition-all duration-500 hover:shadow-2xl hover:shadow-[var(--color-accent-start)]/20"
               >
                 {/* Image Background */}
                 <div
@@ -130,18 +194,15 @@ export default function Work() {
                 />
                 
                 {/* Overlay Gradient */}
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/40 to-transparent opacity-80 group-hover/card:opacity-95 transition-opacity duration-500" />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent opacity-80 group-hover/card:opacity-95 transition-opacity duration-500" />
                 
-                {/* Border Glow (Removed actual border, kept transition container) */}
-                <div className="absolute inset-0 rounded-3xl transition-colors duration-500" />
-
                 {/* Content */}
-                <div className="absolute inset-0 p-8 flex flex-col justify-end">
+                <div className="absolute inset-0 p-8 lg:p-10 flex flex-col justify-end">
                   <div className="translate-y-8 group-hover/card:translate-y-0 transition-transform duration-500">
                     <p className="text-sm font-bold uppercase tracking-[0.2em] text-[var(--color-accent-start)] mb-3">
                       {project.category}
                     </p>
-                    <h3 className="text-3xl font-bold font-outfit leading-[1.1] mb-4 text-white">
+                    <h3 className="text-3xl lg:text-4xl font-bold font-outfit leading-[1.1] mb-4 text-white">
                       {project.title}
                     </h3>
                     <p className="text-white/70 line-clamp-2 mb-6 opacity-0 group-hover/card:opacity-100 transition-opacity duration-500 delay-100">
@@ -176,7 +237,7 @@ export default function Work() {
             <div className="w-12 h-1 bg-white/20 rounded-full overflow-hidden">
               <div className="w-1/3 h-full bg-[var(--color-accent-start)] animate-shimmer" />
             </div>
-            <span className="text-[10px] uppercase tracking-widest font-bold">Auto-Scroll</span>
+            <span className="text-[10px] uppercase tracking-widest font-bold">Swipe to Explore</span>
           </div>
         </div>
       </div>

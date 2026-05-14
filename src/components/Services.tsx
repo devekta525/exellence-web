@@ -103,11 +103,11 @@ export default function Services() {
                   onClick={() => setActiveVertical(idx)}
                   className={`flex-shrink-0 snap-start px-6 py-3 rounded-xl transition-all duration-300 border flex items-center gap-3 ${
                     activeVertical === idx 
-                    ? "bg-accent-start text-white border-accent-start shadow-lg" 
-                    : "bg-white/5 border-white/5 text-gray-400"
+                    ? "bg-accent-start text-white border-accent-start shadow-[0_0_20px_rgba(56,189,248,0.4)]" 
+                    : "bg-white/5 border-white/5 text-gray-400 hover:bg-white/10"
                   }`}
                 >
-                  <vertical.icon className="w-5 h-5" />
+                  <vertical.icon className={`w-5 h-5 ${activeVertical === idx ? "text-white" : "text-accent-start"}`} />
                   <span className="text-sm font-bold whitespace-nowrap">{vertical.title}</span>
                 </button>
               ))}
@@ -149,8 +149,8 @@ export default function Services() {
                   onClick={() => setActiveService(idx)}
                   className={`flex-shrink-0 snap-start px-4 py-2 rounded-lg transition-all duration-300 border ${
                     activeService === idx 
-                    ? "bg-accent-end/20 text-accent-end border-accent-end/50" 
-                    : "bg-white/5 border-white/5 text-gray-400"
+                    ? "bg-accent-end text-white border-accent-end shadow-[0_0_15px_rgba(129,140,248,0.3)]" 
+                    : "bg-white/5 border-white/5 text-gray-400 hover:bg-white/10"
                   }`}
                 >
                   <span className="text-xs font-medium whitespace-nowrap">{item.text}</span>
@@ -159,8 +159,8 @@ export default function Services() {
             </div>
 
             {/* Desktop/Common Services Container */}
-            <div className="bg-white/5 border border-white/5 rounded-[24px] lg:rounded-[32px] p-2 lg:p-4">
-              <div className="hidden lg:block space-y-2">
+            <div className="hidden lg:block bg-white/5 border border-white/5 rounded-[24px] lg:rounded-[32px] p-2 lg:p-4">
+              <div className="space-y-2">
                 {currentVertical.items.map((item, idx) => (
                   <button
                     key={idx}
@@ -180,19 +180,6 @@ export default function Services() {
                     <ChevronRight className={`w-5 h-5 transition-transform ${activeService === idx ? "translate-x-0 opacity-100" : "-translate-x-2 opacity-0"}`} />
                   </button>
                 ))}
-              </div>
-              
-              {/* Mobile View Indicator (Simple list of sub-services) */}
-              <div className="lg:hidden p-2">
-                <p className="text-[10px] text-gray-500 uppercase tracking-widest mb-2 px-2">Sub-Services</p>
-                <div className="grid grid-cols-2 gap-2">
-                  {currentVertical.items.map((item, idx) => (
-                    <div key={idx} className={`flex items-center gap-2 p-2 rounded-lg border text-[11px] ${activeService === idx ? "bg-accent-end/10 border-accent-end/20 text-white" : "bg-white/[0.02] border-white/5 text-gray-500"}`}>
-                       <item.icon className="w-3 h-3" />
-                       <span className="truncate">{item.text}</span>
-                    </div>
-                  ))}
-                </div>
               </div>
             </div>
           </div>

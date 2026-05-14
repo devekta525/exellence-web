@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
-import { Zap, Target, Layers, TrendingUp } from "lucide-react";
+import { Zap, Target, Layers, TrendingUp, ChevronLeft, ChevronRight } from "lucide-react";
 
 const STRENGTHS = [
   {
@@ -66,6 +66,35 @@ export default function Strengths() {
     if (tweenRef.current) tweenRef.current.play();
   };
 
+  const scrollSlider = (direction: 'left' | 'right') => {
+    if (sliderRef.current && tweenRef.current) {
+      tweenRef.current.pause();
+      
+      const cardWidth = window.innerWidth > 768 ? 400 + 24 : 350 + 24;
+      const currentX = gsap.getProperty(sliderRef.current, "x") as number;
+      const targetX = currentX + (direction === 'left' ? cardWidth : -cardWidth);
+      
+      gsap.to(sliderRef.current, {
+        x: targetX,
+        duration: 0.6,
+        ease: "power2.out",
+        onComplete: () => {
+          // Reset to loop if we go too far
+          const totalWidth = sliderRef.current!.scrollWidth / 2;
+          if (Math.abs(targetX) >= totalWidth) {
+             gsap.set(sliderRef.current, { x: 0 });
+          } else if (targetX > 0) {
+             gsap.set(sliderRef.current, { x: -totalWidth });
+          }
+          
+          setTimeout(() => {
+            if (tweenRef.current) tweenRef.current.play();
+          }, 3000);
+        }
+      });
+    }
+  };
+
   return (
     <section id="strengths" ref={containerRef} className="py-12 md:py-20 bg-transparent overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 mb-8 md:mb-12">
@@ -78,7 +107,29 @@ export default function Strengths() {
         className="relative group"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onTouchStart={handleMouseEnter}
+        onTouchEnd={() => {
+          setTimeout(() => {
+            if (tweenRef.current) tweenRef.current.play();
+          }, 3000);
+        }}
       >
+        {/* Mobile Navigation Arrows */}
+        <div className="md:hidden absolute inset-y-0 -left-4 -right-4 z-20 flex items-center justify-between pointer-events-none px-6">
+          <button 
+            onClick={() => scrollSlider('left')}
+            className="w-10 h-10 rounded-full bg-slate-900/80 backdrop-blur-md border border-white/10 flex items-center justify-center text-white pointer-events-auto active:scale-90 transition-transform"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+          <button 
+            onClick={() => scrollSlider('right')}
+            className="w-10 h-10 rounded-full bg-slate-900/80 backdrop-blur-md border border-white/10 flex items-center justify-center text-white pointer-events-auto active:scale-90 transition-transform"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
+        </div>
+
         <div 
           ref={sliderRef}
           className="flex gap-6 w-max px-6 cursor-pointer"
