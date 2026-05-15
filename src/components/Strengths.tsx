@@ -37,118 +37,106 @@ export default function Strengths() {
   const tweenRef = useRef<gsap.core.Tween | null>(null);
 
   useEffect(() => {
+    // Auto-running marquee effect removed as per user request
     const ctx = gsap.context(() => {
-      if (!sliderRef.current) return;
-
-      const slider = sliderRef.current;
-      const totalWidth = slider.scrollWidth / 2;
-
-      // Auto-running marquee effect
-      tweenRef.current = gsap.to(slider, {
-        x: -totalWidth,
-        duration: 30, // Slightly slower for better readability
-        ease: "none",
-        repeat: -1,
-        onRepeat: () => {
-          gsap.set(slider, { x: 0 });
-        }
-      });
+      // Logic for auto-sliding has been disabled
     }, containerRef);
 
     return () => ctx.revert();
   }, []);
 
   const handleMouseEnter = () => {
-    if (tweenRef.current) tweenRef.current.pause();
+    // if (tweenRef.current) tweenRef.current.pause();
   };
 
   const handleMouseLeave = () => {
-    if (tweenRef.current) tweenRef.current.play();
+    // if (tweenRef.current && window.innerWidth > 768) tweenRef.current.play();
   };
 
   const scrollSlider = (direction: 'left' | 'right') => {
-    if (sliderRef.current && tweenRef.current) {
-      tweenRef.current.pause();
-      
-      const cardWidth = window.innerWidth > 768 ? 400 + 24 : 350 + 24;
-      const currentX = gsap.getProperty(sliderRef.current, "x") as number;
-      const targetX = currentX + (direction === 'left' ? cardWidth : -cardWidth);
-      
+    if (sliderRef.current) {
+      const isMobile = window.innerWidth <= 768;
+      // 85vw + 24px gap on mobile, 400px + 24px gap on desktop
+      const scrollAmount = isMobile
+        ? (window.innerWidth * 0.85) + 24
+        : 424;
+
+      const targetScroll = sliderRef.current.scrollLeft + (direction === 'left' ? -scrollAmount : scrollAmount);
+
       gsap.to(sliderRef.current, {
-        x: targetX,
+        scrollLeft: targetScroll,
         duration: 0.6,
-        ease: "power2.out",
-        onComplete: () => {
-          // Reset to loop if we go too far
-          const totalWidth = sliderRef.current!.scrollWidth / 2;
-          if (Math.abs(targetX) >= totalWidth) {
-             gsap.set(sliderRef.current, { x: 0 });
-          } else if (targetX > 0) {
-             gsap.set(sliderRef.current, { x: -totalWidth });
-          }
-          
-          setTimeout(() => {
-            if (tweenRef.current) tweenRef.current.play();
-          }, 3000);
-        }
+        ease: "power2.out"
       });
     }
   };
 
   return (
     <section id="strengths" ref={containerRef} className="py-12 md:py-20 bg-transparent overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 mb-8 md:mb-12">
+      <div className="max-w-7xl mx-auto px-6 mb-8 md:mb-12 flex flex-row justify-between items-end">
         <h2 className="text-3xl md:text-5xl font-bold font-outfit tracking-tight">
           Our <span className="text-gradient">Strengths</span>
         </h2>
+        
+        {/* Desktop Navigation Arrows */}
+        <div className="hidden md:flex items-center gap-4">
+          <button
+            onClick={() => scrollSlider('left')}
+            className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/5 hover:border-white/20 transition-all text-white group cursor-pointer"
+          >
+            <ChevronLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
+          </button>
+          <button
+            onClick={() => scrollSlider('right')}
+            className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/5 hover:border-white/20 transition-all text-white group cursor-pointer"
+          >
+            <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+          </button>
+        </div>
       </div>
 
-      <div 
+      <div
         className="relative group"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         onTouchStart={handleMouseEnter}
-        onTouchEnd={() => {
-          setTimeout(() => {
-            if (tweenRef.current) tweenRef.current.play();
-          }, 3000);
-        }}
+        onTouchEnd={() => {}}
       >
         {/* Mobile Navigation Arrows */}
-        <div className="md:hidden absolute inset-y-0 -left-4 -right-4 z-20 flex items-center justify-between pointer-events-none px-6">
-          <button 
+        <div className="md:hidden absolute inset-y-0 -left-4 -right-4 z-20 flex items-center justify-between pointer-events-none px-4">
+          <button
             onClick={() => scrollSlider('left')}
-            className="w-10 h-10 rounded-full bg-slate-900/80 backdrop-blur-md border border-white/10 flex items-center justify-center text-white pointer-events-auto active:scale-90 transition-transform"
+            className="w-10 h-10 rounded-full bg-slate-900/80 backdrop-blur-md border border-white/10 flex items-center justify-center text-white pointer-events-auto active:scale-90 transition-transform shadow-2xl cursor-pointer"
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
-          <button 
+          <button
             onClick={() => scrollSlider('right')}
-            className="w-10 h-10 rounded-full bg-slate-900/80 backdrop-blur-md border border-white/10 flex items-center justify-center text-white pointer-events-auto active:scale-90 transition-transform"
+            className="w-10 h-10 rounded-full bg-slate-900/80 backdrop-blur-md border border-white/10 flex items-center justify-center text-white pointer-events-auto active:scale-90 transition-transform shadow-2xl cursor-pointer"
           >
             <ChevronRight className="w-5 h-5" />
           </button>
         </div>
 
-        <div 
+        <div
           ref={sliderRef}
-          className="flex gap-6 w-max px-6 cursor-pointer"
+          className="flex gap-6 overflow-x-auto no-scrollbar cursor-pointer snap-x snap-mandatory px-[7.5vw] md:px-6"
         >
           {/* Double the array for seamless loop */}
-          {[...STRENGTHS, ...STRENGTHS].map((strength, i) => {
+          {STRENGTHS.map((strength, i) => {
             const Icon = strength.icon;
             return (
-              <div 
+              <div
                 key={i}
-                className="w-[350px] md:w-[400px] p-8 rounded-[2rem] bg-slate-900/20 border border-white/5 backdrop-blur-sm group/card hover:bg-slate-900/60 hover:border-white/20 transition-all duration-500 relative overflow-hidden"
+                className="flex-none w-[85vw] md:w-[400px] p-8 rounded-[2rem] bg-slate-900/20 border border-white/5 backdrop-blur-sm group/card hover:bg-slate-900/60 hover:border-white/20 transition-all duration-500 relative overflow-hidden snap-center"
               >
                 {/* Hover Glow Effect */}
                 <div className={`absolute -inset-1 bg-gradient-to-br ${strength.color} opacity-0 group-hover/card:opacity-5 blur-2xl transition-opacity duration-500`} />
-                
+
                 <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${strength.color} flex items-center justify-center mb-6 shadow-lg shadow-black/20 group-hover/card:scale-110 group-hover/card:shadow-[var(--color-accent-start)]/20 transition-all duration-500`}>
                   <Icon className="w-7 h-7 text-white" />
                 </div>
-                
+
                 <h3 className="text-2xl font-bold font-outfit text-white mb-4 group-hover/card:text-white transition-all duration-500 relative z-10">
                   {strength.title}
                 </h3>
@@ -159,11 +147,17 @@ export default function Strengths() {
             );
           })}
         </div>
-        
-        {/* Fading Edges */}
-        <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[#020617] to-transparent z-10 pointer-events-none" />
-        <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[#020617] to-transparent z-10 pointer-events-none" />
+
+        {/* Fading Edges (Desktop Only) */}
+        <div className="hidden md:block absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[#020617] to-transparent z-10 pointer-events-none" />
+        <div className="hidden md:block absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[#020617] to-transparent z-10 pointer-events-none" />
       </div>
+
+      <style jsx>{`
+        .no-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
     </section>
   );
 }

@@ -48,35 +48,6 @@ export default function Footer() {
                 <p className="font-semibold">hi@excellence.agency</p>
               </div>
             </div>
-
-            <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-xl bg-[#00cc66]/20 text-[#00cc66] flex items-center justify-center shrink-0">
-                <Phone className="w-5 h-5" />
-              </div>
-              <div>
-                <p className="text-sm text-gray-400 mb-1">Phone</p>
-                <p className="font-semibold">+91-90972 90982</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Socials */}
-          <div className="lg:text-right">
-            <h3 className="text-xl font-bold mb-6">Connect With Us</h3>
-            <div className="flex items-center lg:justify-end gap-3">
-              <Link href="#" className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10 transition-colors">
-                <Share2 className="w-5 h-5" />
-              </Link>
-              <Link href="#" className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10 transition-colors">
-                <Send className="w-5 h-5" />
-              </Link>
-              <Link href="#" className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10 transition-colors">
-                <Globe className="w-5 h-5" />
-              </Link>
-              <Link href="#" className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center hover:bg-white/10 transition-colors">
-                <Star className="w-5 h-5" />
-              </Link>
-            </div>
           </div>
         </div>
 
@@ -84,9 +55,8 @@ export default function Footer() {
         <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-gray-500">
           <p>© 2026 <strong className="text-white">Dviora</strong>. All rights reserved.</p>
           <div className="flex gap-6">
-            <Link href="#" className="hover:text-white transition-colors">Privacy Policy</Link>
-            <Link href="#" className="hover:text-white transition-colors">Terms of Service</Link>
-            <Link href="#" className="hover:text-white transition-colors">Refund Policy</Link>
+            <Link href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
+            <Link href="/terms-and-conditions" className="hover:text-white transition-colors">Terms of Service</Link>
           </div>
           <p>
             Made with <span className="text-red-500">♥</span> by Dviora Team

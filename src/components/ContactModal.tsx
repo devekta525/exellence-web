@@ -12,6 +12,7 @@ export default function ContactModal() {
     name: "",
     phone: "",
     website: "",
+    service: "Performance Marketing",
     revenue: "Beginner (0-1 Lakh)",
     message: "",
   });
@@ -34,6 +35,7 @@ export default function ContactModal() {
           name: "",
           phone: "",
           website: "",
+          service: "Performance Marketing",
           revenue: "Beginner (0-1 Lakh)",
           message: "",
         });
@@ -72,7 +74,7 @@ export default function ContactModal() {
       ></div>
 
       {/* Modal Content */}
-      <div className="relative w-full max-w-md lg:max-w-xl bg-[#0c1a3d] border border-white/10 rounded-[32px] p-8 md:p-12 shadow-2xl animate-in fade-in zoom-in-95 duration-200 overflow-y-auto max-h-[90vh] no-scrollbar">
+      <div className="relative w-full max-w-md lg:max-w-xl bg-[#0c1a3d] border border-white/10 rounded-[32px] p-6 md:p-12 shadow-2xl animate-in fade-in zoom-in-95 duration-200 overflow-y-auto max-h-[90vh] no-scrollbar">
         <button
           onClick={closeContactModal}
           className="absolute top-5 right-5 text-gray-400 hover:text-white transition-colors"
@@ -96,7 +98,7 @@ export default function ContactModal() {
                 required
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-cyan-500/50 transition-all focus:bg-white/[0.08]"
+                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-base md:text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-cyan-500/50 transition-all focus:bg-white/[0.08]"
                 placeholder="John Doe"
               />
             </div>
@@ -109,7 +111,7 @@ export default function ContactModal() {
                 required
                 value={formData.phone}
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-cyan-500/50 transition-all focus:bg-white/[0.08]"
+                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-base md:text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-cyan-500/50 transition-all focus:bg-white/[0.08]"
                 placeholder="+1 (555) 000-0000"
               />
             </div>
@@ -124,31 +126,54 @@ export default function ContactModal() {
               required
               value={formData.website}
               onChange={(e) => setFormData({ ...formData, website: e.target.value })}
-              className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-cyan-500/50 transition-all focus:bg-white/[0.08]"
+              className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-base md:text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-cyan-500/50 transition-all focus:bg-white/[0.08]"
               placeholder="https://yourwebsite.com"
             />
           </div>
 
           <div className="relative">
             <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em] mb-1.5 ml-1">
-              Monthly Revenue <span className="text-rose-500">*</span>
+              Which Service? <span className="text-rose-500">*</span>
             </label>
             <div className="relative group">
               <select
                 required
-                value={formData.revenue}
-                onChange={(e) => setFormData({ ...formData, revenue: e.target.value })}
-                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-cyan-500/50 transition-all appearance-none cursor-pointer focus:bg-white/[0.08]"
+                value={formData.service}
+                onChange={(e) => setFormData({ ...formData, service: e.target.value })}
+                className="w-full bg-white/5 border border-white/10 rounded-xl pl-4 pr-10 py-3 text-base md:text-sm text-white focus:outline-none focus:border-cyan-500/50 transition-all appearance-none cursor-pointer focus:bg-white/[0.08]"
               >
-                <option className="bg-[#0c1a3d]" value="Beginner (0-1 Lakh)">Beginner (0-1 Lakh)</option>
-                <option className="bg-[#0c1a3d]" value="Intermediate (1 Lakh - 5 Lakh)">Intermediate (1 Lakh - 5 Lakh)</option>
-                <option className="bg-[#0c1a3d]" value="Growth (5 Lakh +)">Growth (5 Lakh +)</option>
+                <option className="bg-[#0c1a3d]" value="Performance Marketing">Performance Marketing</option>
+                <option className="bg-[#0c1a3d]" value="Social Media Management">Social Media Management</option>
+                <option className="bg-[#0c1a3d]" value="Website Designing">Website Designing</option>
               </select>
               <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500 group-focus-within:text-cyan-500 transition-colors">
                 <ChevronRight className="w-4 h-4 rotate-90" />
               </div>
             </div>
           </div>
+
+          {formData.service === "Performance Marketing" && (
+            <div className="relative animate-in slide-in-from-top-2 duration-300">
+              <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em] mb-1.5 ml-1">
+                Monthly Revenue <span className="text-rose-500">*</span>
+              </label>
+              <div className="relative group">
+                <select
+                  required
+                  value={formData.revenue}
+                  onChange={(e) => setFormData({ ...formData, revenue: e.target.value })}
+                  className="w-full bg-white/5 border border-white/10 rounded-xl pl-4 pr-10 py-3 text-base md:text-sm text-white focus:outline-none focus:border-cyan-500/50 transition-all appearance-none cursor-pointer focus:bg-white/[0.08]"
+                >
+                  <option className="bg-[#0c1a3d]" value="Beginner (0-1 Lakh)">Beginner (0-1 Lakh)</option>
+                  <option className="bg-[#0c1a3d]" value="Intermediate (1 Lakh - 5 Lakh)">Intermediate (1 Lakh - 5 Lakh)</option>
+                  <option className="bg-[#0c1a3d]" value="Growth (5 Lakh +)">Growth (5 Lakh +)</option>
+                </select>
+                <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500 group-focus-within:text-cyan-500 transition-colors">
+                  <ChevronRight className="w-4 h-4 rotate-90" />
+                </div>
+              </div>
+            </div>
+          )}
 
           <div className="relative">
             <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em] mb-1.5 ml-1">
@@ -158,7 +183,7 @@ export default function ContactModal() {
               rows={3}
               value={formData.message}
               onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-              className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-cyan-500/50 transition-all resize-none focus:bg-white/[0.08]"
+              className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-base md:text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-cyan-500/50 transition-all resize-none focus:bg-white/[0.08]"
               placeholder="Tell us about your goals..."
             ></textarea>
           </div>
