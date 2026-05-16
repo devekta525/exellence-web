@@ -56,23 +56,33 @@ export default function Strengths() {
   const scrollSlider = (direction: 'left' | 'right') => {
     if (sliderRef.current) {
       const isMobile = window.innerWidth <= 768;
-      // 85vw + 24px gap on mobile, 400px + 24px gap on desktop
-      const scrollAmount = isMobile
-        ? (window.innerWidth * 0.85) + 24
-        : 424;
+      const scrollAmount = isMobile ? (window.innerWidth * 0.85) + 24 : 424;
+      const slider = sliderRef.current;
+      const totalWidth = (STRENGTHS.length * scrollAmount);
 
-      const targetScroll = sliderRef.current.scrollLeft + (direction === 'left' ? -scrollAmount : scrollAmount);
+      // Handle left boundary jump
+      if (direction === 'left' && slider.scrollLeft <= 10) {
+        slider.scrollLeft = totalWidth;
+      }
 
-      gsap.to(sliderRef.current, {
+      const targetScroll = slider.scrollLeft + (direction === 'left' ? -scrollAmount : scrollAmount);
+
+      gsap.to(slider, {
         scrollLeft: targetScroll,
-        duration: 0.6,
-        ease: "power2.out"
+        duration: 0.7,
+        ease: "power2.out",
+        onComplete: () => {
+          // If we've scrolled into the second half, jump back to the first half silently
+          if (slider.scrollLeft >= totalWidth + 10) {
+            slider.scrollLeft -= totalWidth;
+          }
+        }
       });
     }
   };
 
   return (
-    <section id="strengths" ref={containerRef} className="py-12 md:py-20 bg-transparent overflow-hidden">
+    <section id="strengths" ref={containerRef} className="pt-8 md:pt-20 pb-4 md:pb-6 bg-transparent overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 mb-8 md:mb-12 flex flex-row justify-between items-end">
         <h2 className="text-3xl md:text-5xl font-bold font-outfit tracking-tight">
           Our <span className="text-gradient">Strengths</span>
@@ -123,7 +133,7 @@ export default function Strengths() {
           className="flex gap-6 overflow-x-auto no-scrollbar cursor-pointer snap-x snap-mandatory px-[7.5vw] md:px-6"
         >
           {/* Double the array for seamless loop */}
-          {STRENGTHS.map((strength, i) => {
+          {[...STRENGTHS, ...STRENGTHS].map((strength, i) => {
             const Icon = strength.icon;
             return (
               <div

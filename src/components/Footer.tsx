@@ -13,7 +13,7 @@ export default function Footer() {
           <div>
             <Link href="/" className="flex items-center gap-2 mb-4 group">
               <div className="w-10 h-10 rounded-full border border-[var(--color-accent-start)] flex items-center justify-center text-[var(--color-accent-start)] font-bold">
-                E
+                D
               </div>
               <span className="text-2xl font-bold font-outfit">
                 Dviora
@@ -45,7 +45,7 @@ export default function Footer() {
               </div>
               <div>
                 <p className="text-sm text-gray-400 mb-1">Email</p>
-                <p className="font-semibold">hi@excellence.agency</p>
+                <p className="font-semibold">dvioralabs@gmail.com</p>
               </div>
             </div>
           </div>

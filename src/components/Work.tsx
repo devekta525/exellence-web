@@ -16,8 +16,8 @@ export default function Work() {
   const sliderRef = useRef<HTMLDivElement>(null);
   const scrollTween = useRef<gsap.core.Tween | null>(null);
 
-  // Display base items for manual sliding
-  const displayStudies = caseStudies;
+  // Double the items for seamless loop
+  const displayStudies = [...caseStudies, ...caseStudies];
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -72,23 +72,33 @@ export default function Work() {
   const scrollSlider = (direction: 'left' | 'right') => {
     if (sliderRef.current) {
       const isMobile = window.innerWidth <= 768;
-      // 85vw + 16px gap on mobile, 480px + 24px gap on desktop
-      const scrollAmount = isMobile 
-        ? (window.innerWidth * 0.85) + 16 
-        : 504; 
+      const scrollAmount = isMobile ? (window.innerWidth * 0.85) + 16 : 504; 
+      const slider = sliderRef.current;
+      const totalWidth = (caseStudies.length * scrollAmount);
+
+      // Handle left boundary: if at start, jump to the middle copy instantly
+      if (direction === 'left' && slider.scrollLeft <= 10) {
+        slider.scrollLeft = totalWidth;
+      }
+
+      const targetScroll = slider.scrollLeft + (direction === 'left' ? -scrollAmount : scrollAmount);
       
-      const targetScroll = sliderRef.current.scrollLeft + (direction === 'left' ? -scrollAmount : scrollAmount);
-      
-      gsap.to(sliderRef.current, {
+      gsap.to(slider, {
         scrollLeft: targetScroll,
-        duration: 0.6,
-        ease: "power2.out"
+        duration: 0.7,
+        ease: "power2.out",
+        onComplete: () => {
+          // If we've scrolled into the second half, jump back to the first half silently
+          if (slider.scrollLeft >= totalWidth + 10) {
+            slider.scrollLeft -= totalWidth;
+          }
+        }
       });
     }
   };
 
   return (
-    <section id="work" ref={containerRef} className="py-12 md:py-24 px-6 md:px-12 overflow-hidden bg-slate-950/20">
+    <section id="work" ref={containerRef} className="pt-10 pb-8 md:py-24 px-6 md:px-12 overflow-hidden bg-slate-950/20">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-center md:items-end mb-10 md:mb-16 gap-6 text-center md:text-left">
           <div className="max-w-2xl">
@@ -159,49 +169,50 @@ export default function Work() {
               <Link
                 key={`${project.id}-${index}`}
                 href={`/case-studies/${project.slug}`}
-                className="case-study-card flex-none w-[85vw] md:w-[480px] aspect-[4/5.2] group/card relative overflow-hidden rounded-[32px] transition-all duration-500 hover:shadow-2xl hover:shadow-[var(--color-accent-start)]/20 snap-center"
+                className="case-study-card flex-none w-[85vw] md:w-[480px] aspect-[4/5.5] group/card relative overflow-hidden rounded-[40px] bg-slate-900/50 border border-white/5 transition-all duration-500 hover:shadow-2xl hover:shadow-[var(--color-accent-start)]/20 snap-center flex flex-col"
               >
-                {/* Image Background */}
-                <div
-                  className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover/card:scale-110"
-                  style={{ backgroundImage: `url(${project.image})` }}
-                />
+                {/* Image Section (Top 60%) */}
+                <div className="relative h-[58%] w-full overflow-hidden">
+                  <div
+                    className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover/card:scale-110"
+                    style={{ backgroundImage: `url(${project.image})` }}
+                  />
+                  {/* Subtle Gradient for image depth */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/20 to-transparent" />
+                  
+                  {/* Stats Tags (on top of image) */}
+                  {project.stats && (
+                    <div className="absolute top-6 left-6 flex flex-wrap gap-2 z-10">
+                      {project.stats.slice(0, 1).map((stat, idx) => (
+                        <span key={idx} className="px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-bold text-white shadow-xl">
+                          {stat.value} {stat.label}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
                 
-                {/* Overlay Gradient */}
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent opacity-80 group-hover/card:opacity-95 transition-opacity duration-500" />
-                
-                {/* Content Box with Glassmorphism */}
-                <div className="absolute inset-x-4 bottom-4 p-6 md:p-8 flex flex-col justify-end bg-black/40 backdrop-blur-md border border-white/10 rounded-[24px] transition-all duration-500 group-hover/card:bg-black/60 group-hover/card:border-white/20">
-                  <div className="transition-transform duration-500">
-                    <p className="text-xs md:text-sm font-bold uppercase tracking-[0.2em] text-[var(--color-accent-start)] mb-3">
+                {/* Content Section (Bottom 40%) */}
+                <div className="flex-grow p-6 md:p-8 flex flex-col bg-slate-950/80 backdrop-blur-sm border-t border-white/5">
+                  <div className="flex-grow">
+                    <p className="text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-[var(--color-accent-start)] mb-3">
                       {project.category}
                     </p>
-                    <h3 className="text-2xl lg:text-3xl font-bold font-outfit leading-[1.1] mb-3 text-white">
+                    <h3 className="text-xl lg:text-2xl font-bold font-outfit leading-tight mb-3 text-white">
                       {project.title}
                     </h3>
-                    <p className="text-white/80 text-sm line-clamp-2 mb-6 transition-opacity duration-500">
+                    <p className="text-white/60 text-sm line-clamp-2 mb-6 font-light">
                       {project.body}
                     </p>
-                    
-                    <div className="flex items-center gap-3 text-white font-semibold group/link">
-                      <span className="text-xs md:text-sm uppercase tracking-widest">View Case Study</span>
-                      <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center group-hover/link:bg-[var(--color-accent-start)] transition-colors duration-300">
-                        <ArrowRight className="w-5 h-5 group-hover/link:translate-x-1 transition-transform duration-300" />
-                      </div>
+                  </div>
+                  
+                  <div className="flex items-center justify-between group/link border-t border-white/5 pt-6">
+                    <span className="text-xs uppercase tracking-widest font-semibold text-white/80">View Case Study</span>
+                    <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center group-hover/link:bg-[var(--color-accent-start)] transition-all duration-300">
+                      <ArrowRight className="w-5 h-5 text-white group-hover/link:translate-x-1 transition-transform duration-300" />
                     </div>
                   </div>
                 </div>
-
-                {/* Stats Tags */}
-                {project.stats && (
-                  <div className="absolute top-6 left-6 flex flex-wrap gap-2">
-                    {project.stats.slice(0, 1).map((stat, idx) => (
-                      <span key={idx} className="px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-bold text-white">
-                        {stat.value} {stat.label}
-                      </span>
-                    ))}
-                  </div>
-                )}
               </Link>
             ))}
           </div>

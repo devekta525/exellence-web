@@ -73,13 +73,13 @@ export default function Services() {
   const activeServiceData = SERVICES.find(s => s.id === selectedService) || SERVICES[0];
 
   return (
-    <section ref={containerRef} id="services" className="py-20 md:py-32 px-6 bg-transparent relative overflow-hidden">
+    <section ref={containerRef} id="services" className="pt-8 md:pt-16 pb-12 md:pb-32 px-6 bg-transparent relative overflow-hidden">
       {/* Background ambient glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] bg-blue-500/5 blur-[120px] rounded-full pointer-events-none" />
       
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-10 md:mb-16">
           <h2 className="text-4xl md:text-7xl font-bold font-outfit mb-6 tracking-tight">
             Our <span className="text-gradient">Services</span>
           </h2>

@@ -45,7 +45,7 @@ export default function Hero() {
     <section
       id="home"
       ref={containerRef}
-      className="relative min-h-[70vh] md:min-h-screen flex flex-col items-center justify-center px-6 py-20 overflow-hidden bg-[#020617]"
+      className="relative min-h-[70vh] md:min-h-screen flex flex-col items-start justify-center px-6 md:px-24 py-20 overflow-hidden bg-[#020617]"
     >
       {/* Cinematic Overlays */}
       <div className="absolute inset-0 z-0">
@@ -54,17 +54,18 @@ export default function Hero() {
       </div>
 
       {/* Glow effect */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[radial-gradient(circle,rgba(56,189,248,0.12)_0%,transparent_70%)] rounded-full blur-3xl pointer-events-none z-[2]" />
+      <div className="absolute top-1/2 left-0 w-[800px] h-[800px] bg-[radial-gradient(circle,rgba(56,189,248,0.12)_0%,transparent_70%)] rounded-full blur-3xl pointer-events-none z-[2]" />
 
       {/* Content */}
-      <div className="max-w-7xl mx-auto text-center z-10 flex flex-col items-center relative">
-        <div className="flex items-center justify-center mb-6 py-4 px-4 overflow-visible">
+      <div className="max-w-7xl text-left z-10 flex flex-col items-start relative">
+        <div className="flex items-center justify-start mb-6 py-4 overflow-visible">
           <h1
             ref={titleContainerRef}
-            className="text-[2.8rem] sm:text-[4rem] md:text-[6rem] lg:text-[8rem] font-black italic tracking-tight leading-[1.2] flex flex-wrap items-baseline justify-center select-none drop-shadow-2xl"
+            className="text-[2.8rem] sm:text-[4rem] md:text-[6rem] lg:text-[8rem] font-black italic tracking-tight leading-[0.85] flex flex-col items-start select-none drop-shadow-2xl"
           >
-            <span ref={wordRef} className="flex items-baseline pr-4">
-              <span className="text-gradient inline-block pb-2">Who Are We</span>
+            <span className="text-gradient inline-block pb-2">WHO ARE</span>
+            <span ref={wordRef} className="flex items-baseline">
+              <span className="text-gradient inline-block pb-2">WE?</span>
               <span className="inline-block w-[0.15em] h-[0.15em] rounded-full bg-[var(--color-accent-start)] ml-[0.02em] shadow-[0_0_20px_var(--color-accent-start)]"></span>
             </span>
           </h1>
@@ -72,15 +73,15 @@ export default function Hero() {
 
         <p
           ref={subtitleRef}
-          className="text-base md:text-xl lg:text-2xl text-white/90 mb-10 max-w-3xl mx-auto leading-relaxed font-outfit drop-shadow-md"
+          className="text-base md:text-xl lg:text-2xl text-white/90 mb-10 max-w-3xl leading-relaxed font-outfit drop-shadow-md"
         >
-          Driving high-impact growth through authentic storytelling and performance marketing.{" "}
+          We specialize exclusively in Meta Ads management for high-spending brands. While you handle your own creatives, we bring laser-focused expertise on strategy, ad management, and scaling.{" "}
           <span className="text-white font-semibold">
-            We don't just capture attention; we convert it into profitable revenue.
+            Our strength is turning big budgets into big returns.
           </span>
         </p>
 
-        <div ref={ctaRef} className="flex flex-col sm:flex-row items-center gap-6">
+        <div ref={ctaRef} className="flex flex-col sm:flex-row items-start gap-6">
           <button
             onClick={openContactModal}
             className="group relative flex items-center px-10 py-4 rounded-full text-lg font-bold overflow-hidden transition-transform hover:scale-105 active:scale-95"
