@@ -63,10 +63,9 @@ export default function Hero() {
             ref={titleContainerRef}
             className="text-[2.8rem] sm:text-[4rem] md:text-[6rem] lg:text-[8rem] font-black italic tracking-tight leading-[0.85] flex flex-col items-start select-none drop-shadow-2xl"
           >
-            <span className="text-gradient inline-block pb-2">WHO ARE</span>
+            <span className="text-gradient inline-block pb-2 pr-4">WHO ARE</span>
             <span ref={wordRef} className="flex items-baseline">
-              <span className="text-gradient inline-block pb-2">WE?</span>
-              <span className="inline-block w-[0.15em] h-[0.15em] rounded-full bg-[var(--color-accent-start)] ml-[0.02em] shadow-[0_0_20px_var(--color-accent-start)]"></span>
+              <span className="text-gradient inline-block pb-2 pr-4">WE?</span>
             </span>
           </h1>
         </div>

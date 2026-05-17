@@ -64,30 +64,4 @@ export const caseStudies: CaseStudy[] = [
       { label: "Timeline", value: "9 Months" }
     ]
   },
-  {
-    id: "2",
-    slug: "b2b-lead-generation",
-    title: "61% Lower Cost Per Quality Lead",
-    body: "Reduced CPL from ₹400 to ₹156 while generating high-intent leads with a 2% conversion rate through Meta funnel optimization.",
-    category: "B2B Lead Gen",
-    image: "/images/case-studies/b2b-lead-gen.png",
-    stats: [
-      { label: "CPL Reduction", value: "61%" },
-      { label: "New CPL", value: "₹156" },
-      { label: "Conv. Rate", value: "2%" }
-    ]
-  },
-  {
-    id: "4",
-    slug: "real-estate-lead-costs",
-    title: "Reduced Real Estate Lead Costs by 40%",
-    body: "Scaled lead generation campaigns in Bahrain with improved lead quality and lower acquisition costs.",
-    category: "Real Estate",
-    image: "/images/case-studies/real-estate.png",
-    stats: [
-      { label: "CPL Reduction", value: "40%" },
-      { label: "Region", value: "Bahrain" },
-      { label: "Status", value: "Scaled" }
-    ]
-  }
 ];
