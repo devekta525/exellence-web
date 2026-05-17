@@ -34,7 +34,7 @@ const STRENGTHS = [
 export default function Strengths() {
   const sliderRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const tweenRef = useRef<gsap.core.Tween | null>(null);
+  const autoPlayTimer = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     // Auto-running marquee effect removed as per user request
@@ -42,15 +42,43 @@ export default function Strengths() {
       // Logic for auto-sliding has been disabled
     }, containerRef);
 
-    return () => ctx.revert();
+    // Initialize scroll position to the middle set
+    setTimeout(() => {
+      if (sliderRef.current) {
+        const isMobile = window.innerWidth <= 768;
+        const scrollAmount = isMobile ? (window.innerWidth * 0.85) + 24 : 424;
+        sliderRef.current.scrollLeft = STRENGTHS.length * scrollAmount;
+      }
+    }, 100);
+
+    startAutoPlay();
+
+    return () => {
+      ctx.revert();
+      stopAutoPlay();
+    };
   }, []);
 
+  const startAutoPlay = () => {
+    stopAutoPlay();
+    autoPlayTimer.current = setInterval(() => {
+      scrollSlider('right');
+    }, 3500);
+  };
+
+  const stopAutoPlay = () => {
+    if (autoPlayTimer.current) {
+      clearInterval(autoPlayTimer.current);
+      autoPlayTimer.current = null;
+    }
+  };
+
   const handleMouseEnter = () => {
-    // if (tweenRef.current) tweenRef.current.pause();
+    stopAutoPlay();
   };
 
   const handleMouseLeave = () => {
-    // if (tweenRef.current && window.innerWidth > 768) tweenRef.current.play();
+    startAutoPlay();
   };
 
   const scrollSlider = (direction: 'left' | 'right') => {
@@ -60,9 +88,9 @@ export default function Strengths() {
       const slider = sliderRef.current;
       const totalWidth = (STRENGTHS.length * scrollAmount);
 
-      // Handle left boundary jump
+      // Handle boundaries for button clicks
       if (direction === 'left' && slider.scrollLeft <= 10) {
-        slider.scrollLeft = totalWidth;
+        slider.scrollLeft += totalWidth;
       }
 
       const targetScroll = slider.scrollLeft + (direction === 'left' ? -scrollAmount : scrollAmount);
@@ -72,19 +100,35 @@ export default function Strengths() {
         duration: 0.7,
         ease: "power2.out",
         onComplete: () => {
-          // If we've scrolled into the second half, jump back to the first half silently
-          if (slider.scrollLeft >= totalWidth + 10) {
+          if (slider.scrollLeft >= totalWidth * 2 - 10) {
             slider.scrollLeft -= totalWidth;
+          } else if (slider.scrollLeft <= totalWidth - 10) {
+             slider.scrollLeft += totalWidth;
           }
         }
       });
     }
   };
 
+  const handleScroll = () => {
+    if (!sliderRef.current) return;
+    const isMobile = window.innerWidth <= 768;
+    const scrollAmount = isMobile ? (window.innerWidth * 0.85) + 24 : 424;
+    const slider = sliderRef.current;
+    const totalWidth = STRENGTHS.length * scrollAmount;
+
+    // Silent jump for native scrolling
+    if (slider.scrollLeft >= totalWidth * 2 - 10) {
+      slider.scrollLeft -= totalWidth;
+    } else if (slider.scrollLeft <= 10) {
+      slider.scrollLeft += totalWidth;
+    }
+  };
+
   return (
     <section id="strengths" ref={containerRef} className="pt-8 md:pt-20 pb-4 md:pb-6 bg-transparent overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 mb-8 md:mb-12 flex flex-row justify-between items-end">
-        <h2 className="text-3xl md:text-5xl font-bold font-outfit tracking-tight">
+      <div className="max-w-7xl mx-auto px-6 mb-8 md:mb-12 flex flex-col md:flex-row justify-center md:justify-between items-center md:items-end text-center md:text-left gap-6">
+        <h2 className="text-3xl md:text-5xl font-bold font-outfit tracking-tight w-full md:w-auto">
           Our <span className="text-gradient">Strengths</span>
         </h2>
         
@@ -110,7 +154,7 @@ export default function Strengths() {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         onTouchStart={handleMouseEnter}
-        onTouchEnd={() => {}}
+        onTouchEnd={handleMouseLeave}
       >
         {/* Mobile Navigation Arrows */}
         <div className="md:hidden absolute inset-y-0 -left-4 -right-4 z-20 flex items-center justify-between pointer-events-none px-4">
@@ -130,10 +174,11 @@ export default function Strengths() {
 
         <div
           ref={sliderRef}
+          onScroll={handleScroll}
           className="flex gap-6 overflow-x-auto no-scrollbar cursor-pointer snap-x snap-mandatory px-[7.5vw] md:px-6"
         >
-          {/* Double the array for seamless loop */}
-          {[...STRENGTHS, ...STRENGTHS].map((strength, i) => {
+          {/* Triple the array for seamless native loop */}
+          {[...STRENGTHS, ...STRENGTHS, ...STRENGTHS].map((strength, i) => {
             const Icon = strength.icon;
             return (
               <div

@@ -14,10 +14,10 @@ export default function Work() {
   const containerRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const sliderRef = useRef<HTMLDivElement>(null);
-  const scrollTween = useRef<gsap.core.Tween | null>(null);
+  const autoPlayTimer = useRef<NodeJS.Timeout | null>(null);
 
-  // Double the items for seamless loop
-  const displayStudies = [...caseStudies, ...caseStudies];
+  // Triple the items for seamless native loop in both directions
+  const displayStudies = [...caseStudies, ...caseStudies, ...caseStudies];
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -58,15 +58,43 @@ export default function Work() {
         );
     }, containerRef);
 
-    return () => ctx.revert();
+    // Initialize scroll position to the middle set
+    setTimeout(() => {
+      if (sliderRef.current) {
+        const isMobile = window.innerWidth <= 768;
+        const scrollAmount = isMobile ? (window.innerWidth * 0.85) + 16 : 504; 
+        sliderRef.current.scrollLeft = caseStudies.length * scrollAmount;
+      }
+    }, 100);
+
+    startAutoPlay();
+
+    return () => {
+      ctx.revert();
+      stopAutoPlay();
+    };
   }, []);
 
+  const startAutoPlay = () => {
+    stopAutoPlay();
+    autoPlayTimer.current = setInterval(() => {
+      scrollSlider('right');
+    }, 3500); // Change slide every 3.5 seconds
+  };
+
+  const stopAutoPlay = () => {
+    if (autoPlayTimer.current) {
+      clearInterval(autoPlayTimer.current);
+      autoPlayTimer.current = null;
+    }
+  };
+
   const handleMouseEnter = () => {
-    // if (scrollTween.current) scrollTween.current.pause();
+    stopAutoPlay();
   };
 
   const handleMouseLeave = () => {
-    // if (scrollTween.current && window.innerWidth > 768) scrollTween.current.play();
+    startAutoPlay();
   };
 
   const scrollSlider = (direction: 'left' | 'right') => {
@@ -76,9 +104,9 @@ export default function Work() {
       const slider = sliderRef.current;
       const totalWidth = (caseStudies.length * scrollAmount);
 
-      // Handle left boundary: if at start, jump to the middle copy instantly
+      // Handle boundaries for button clicks
       if (direction === 'left' && slider.scrollLeft <= 10) {
-        slider.scrollLeft = totalWidth;
+        slider.scrollLeft += totalWidth;
       }
 
       const targetScroll = slider.scrollLeft + (direction === 'left' ? -scrollAmount : scrollAmount);
@@ -88,12 +116,28 @@ export default function Work() {
         duration: 0.7,
         ease: "power2.out",
         onComplete: () => {
-          // If we've scrolled into the second half, jump back to the first half silently
-          if (slider.scrollLeft >= totalWidth + 10) {
+          if (slider.scrollLeft >= totalWidth * 2 - 10) {
             slider.scrollLeft -= totalWidth;
+          } else if (slider.scrollLeft <= totalWidth - 10) {
+             slider.scrollLeft += totalWidth;
           }
         }
       });
+    }
+  };
+
+  const handleScroll = () => {
+    if (!sliderRef.current) return;
+    const isMobile = window.innerWidth <= 768;
+    const scrollAmount = isMobile ? (window.innerWidth * 0.85) + 16 : 504; 
+    const slider = sliderRef.current;
+    const totalWidth = caseStudies.length * scrollAmount;
+
+    // Silent jump for native scrolling
+    if (slider.scrollLeft >= totalWidth * 2 - 10) {
+      slider.scrollLeft -= totalWidth;
+    } else if (slider.scrollLeft <= 10) {
+      slider.scrollLeft += totalWidth;
     }
   };
 
@@ -140,7 +184,7 @@ export default function Work() {
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
           onTouchStart={handleMouseEnter}
-          onTouchEnd={() => {}}
+          onTouchEnd={handleMouseLeave}
         >
           {/* Mobile Overlay Arrows */}
           <div className="md:hidden absolute inset-y-0 -left-4 -right-4 z-20 flex items-center justify-between pointer-events-none px-2">
@@ -160,6 +204,7 @@ export default function Work() {
 
           <div
             ref={sliderRef}
+            onScroll={handleScroll}
             className="flex gap-4 md:gap-6 overflow-x-auto pb-8 pt-4 no-scrollbar cursor-pointer snap-x snap-mandatory px-[7.5vw] md:px-0"
             style={{ 
               WebkitOverflowScrolling: 'touch'
