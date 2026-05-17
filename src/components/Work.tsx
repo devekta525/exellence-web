@@ -187,7 +187,7 @@ export default function Work() {
           onTouchEnd={handleMouseLeave}
         >
           {/* Mobile Overlay Arrows */}
-          <div className="md:hidden absolute inset-y-0 -left-4 -right-4 z-20 flex items-center justify-between pointer-events-none px-2">
+          <div className="md:hidden absolute top-[30%] -translate-y-1/2 -left-2 -right-2 z-20 flex items-center justify-between pointer-events-none px-2">
             <button 
               onClick={() => scrollSlider('left')}
               className="w-12 h-12 rounded-full bg-slate-900/80 backdrop-blur-md border border-white/10 flex items-center justify-center text-white pointer-events-auto shadow-2xl active:scale-95 transition-transform cursor-pointer"
