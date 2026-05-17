@@ -137,7 +137,7 @@ export default function Process() {
               </div>
             </div>
 
-            <p className="text-white/90 text-lg md:text-xl leading-relaxed mb-8 font-medium max-w-3xl">
+            <p className="text-white/90 text-base md:text-lg leading-relaxed mb-8 font-normal max-w-3xl">
               {step.desc}
             </p>
 

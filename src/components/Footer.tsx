@@ -12,9 +12,7 @@ export default function Footer() {
           {/* Brand Info */}
           <div>
             <Link href="/" className="flex items-center gap-2 mb-4 group">
-              <div className="w-10 h-10 rounded-full border border-[var(--color-accent-start)] flex items-center justify-center text-[var(--color-accent-start)] font-bold">
-                D
-              </div>
+              <img src="/dviora-logo.png" alt="Dviora Logo" className="w-14 h-14 object-contain group-hover:scale-105 transition-transform" />
               <span className="text-2xl font-bold font-outfit">
                 Dviora
               </span>

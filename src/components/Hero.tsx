@@ -61,7 +61,7 @@ export default function Hero() {
         <div className="flex items-center justify-start mb-6 py-4 overflow-visible">
           <h1
             ref={titleContainerRef}
-            className="text-[2.8rem] sm:text-[4rem] md:text-[6rem] lg:text-[8rem] font-black italic tracking-tight leading-[0.85] flex flex-col items-start select-none drop-shadow-2xl"
+            className="text-[4rem] sm:text-[6rem] md:text-[8rem] lg:text-[10rem] xl:text-[12rem] font-black italic tracking-tight leading-[0.85] flex flex-col items-start select-none drop-shadow-2xl"
           >
             <span className="text-gradient inline-block pb-2 pr-4">WHO ARE</span>
             <span ref={wordRef} className="flex items-baseline">

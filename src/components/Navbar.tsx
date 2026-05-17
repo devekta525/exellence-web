@@ -39,18 +39,8 @@ export default function Navbar() {
         <div className="max-w-[1400px] mx-auto px-6 md:px-12 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-8 h-8 group-hover:scale-105 transition-transform">
-              <svg
-                viewBox="0 0 100 100"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-full h-full"
-              >
-                <circle cx="50" cy="50" r="46" stroke="#c5a059" strokeWidth="4" />
-                <line x1="4" y1="50" x2="96" y2="50" stroke="#c5a059" strokeWidth="4" />
-                <line x1="35" y1="17" x2="35" y2="83" stroke="#c5a059" strokeWidth="4" />
-                <line x1="65" y1="17" x2="65" y2="83" stroke="#c5a059" strokeWidth="4" />
-              </svg>
+            <div className="w-12 h-12 group-hover:scale-105 transition-transform">
+              <img src="/dviora-logo.png" alt="Dviora Logo" className="w-full h-full object-contain" />
             </div>
             <span className="text-xl font-bold font-outfit tracking-wide text-white">
               Dviora
@@ -61,8 +51,8 @@ export default function Navbar() {
             <Link href="/#work" className="hover:text-white transition-colors">
               Work
             </Link>
-            <Link href="/#strengths" className="hover:text-white transition-colors">
-              Strengths
+            <Link href="/#why-we-started" className="hover:text-white transition-colors">
+              Why We Started
             </Link>
             <Link href="/#services" className="hover:text-white transition-colors">
               Services
@@ -136,11 +126,11 @@ export default function Navbar() {
               Work
             </Link>
             <Link
-              href="/#strengths"
+              href="/#why-we-started"
               onClick={() => setIsMenuOpen(false)}
               className="text-3xl font-bold text-white hover:text-[#c5a059] transition-colors font-outfit"
             >
-              Strengths
+              Why We Started
             </Link>
             <Link
               href="/#services"

@@ -55,47 +55,7 @@ export default function SplashScreen() {
       <div className="splash-content flex flex-col items-center">
         {/* Logo Icon */}
         <div className="splash-logo mb-6">
-          <svg
-            width="80"
-            height="80"
-            viewBox="0 0 100 100"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <circle
-              cx="50"
-              cy="50"
-              r="46"
-              stroke="#c5a059"
-              strokeWidth="4"
-            />
-            {/* Horizontal line */}
-            <line
-              x1="4"
-              y1="50"
-              x2="96"
-              y2="50"
-              stroke="#c5a059"
-              strokeWidth="4"
-            />
-            {/* Vertical lines forming abstract 'E' */}
-            <line
-              x1="35"
-              y1="17"
-              x2="35"
-              y2="83"
-              stroke="#c5a059"
-              strokeWidth="4"
-            />
-            <line
-              x1="65"
-              y1="17"
-              x2="65"
-              y2="83"
-              stroke="#c5a059"
-              strokeWidth="4"
-            />
-          </svg>
+          <img src="/dviora-logo.png" alt="Dviora Logo" className="w-28 h-28 object-contain" />
         </div>
 
         {/* Brand Text */}
