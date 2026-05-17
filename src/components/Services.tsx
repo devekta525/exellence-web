@@ -19,12 +19,22 @@ import { useModal } from "@/context/ModalContext";
 const SERVICES = [
   {
     id: "performance",
-    title: "Performance Marketing",
-    description: "Data-driven advertising strategies designed to maximize your ROAS and scale your revenue profitably through Meta, Google, and beyond.",
+    title: "Meta Ads Management",
+    description: "We work with brands that already have in-house creatives and content production. Our focus is purely on media buying, campaign scaling, funnel optimization, and maximizing ROAS through advanced Meta Ads execution.",
     icon: Zap,
     color: "from-cyan-500 to-blue-600",
     glow: "shadow-cyan-500/20",
-    features: ["ROAS Focused Scaling", "Precision Audience Targeting", "Creative Ad Optimization", "Attribution Tracking"]
+    features: [
+      "High-Spend Meta Ads Scaling",
+      "Advanced Campaign Structure",
+      "ROAS & MER Optimization",
+      "Full Funnel Media Buying",
+      "Retargeting & Customer Journey Optimization",
+      "Conversion API & Pixel Tracking",
+      "Budget Scaling Without Efficiency Drop",
+      "Creative Strategy Direction",
+      "Data-Driven Decision Making"
+    ]
   },
   {
     id: "social",

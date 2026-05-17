@@ -12,8 +12,8 @@ export default function ContactModal() {
     name: "",
     phone: "",
     website: "",
-    service: "Performance Marketing",
-    revenue: "Beginner (0-1 Lakh)",
+    service: "Meta Ads Management",
+    revenue: "1L to 5L",
     message: "",
   });
 
@@ -35,8 +35,8 @@ export default function ContactModal() {
           name: "",
           phone: "",
           website: "",
-          service: "Performance Marketing",
-          revenue: "Beginner (0-1 Lakh)",
+          service: "Meta Ads Management",
+          revenue: "1L to 5L",
           message: "",
         });
         closeContactModal();
@@ -122,12 +122,12 @@ export default function ContactModal() {
               Website Link <span className="text-rose-500">*</span>
             </label>
             <input
-              type="url"
+              type="text"
               required
               value={formData.website}
               onChange={(e) => setFormData({ ...formData, website: e.target.value })}
               className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-base md:text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-cyan-500/50 transition-all focus:bg-white/[0.08]"
-              placeholder="https://yourwebsite.com"
+              placeholder="yourwebsite.com"
             />
           </div>
 
@@ -142,7 +142,7 @@ export default function ContactModal() {
                 onChange={(e) => setFormData({ ...formData, service: e.target.value })}
                 className="w-full bg-white/5 border border-white/10 rounded-xl pl-4 pr-10 py-3 text-base md:text-sm text-white focus:outline-none focus:border-cyan-500/50 transition-all appearance-none cursor-pointer focus:bg-white/[0.08]"
               >
-                <option className="bg-[#0c1a3d]" value="Performance Marketing">Performance Marketing</option>
+                <option className="bg-[#0c1a3d]" value="Meta Ads Management">Meta Ads Management</option>
                 <option className="bg-[#0c1a3d]" value="Social Media Management">Social Media Management</option>
                 <option className="bg-[#0c1a3d]" value="Website Designing">Website Designing</option>
               </select>
@@ -152,7 +152,7 @@ export default function ContactModal() {
             </div>
           </div>
 
-          {formData.service === "Performance Marketing" && (
+          {formData.service === "Meta Ads Management" && (
             <div className="relative animate-in slide-in-from-top-2 duration-300">
               <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em] mb-1.5 ml-1">
                 Monthly Revenue <span className="text-rose-500">*</span>
@@ -164,9 +164,9 @@ export default function ContactModal() {
                   onChange={(e) => setFormData({ ...formData, revenue: e.target.value })}
                   className="w-full bg-white/5 border border-white/10 rounded-xl pl-4 pr-10 py-3 text-base md:text-sm text-white focus:outline-none focus:border-cyan-500/50 transition-all appearance-none cursor-pointer focus:bg-white/[0.08]"
                 >
-                  <option className="bg-[#0c1a3d]" value="Beginner (0-1 Lakh)">Beginner (0-1 Lakh)</option>
-                  <option className="bg-[#0c1a3d]" value="Intermediate (1 Lakh - 5 Lakh)">Intermediate (1 Lakh - 5 Lakh)</option>
-                  <option className="bg-[#0c1a3d]" value="Growth (5 Lakh +)">Growth (5 Lakh +)</option>
+                  <option className="bg-[#0c1a3d]" value="1L to 5L">1L to 5L</option>
+                  <option className="bg-[#0c1a3d]" value="5L to 10L">5L to 10L</option>
+                  <option className="bg-[#0c1a3d]" value="10L+">10L+</option>
                 </select>
                 <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500 group-focus-within:text-cyan-500 transition-colors">
                   <ChevronRight className="w-4 h-4 rotate-90" />

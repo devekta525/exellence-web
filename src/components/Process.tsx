@@ -14,16 +14,20 @@ import {
 const processSteps = [
   {
     id: 1,
-    title: "Decoding Your Audience",
+    title: "Understanding The Business",
     icon: Map,
     color: "cyan",
     hex: "#06b6d4",
-    desc: "We begin by studying, not guessing. Through focus group discussions, audits of client data, competitor research, and social listening across platforms like Reddit, Quora, and X, we decode what your audience truly cares about, laughs at, feels inspired by, and is willing to act on. We supplement this with direct community engagement and feedback loops to capture qualitative insights and validate assumptions.",
+    desc: "Before scaling any account, we deeply analyze your brand, customer journey, existing funnel, creatives, and campaign data. Our goal is to identify performance leaks, scaling opportunities, and the exact buying signals driving profitable conversions.",
     checks: [
-      "Map audience segments, behaviors, and preferences",
-      "Analyze competitors to uncover gaps and opportunities",
-      "Audit existing campaigns, content, and KPIs",
-      "Engage directly with communities to understand motivations",
+      "Analyze Existing Meta Ad Account",
+      "Audit Funnel & Customer Journey",
+      "Identify Scaling Opportunities",
+      "Study Winning Creatives & Angles",
+      "Audience & Purchase Behavior Analysis",
+      "Tracking, Pixel & Attribution Audit",
+      "Competitor Ad Intelligence",
+      "Data-Led Growth Strategy",
     ],
   },
   {
@@ -109,7 +113,7 @@ export default function Process() {
           Our <span className="text-gradient">Process</span>
         </h2>
         <p className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto">
-          A strategic, data-led approach designed to decode your audience and drive growth.
+          A performance-focused Meta Ads framework built to scale profitable growth systematically.
         </p>
       </div>
 

@@ -34,6 +34,7 @@ const STRENGTHS = [
 export default function Strengths() {
   const sliderRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     // Auto-running marquee effect removed as per user request
@@ -86,6 +87,28 @@ export default function Strengths() {
     }
   };
 
+  const handleScroll = () => {
+    if (scrollTimeout.current) {
+      clearTimeout(scrollTimeout.current);
+    }
+    
+    // Use debounce to prevent jumping during active momentum scroll
+    scrollTimeout.current = setTimeout(() => {
+      if (!sliderRef.current) return;
+      const isMobile = window.innerWidth <= 768;
+      const scrollAmount = isMobile ? (window.innerWidth * 0.85) + 24 : 424;
+      const slider = sliderRef.current;
+      const totalWidth = STRENGTHS.length * scrollAmount;
+
+      // Silent jump for native scrolling
+      if (slider.scrollLeft >= totalWidth * 2 - 10) {
+        slider.scrollLeft -= totalWidth;
+      } else if (slider.scrollLeft <= 10) {
+        slider.scrollLeft += totalWidth;
+      }
+    }, 150);
+  };
+
 
   return (
     <section id="strengths" ref={containerRef} className="pt-8 md:pt-20 pb-4 md:pb-6 bg-transparent overflow-hidden">
@@ -132,6 +155,7 @@ export default function Strengths() {
 
         <div
           ref={sliderRef}
+          onScroll={handleScroll}
           className="flex gap-6 overflow-x-auto no-scrollbar cursor-pointer snap-x snap-mandatory px-[7.5vw] md:px-6"
         >
           {/* Triple the array for seamless native loop */}

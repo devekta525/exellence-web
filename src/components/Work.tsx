@@ -14,6 +14,7 @@ export default function Work() {
   const containerRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const sliderRef = useRef<HTMLDivElement>(null);
+  const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
 
   // Triple the items for seamless native loop in both directions
   const displayStudies = [...caseStudies, ...caseStudies, ...caseStudies];
@@ -101,6 +102,28 @@ export default function Work() {
     }
   };
 
+  const handleScroll = () => {
+    if (scrollTimeout.current) {
+      clearTimeout(scrollTimeout.current);
+    }
+    
+    // Use debounce to prevent jumping during active momentum scroll
+    scrollTimeout.current = setTimeout(() => {
+      if (!sliderRef.current) return;
+      const isMobile = window.innerWidth <= 768;
+      const scrollAmount = isMobile ? (window.innerWidth * 0.85) + 16 : 504;
+      const slider = sliderRef.current;
+      const totalWidth = caseStudies.length * scrollAmount;
+
+      // Silent jump for native scrolling
+      if (slider.scrollLeft >= totalWidth * 2 - 10) {
+        slider.scrollLeft -= totalWidth;
+      } else if (slider.scrollLeft <= 10) {
+        slider.scrollLeft += totalWidth;
+      }
+    }, 150);
+  };
+
 
   return (
     <section id="work" ref={containerRef} className="pt-10 pb-8 md:py-24 px-6 md:px-12 overflow-hidden bg-slate-950/20">
@@ -161,6 +184,7 @@ export default function Work() {
 
           <div
             ref={sliderRef}
+            onScroll={handleScroll}
             className="flex gap-4 md:gap-6 overflow-x-auto pb-8 pt-4 no-scrollbar cursor-pointer snap-x snap-mandatory px-[7.5vw] md:px-0"
             style={{
               WebkitOverflowScrolling: 'touch'
