@@ -34,7 +34,6 @@ const STRENGTHS = [
 export default function Strengths() {
   const sliderRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const autoPlayTimer = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     // Auto-running marquee effect removed as per user request
@@ -51,35 +50,12 @@ export default function Strengths() {
       }
     }, 100);
 
-    startAutoPlay();
-
     return () => {
       ctx.revert();
-      stopAutoPlay();
     };
   }, []);
 
-  const startAutoPlay = () => {
-    stopAutoPlay();
-    autoPlayTimer.current = setInterval(() => {
-      scrollSlider('right');
-    }, 3500);
-  };
 
-  const stopAutoPlay = () => {
-    if (autoPlayTimer.current) {
-      clearInterval(autoPlayTimer.current);
-      autoPlayTimer.current = null;
-    }
-  };
-
-  const handleMouseEnter = () => {
-    stopAutoPlay();
-  };
-
-  const handleMouseLeave = () => {
-    startAutoPlay();
-  };
 
   const scrollSlider = (direction: 'left' | 'right') => {
     if (sliderRef.current) {
@@ -103,7 +79,7 @@ export default function Strengths() {
           if (slider.scrollLeft >= totalWidth * 2 - 10) {
             slider.scrollLeft -= totalWidth;
           } else if (slider.scrollLeft <= totalWidth - 10) {
-             slider.scrollLeft += totalWidth;
+            slider.scrollLeft += totalWidth;
           }
         }
       });
@@ -131,7 +107,7 @@ export default function Strengths() {
         <h2 className="text-3xl md:text-5xl font-bold font-outfit tracking-tight w-full md:w-auto">
           Our <span className="text-gradient">Strengths</span>
         </h2>
-        
+
         {/* Desktop Navigation Arrows */}
         <div className="hidden md:flex items-center gap-4">
           <button
@@ -151,10 +127,6 @@ export default function Strengths() {
 
       <div
         className="relative group"
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        onTouchStart={handleMouseEnter}
-        onTouchEnd={handleMouseLeave}
       >
         {/* Mobile Navigation Arrows */}
         <div className="md:hidden absolute inset-y-0 -left-4 -right-4 z-20 flex items-center justify-between pointer-events-none px-4">
