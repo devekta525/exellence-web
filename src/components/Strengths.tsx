@@ -86,20 +86,6 @@ export default function Strengths() {
     }
   };
 
-  const handleScroll = () => {
-    if (!sliderRef.current) return;
-    const isMobile = window.innerWidth <= 768;
-    const scrollAmount = isMobile ? (window.innerWidth * 0.85) + 24 : 424;
-    const slider = sliderRef.current;
-    const totalWidth = STRENGTHS.length * scrollAmount;
-
-    // Silent jump for native scrolling
-    if (slider.scrollLeft >= totalWidth * 2 - 10) {
-      slider.scrollLeft -= totalWidth;
-    } else if (slider.scrollLeft <= 10) {
-      slider.scrollLeft += totalWidth;
-    }
-  };
 
   return (
     <section id="strengths" ref={containerRef} className="pt-8 md:pt-20 pb-4 md:pb-6 bg-transparent overflow-hidden">
@@ -146,7 +132,6 @@ export default function Strengths() {
 
         <div
           ref={sliderRef}
-          onScroll={handleScroll}
           className="flex gap-6 overflow-x-auto no-scrollbar cursor-pointer snap-x snap-mandatory px-[7.5vw] md:px-6"
         >
           {/* Triple the array for seamless native loop */}
@@ -155,19 +140,19 @@ export default function Strengths() {
             return (
               <div
                 key={i}
-                className="flex-none w-[85vw] md:w-[400px] p-8 rounded-[2rem] bg-slate-900/20 border border-white/5 backdrop-blur-sm group/card hover:bg-slate-900/60 hover:border-white/20 transition-all duration-500 relative overflow-hidden snap-center"
+                className="flex-none w-[85vw] md:w-[400px] p-8 rounded-[2rem] bg-slate-900/20 border border-white/5 backdrop-blur-sm group/card md:hover:bg-slate-900/60 md:hover:border-white/20 transition-[background-color,border-color,box-shadow,transform] duration-500 relative overflow-hidden snap-center"
               >
                 {/* Hover Glow Effect */}
-                <div className={`absolute -inset-1 bg-gradient-to-br ${strength.color} opacity-0 group-hover/card:opacity-5 blur-2xl transition-opacity duration-500`} />
+                <div className={`absolute -inset-1 bg-gradient-to-br ${strength.color} opacity-0 md:group-hover/card:opacity-5 blur-2xl transition-opacity duration-500`} />
 
-                <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${strength.color} flex items-center justify-center mb-6 shadow-lg shadow-black/20 group-hover/card:scale-110 group-hover/card:shadow-[var(--color-accent-start)]/20 transition-all duration-500`}>
+                <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${strength.color} flex items-center justify-center mb-6 shadow-lg shadow-black/20 md:group-hover/card:scale-110 md:group-hover/card:shadow-[var(--color-accent-start)]/20 transition-[transform,box-shadow] duration-500`}>
                   <Icon className="w-7 h-7 text-white" />
                 </div>
 
-                <h3 className="text-2xl font-bold font-outfit text-white mb-4 group-hover/card:text-white transition-all duration-500 relative z-10">
+                <h3 className="text-2xl font-bold font-outfit text-white mb-4 md:group-hover/card:text-white transition-colors duration-500 relative z-10">
                   {strength.title}
-                </h3>
-                <p className="text-white/60 leading-relaxed group-hover/card:text-white/80 transition-all duration-500 relative z-10">
+</h3>
+                <p className="text-white/60 leading-relaxed md:group-hover/card:text-white/80 transition-colors duration-500 relative z-10">
                   {strength.body}
                 </p>
               </div>

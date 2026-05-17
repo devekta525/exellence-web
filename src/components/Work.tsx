@@ -101,20 +101,6 @@ export default function Work() {
     }
   };
 
-  const handleScroll = () => {
-    if (!sliderRef.current) return;
-    const isMobile = window.innerWidth <= 768;
-    const scrollAmount = isMobile ? (window.innerWidth * 0.85) + 16 : 504;
-    const slider = sliderRef.current;
-    const totalWidth = caseStudies.length * scrollAmount;
-
-    // Silent jump for native scrolling
-    if (slider.scrollLeft >= totalWidth * 2 - 10) {
-      slider.scrollLeft -= totalWidth;
-    } else if (slider.scrollLeft <= 10) {
-      slider.scrollLeft += totalWidth;
-    }
-  };
 
   return (
     <section id="work" ref={containerRef} className="pt-10 pb-8 md:py-24 px-6 md:px-12 overflow-hidden bg-slate-950/20">
@@ -175,7 +161,6 @@ export default function Work() {
 
           <div
             ref={sliderRef}
-            onScroll={handleScroll}
             className="flex gap-4 md:gap-6 overflow-x-auto pb-8 pt-4 no-scrollbar cursor-pointer snap-x snap-mandatory px-[7.5vw] md:px-0"
             style={{
               WebkitOverflowScrolling: 'touch'
@@ -185,12 +170,12 @@ export default function Work() {
               <Link
                 key={`${project.id}-${index}`}
                 href={`/case-studies/${project.slug}`}
-                className="case-study-card flex-none w-[85vw] md:w-[480px] aspect-[4/5.5] group/card relative overflow-hidden rounded-[40px] bg-slate-900/50 border border-white/5 transition-all duration-500 hover:shadow-2xl hover:shadow-[var(--color-accent-start)]/20 snap-center flex flex-col"
+                className="case-study-card flex-none w-[85vw] md:w-[480px] aspect-[4/5.5] group/card relative overflow-hidden rounded-[40px] bg-slate-900/50 border border-white/5 transition-[box-shadow,transform,background-color,border-color] duration-500 md:hover:shadow-2xl md:hover:shadow-[var(--color-accent-start)]/20 snap-center flex flex-col"
               >
                 {/* Image Section (Top 60%) */}
-                <div className="relative h-[58%] w-full overflow-hidden">
+                <div className="relative h-[58%] w-full overflow-hidden shrink-0">
                   <div
-                    className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover/card:scale-110"
+                    className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 md:group-hover/card:scale-110"
                     style={{ backgroundImage: `url(${project.image})` }}
                   />
                   {/* Subtle Gradient for image depth */}
