@@ -194,10 +194,10 @@ export default function Work() {
               <Link
                 key={`${project.id}-${index}`}
                 href={`/case-studies/${project.slug}`}
-                className="case-study-card flex-none w-[85vw] md:w-[480px] aspect-[4/5.5] group/card relative overflow-hidden rounded-[40px] bg-slate-900/50 border border-white/5 transition-[box-shadow,transform,background-color,border-color] duration-500 md:hover:shadow-2xl md:hover:shadow-[var(--color-accent-start)]/20 snap-center flex flex-col"
+                className="case-study-card flex-none w-[85vw] md:w-[480px] h-auto min-h-[550px] md:min-h-[600px] group/card relative overflow-hidden rounded-[40px] bg-slate-900/50 border border-white/5 transition-[box-shadow,transform,background-color,border-color] duration-500 md:hover:shadow-2xl md:hover:shadow-[var(--color-accent-start)]/20 snap-center flex flex-col"
               >
-                {/* Image Section (Top 60%) */}
-                <div className="relative h-[58%] w-full overflow-hidden shrink-0">
+                {/* Image Section */}
+                <div className="relative h-[250px] md:h-[300px] w-full overflow-hidden shrink-0">
                   <div
                     className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 md:group-hover/card:scale-110"
                     style={{ backgroundImage: `url(${project.image})` }}

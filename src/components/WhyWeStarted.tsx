@@ -42,10 +42,10 @@ export default function WhyWeStarted() {
             We noticed a common pattern across growing D2C brands — companies spending ₹5L, ₹10L, or even more every month on Meta Ads were still struggling to scale profitably.
           </p>
           
-          <div className="reveal-text pl-6 border-l-2 border-[var(--color-accent-start)] space-y-2 py-2 my-8">
-            <p className="text-white font-medium">Not because the product was weak.</p>
-            <p className="text-white font-medium">Not because the brand lacked potential.</p>
-          </div>
+          <p className="reveal-text">
+            Not because the product was weak.<br />
+            Not because the brand lacked potential.
+          </p>
           
           <p className="reveal-text">
             But because their ad accounts were being handled by under-skilled freelancers, generic agencies, or media buyers without deep performance expertise.
@@ -83,9 +83,11 @@ export default function WhyWeStarted() {
             
             <p className="mb-4">We don’t operate like a traditional agency.</p>
             
-            <p className="mb-8">
-              We work as an extension of your internal growth team — bringing strategic thinking, data-driven decision making, advanced media buying execution, and performance-focused scaling systems to your Meta Ads ecosystem.
-            </p>
+            <div className="pl-6 border-l-2 border-[var(--color-accent-start)] py-2 my-8">
+              <p className="text-white font-medium text-lg md:text-xl leading-relaxed">
+                We work as an extension of your internal growth team — bringing strategic thinking, data-driven decision making, advanced media buying execution, and performance-focused scaling systems to your Meta Ads ecosystem.
+              </p>
+            </div>
             
             <p className="font-semibold text-white text-xl border-t border-white/10 pt-8 mt-4">
               Our focus is simple: Build profitable, scalable, and sustainable growth through expert Meta Ads management.

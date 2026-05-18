@@ -39,7 +39,7 @@ export default function Navbar() {
         <div className="max-w-[1400px] mx-auto px-6 md:px-12 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-12 h-12 group-hover:scale-105 transition-transform">
+            <div className="w-16 h-16 group-hover:scale-105 transition-transform">
               <img src="/dviora-logo.png" alt="Dviora Logo" className="w-full h-full object-contain" />
             </div>
             <span className="text-xl font-bold font-outfit tracking-wide text-white">

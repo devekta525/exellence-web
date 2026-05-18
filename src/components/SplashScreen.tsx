@@ -55,7 +55,7 @@ export default function SplashScreen() {
       <div className="splash-content flex flex-col items-center">
         {/* Logo Icon */}
         <div className="splash-logo mb-6">
-          <img src="/dviora-logo.png" alt="Dviora Logo" className="w-28 h-28 object-contain" />
+          <img src="/dviora-logo.png" alt="Dviora Logo" className="w-40 h-40 object-contain" />
         </div>
 
         {/* Brand Text */}
