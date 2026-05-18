@@ -8,12 +8,14 @@ import { useModal } from "@/context/ModalContext";
 export default function ContactModal() {
   const { isContactModalOpen, closeContactModal } = useModal();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [preferredContact, setPreferredContact] = useState<"phone" | "email">("phone");
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
+    email: "",
     website: "",
     service: "Meta Ads Management",
-    revenue: "1L to 5L",
+    revenue: "₹1 Lakh - ₹5 Lakh",
     message: "",
   });
 
@@ -34,9 +36,10 @@ export default function ContactModal() {
         setFormData({
           name: "",
           phone: "",
+          email: "",
           website: "",
           service: "Meta Ads Management",
-          revenue: "1L to 5L",
+          revenue: "₹1 Lakh - ₹5 Lakh",
           message: "",
         });
         closeContactModal();
@@ -103,17 +106,34 @@ export default function ContactModal() {
               />
             </div>
             <div className="relative">
-              <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em] mb-1.5 ml-1">
-                Phone Number <span className="text-rose-500">*</span>
-              </label>
-              <input
-                type="tel"
-                required
-                value={formData.phone}
-                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-base md:text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-cyan-500/50 transition-all focus:bg-white/[0.08]"
-                placeholder="+1 (555) 000-0000"
-              />
+              <div className="flex items-center justify-between mb-1.5 ml-1">
+                <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em]">
+                  {preferredContact === "phone" ? "Phone Number" : "Email Address"} <span className="text-rose-500">*</span>
+                </label>
+                <div className="flex gap-2 bg-[#0c1a3d] border border-white/10 rounded-lg p-0.5">
+                  <button type="button" onClick={() => { setPreferredContact("phone"); setFormData({...formData, email: ""}); }} className={`text-[10px] font-bold uppercase tracking-[0.1em] px-2 py-1 rounded-md transition-colors ${preferredContact === "phone" ? "bg-cyan-500/20 text-cyan-400" : "text-gray-500 hover:text-gray-400"}`}>Phone</button>
+                  <button type="button" onClick={() => { setPreferredContact("email"); setFormData({...formData, phone: ""}); }} className={`text-[10px] font-bold uppercase tracking-[0.1em] px-2 py-1 rounded-md transition-colors ${preferredContact === "email" ? "bg-cyan-500/20 text-cyan-400" : "text-gray-500 hover:text-gray-400"}`}>Email</button>
+                </div>
+              </div>
+              {preferredContact === "phone" ? (
+                <input
+                  type="tel"
+                  required
+                  value={formData.phone}
+                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-base md:text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-cyan-500/50 transition-all focus:bg-white/[0.08]"
+                  placeholder="+1 (555) 000-0000"
+                />
+              ) : (
+                <input
+                  type="email"
+                  required
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-base md:text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-cyan-500/50 transition-all focus:bg-white/[0.08]"
+                  placeholder="john@example.com"
+                />
+              )}
             </div>
           </div>
 
@@ -164,9 +184,9 @@ export default function ContactModal() {
                   onChange={(e) => setFormData({ ...formData, revenue: e.target.value })}
                   className="w-full bg-white/5 border border-white/10 rounded-xl pl-4 pr-10 py-3 text-base md:text-sm text-white focus:outline-none focus:border-cyan-500/50 transition-all appearance-none cursor-pointer focus:bg-white/[0.08]"
                 >
-                  <option className="bg-[#0c1a3d]" value="1L to 5L">1L to 5L</option>
-                  <option className="bg-[#0c1a3d]" value="5L to 10L">5L to 10L</option>
-                  <option className="bg-[#0c1a3d]" value="10L+">10L+</option>
+                  <option className="bg-[#0c1a3d]" value="₹1 Lakh - ₹5 Lakh">₹1 Lakh - ₹5 Lakh</option>
+                  <option className="bg-[#0c1a3d]" value="₹5 Lakh - ₹10 Lakh">₹5 Lakh - ₹10 Lakh</option>
+                  <option className="bg-[#0c1a3d]" value="₹10 Lakh+">₹10 Lakh+</option>
                 </select>
                 <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500 group-focus-within:text-cyan-500 transition-colors">
                   <ChevronRight className="w-4 h-4 rotate-90" />

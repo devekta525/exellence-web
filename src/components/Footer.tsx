@@ -33,7 +33,7 @@ export default function Footer() {
               </div>
               <div>
                 <p className="text-sm text-gray-400 mb-1">Location</p>
-                <p className="font-semibold">New Delhi, India</p>
+                <p className="font-semibold">Pune, India</p>
               </div>
             </div>
 

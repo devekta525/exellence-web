@@ -45,7 +45,7 @@ export default function Hero() {
     <section
       id="home"
       ref={containerRef}
-      className="relative min-h-[70vh] md:min-h-screen flex flex-col items-start justify-center px-6 md:px-24 py-20 overflow-hidden bg-[#020617]"
+      className="relative min-h-[70vh] md:min-h-screen flex flex-col items-start justify-center px-6 md:px-24 pt-32 md:pt-48 pb-20 overflow-hidden bg-[#020617]"
     >
       {/* Cinematic Overlays */}
       <div className="absolute inset-0 z-0">

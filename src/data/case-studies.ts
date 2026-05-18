@@ -34,7 +34,7 @@ export const caseStudies: CaseStudy[] = [
     image: "/images/case-studies/barefoot-shoes.png",
     stats: [
       { label: "ROAS", value: "4X" },
-      { label: "Scale", value: "7X" },
+      { label: "Scale", value: "6X" },
       { label: "Region", value: "India" }
     ]
   },
@@ -46,8 +46,8 @@ export const caseStudies: CaseStudy[] = [
     category: "Consumer Tech",
     image: "/images/case-studies/air-purifier.png",
     stats: [
-      { label: "ROAS", value: "4X" },
-      { label: "Revenue", value: "₹1Cr+" },
+      { label: "ROAS", value: "11X" },
+      { label: "Revenue", value: "₹1.56Cr" },
       { label: "Timeline", value: "40 Days" }
     ]
   },
@@ -60,7 +60,7 @@ export const caseStudies: CaseStudy[] = [
     image: "/images/case-studies/sneaker-brand.png",
     stats: [
       { label: "Growth", value: "5X" },
-      { label: "Monthly Revenue", value: "₹1.5Cr" },
+      { label: "Revenue", value: "₹9.47Cr" },
       { label: "Timeline", value: "9 Months" }
     ]
   },

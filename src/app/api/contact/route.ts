@@ -3,7 +3,7 @@ import nodemailer from 'nodemailer';
 
 export async function POST(req: Request) {
   try {
-    const { name, phone, website, revenue, message } = await req.json();
+    const { name, phone, email, website, service, revenue, message } = await req.json();
 
     const transporter = nodemailer.createTransport({
       service: 'gmail',
@@ -16,7 +16,7 @@ export async function POST(req: Request) {
     const mailOptions = {
       from: 'dvioralabs@gmail.com',
       to: 'dvioralabs@gmail.com',
-      subject: `New Dviora Lead: ${name}`,
+      subject: `New Dviora Lead: ${name} (${service})`,
       html: `
         <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 20px auto; background-color: #020617; color: #ffffff; padding: 40px; border-radius: 24px; border: 1px solid #1e293b; box-shadow: 0 20px 50px rgba(0,0,0,0.5);">
           <div style="text-align: center; margin-bottom: 40px;">
@@ -36,8 +36,14 @@ export async function POST(req: Request) {
               </tr>
               <tr>
                 <td style="padding-bottom: 20px;">
-                  <span style="color: #64748b; font-size: 11px; text-transform: uppercase; font-weight: 800; letter-spacing: 1px; display: block; margin-bottom: 5px;">Phone Number</span>
-                  <span style="font-size: 16px; color: #cbd5e1;">${phone}</span>
+                  <span style="color: #64748b; font-size: 11px; text-transform: uppercase; font-weight: 800; letter-spacing: 1px; display: block; margin-bottom: 5px;">Contact Details</span>
+                  <span style="font-size: 16px; color: #cbd5e1;">${phone ? `📞 ${phone}` : `✉️ ${email}`}</span>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding-bottom: 20px;">
+                  <span style="color: #64748b; font-size: 11px; text-transform: uppercase; font-weight: 800; letter-spacing: 1px; display: block; margin-bottom: 5px;">Service Requested</span>
+                  <span style="font-size: 16px; color: #34d399; font-weight: 700;">${service}</span>
                 </td>
               </tr>
               <tr>
