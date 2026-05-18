@@ -6,8 +6,8 @@ import { ModalProvider } from "@/context/ModalContext";
 import ContactModal from "@/components/ContactModal";
 
 export const metadata: Metadata = {
-  title: "Dviora Web | Personal Portfolio",
-  description: "A premium, minimal, dark-themed personal portfolio showcasing scroll-driven storytelling.",
+  title: "Dviora | Performance-Driven Meta Ads Management",
+  description: "Dviora specializes in Meta Ads management for growth-focused brands spending serious budgets. Advanced media buying, scaling systems, and performance-driven execution.",
 };
 
 export default function RootLayout({
