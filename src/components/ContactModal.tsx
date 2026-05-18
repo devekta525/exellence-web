@@ -116,14 +116,23 @@ export default function ContactModal() {
                 </div>
               </div>
               {preferredContact === "phone" ? (
-                <input
-                  type="tel"
-                  required
-                  value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-base md:text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-cyan-500/50 transition-all focus:bg-white/[0.08]"
-                  placeholder="+1 (555) 000-0000"
-                />
+                <div className="relative flex items-center">
+                  <span className="absolute left-4 text-gray-400 text-base md:text-sm font-medium">+91</span>
+                  <input
+                    type="tel"
+                    required
+                    pattern="[0-9]{10}"
+                    maxLength={10}
+                    title="Please enter exactly 10 digits"
+                    value={formData.phone}
+                    onChange={(e) => {
+                      const value = e.target.value.replace(/\D/g, "");
+                      setFormData({ ...formData, phone: value });
+                    }}
+                    className="w-full bg-white/5 border border-white/10 rounded-xl pl-12 pr-4 py-3 text-base md:text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-cyan-500/50 transition-all focus:bg-white/[0.08]"
+                    placeholder="9876543210"
+                  />
+                </div>
               ) : (
                 <input
                   type="email"
