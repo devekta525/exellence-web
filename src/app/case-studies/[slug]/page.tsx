@@ -4,8 +4,6 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import BookCallButton from "@/components/BookCallButton";
 import { ArrowLeft, ChevronRight, CheckCircle2, Globe, TrendingUp, Target } from "lucide-react";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 
 export async function generateStaticParams() {
   return caseStudies.map((cs) => ({
@@ -23,8 +21,6 @@ export default async function CaseStudyPage({ params }: { params: { slug: string
 
   return (
     <main className="min-h-screen bg-[#020617] text-white">
-      <Navbar />
-      
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 px-6 md:px-12 overflow-hidden">
         {/* Background Decorative Elements */}
@@ -801,8 +797,6 @@ export default async function CaseStudyPage({ params }: { params: { slug: string
           </div>
         </div>
       </section>
-
-      <Footer />
     </main>
   );
 }

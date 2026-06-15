@@ -3,8 +3,6 @@
 import React, { useEffect, useRef } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { servicesData } from "@/data/services";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import gsap from "gsap";
 import { ArrowLeft, CheckCircle2, ArrowRight } from "lucide-react";
 import Link from "next/link";
@@ -40,8 +38,6 @@ export default function ServiceDetail() {
 
   return (
     <main ref={containerRef} className="min-h-screen bg-[#020617] text-white">
-      <Navbar />
-      
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 px-6 md:px-12 overflow-hidden">
         {/* Background Glow */}
@@ -153,8 +149,6 @@ export default function ServiceDetail() {
           </div>
         </div>
       </section>
-
-      <Footer />
     </main>
   );
 }

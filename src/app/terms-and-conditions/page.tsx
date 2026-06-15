@@ -1,6 +1,4 @@
 import React from "react";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 
 export const metadata = {
   title: "Terms and Conditions | Dviora",
@@ -10,7 +8,6 @@ export const metadata = {
 export default function TermsAndConditions() {
   return (
     <main className="min-h-screen bg-[#020617] text-white">
-      <Navbar />
       
       <div className="pt-32 pb-20 px-6 md:px-12 max-w-4xl mx-auto">
         <h1 className="text-4xl md:text-6xl font-bold font-outfit mb-12">
@@ -75,8 +72,6 @@ export default function TermsAndConditions() {
           </p>
         </div>
       </div>
-
-      <Footer />
     </main>
   );
 }
