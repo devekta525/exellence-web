@@ -5,21 +5,12 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { useRouter } from "next/navigation";
 import { 
-  Code2, 
   Sparkles, 
-  Cpu, 
-  Layers, 
   Gauge, 
-  Zap, 
   Search, 
   Smartphone, 
-  ShoppingBag, 
   Check, 
   ArrowRight, 
-  Monitor, 
-  Database, 
-  Lock,
-  Terminal,
   Shield,
   HelpCircle,
   X,
@@ -46,6 +37,37 @@ export default function WebsiteDevelopmentClient() {
     budget: "₹10,000 - ₹25,000",
     message: ""
   });
+
+  // 3D Parallax Tilt State
+  const [tiltStyle, setTiltStyle] = useState<React.CSSProperties>({});
+  
+  // Interactive Lead Simulator State
+  const [traffic, setTraffic] = useState(25000);
+  const [convRate, setConvRate] = useState(3.5);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const card = e.currentTarget;
+    const box = card.getBoundingClientRect();
+    const x = e.clientX - box.left - box.width / 2;
+    const y = e.clientY - box.top - box.height / 2;
+    
+    // Max rotation in degrees
+    const maxRotate = 8; 
+    const rotateX = -(y / (box.height / 2)) * maxRotate;
+    const rotateY = (x / (box.width / 2)) * maxRotate;
+    
+    setTiltStyle({
+      transform: `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`,
+      transition: "transform 0.1s cubic-bezier(0.25, 1, 0.5, 1)"
+    });
+  };
+
+  const handleMouseLeave = () => {
+    setTiltStyle({
+      transform: `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`,
+      transition: "transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)"
+    });
+  };
 
   // Open Modal Helper with pre-selected project type
   const handleOpenModal = (projectType?: string, budgetRange?: string) => {
@@ -225,7 +247,7 @@ export default function WebsiteDevelopmentClient() {
     <div ref={containerRef} className="min-h-screen bg-[#020617] text-white overflow-hidden font-sans">
       
       {/* Hero Section */}
-      <section className="relative pt-40 pb-28 px-6 md:px-12 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-indigo-950/20 via-[#020617] to-[#020617]">
+      <section className="relative pt-32 pb-16 px-6 md:px-12 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-indigo-950/20 via-[#020617] to-[#020617]">
         {/* Glow Effects */}
         <div className="animate-hero-glow absolute top-12 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-gradient-to-r from-purple-600/10 via-indigo-500/10 to-blue-500/10 blur-[120px] rounded-full pointer-events-none opacity-0" />
         
@@ -235,110 +257,181 @@ export default function WebsiteDevelopmentClient() {
           <div className="lg:col-span-7 text-left">
             <div className="animate-hero-title inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-8 backdrop-blur-md">
               <span className="w-2 h-2 rounded-full bg-purple-500 animate-ping" />
-              <span className="text-xs font-bold uppercase tracking-widest text-gray-300">Premium Web Services</span>
+              <span className="text-xs font-bold uppercase tracking-widest text-gray-300">Professional Web Design & Development</span>
             </div>
 
             <h1 className="animate-hero-title text-4xl sm:text-5xl md:text-7xl font-bold font-outfit mb-8 leading-[1.05] tracking-tight text-white">
-              Transform Your Business with a <span className="bg-gradient-to-r from-purple-400 via-indigo-400 to-blue-400 bg-clip-text text-transparent">Professional Website</span>
+              Transform Your Brand with Custom <span className="bg-gradient-to-r from-purple-400 via-indigo-400 to-blue-400 bg-clip-text text-transparent">Website Development</span>
             </h1>
 
             <p className="animate-hero-sub text-lg md:text-xl text-gray-400 leading-relaxed mb-12 font-light max-w-2xl">
-              Custom websites, eCommerce solutions, and scalable web applications tailored for your business. We engineer for speed, user conversions, and high-impact search visibility.
+              Get SEO-optimized custom websites, eCommerce solutions, and high-performance React/Next.js web applications tailored for your business. We engineer for speed, conversion rate optimization, and search engine rankings.
             </p>
 
-            <div className="animate-hero-cta flex flex-wrap gap-5">
+            <div className="animate-hero-cta grid grid-cols-2 gap-4 max-w-lg w-full">
               <button 
                 onClick={() => handleOpenModal("Other", "₹10,000 - ₹25,000")}
-                className="px-8 py-4.5 rounded-full bg-gradient-to-r from-purple-500 to-indigo-600 text-white font-bold text-lg hover:scale-105 transition-all shadow-lg shadow-purple-500/20 active:scale-95"
+                className="px-2 sm:px-6 py-4 rounded-full bg-gradient-to-r from-purple-500 to-indigo-600 text-white font-bold text-sm sm:text-base md:text-lg hover:scale-105 transition-all shadow-lg shadow-purple-500/20 active:scale-95 text-center flex items-center justify-center"
               >
                 Get Free Consultation
               </button>
               <a 
                 href="#pricing"
-                className="px-8 py-4.5 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 text-white font-bold text-lg transition-all active:scale-95 text-center"
+                className="px-2 sm:px-6 py-4 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 text-white font-bold text-sm sm:text-base md:text-lg transition-all active:scale-95 text-center flex items-center justify-center"
               >
                 View Pricing Plans
               </a>
             </div>
           </div>
-
-          {/* Right Workspace Visual Illustration */}
-          <div className="animate-workspace-visual lg:col-span-5 relative">
-            <div className="absolute -inset-1.5 bg-gradient-to-r from-purple-600 to-blue-600 rounded-[36px] blur-xl opacity-20 animate-pulse" />
+            {/* Right Workspace Visual Illustration */}
+          <div className="animate-workspace-visual lg:col-span-5 relative mt-16 lg:mt-0 select-none">
+            {/* Ambient Background Glows */}
+            <div className="absolute -top-10 -left-10 w-72 h-72 bg-purple-500/10 blur-[100px] rounded-full pointer-events-none animate-pulse" style={{ animationDuration: "8s" }} />
+            <div className="absolute -bottom-10 -right-10 w-72 h-72 bg-blue-500/10 blur-[100px] rounded-full pointer-events-none animate-pulse" style={{ animationDuration: "10s", animationDelay: "2s" }} />
             
-            {/* Visual Glassmorphic IDE Frame */}
-            <div className="relative rounded-[32px] bg-slate-900/60 border border-white/10 p-5 backdrop-blur-2xl shadow-2xl overflow-hidden aspect-[4/3] flex flex-col">
-              
-              {/* Window Controls */}
-              <div className="flex items-center justify-between pb-4 border-b border-white/5 mb-4 shrink-0">
+            {/* Outer Glow Outline on Hover */}
+            <div className="absolute -inset-1.5 bg-gradient-to-r from-purple-600 via-indigo-500 to-blue-600 rounded-[36px] blur-xl opacity-20 animate-pulse pointer-events-none" />
+            
+            {/* Visual Glassmorphic Calculator Frame */}
+            <div 
+              style={tiltStyle}
+              onMouseMove={handleMouseMove}
+              onMouseLeave={handleMouseLeave}
+              className="relative rounded-[32px] bg-slate-950/70 border border-white/10 p-6 backdrop-blur-2xl shadow-2xl overflow-visible aspect-[4/3.4] flex flex-col transition-all duration-200 select-none cursor-pointer animate-in fade-in zoom-in-95 duration-500"
+            >
+              {/* Header */}
+              <div className="flex items-center justify-between pb-4 border-b border-white/5 mb-6 shrink-0">
                 <div className="flex gap-2">
                   <div className="w-3 h-3 rounded-full bg-rose-500/80" />
                   <div className="w-3 h-3 rounded-full bg-amber-500/80" />
                   <div className="w-3 h-3 rounded-full bg-emerald-500/80" />
                 </div>
-                <div className="text-[10px] font-mono text-gray-500">ReactComponent.tsx</div>
-                <div className="w-10" />
+                <div className="text-[10px] font-mono text-purple-400 font-bold uppercase tracking-widest">Lead Flow Simulator</div>
+                <div className="w-6" />
               </div>
 
-              {/* Simulated Code Lines */}
-              <div className="font-mono text-xs text-gray-400 space-y-2.5 overflow-hidden flex-grow select-none">
-                <p className="text-purple-400">const <span className="text-blue-400">DvioraLandingPage</span> = () =&gt; {"{"}</p>
-                <p className="pl-4 text-gray-500">const [metrics] = useState(pageOptimized);</p>
-                <p className="pl-4 text-purple-400">return (</p>
-                <p className="pl-8 text-blue-400">&lt;<span className="text-emerald-400">div</span> className=<span className="text-amber-400">&quot;performance-extreme&quot;</span>&gt;</p>
-                <p className="pl-12 text-blue-400">&lt;<span className="text-emerald-400">HeroSection</span></p>
-                <p className="pl-16 text-indigo-300">speed=<span className="text-amber-400">&quot;100ms&quot;</span></p>
-                <p className="pl-16 text-indigo-300">conversions=<span className="text-amber-400">&quot;maximum&quot;</span></p>
-                <p className="pl-12 text-blue-400">/&gt;</p>
-                <p className="pl-12 text-blue-400">&lt;<span className="text-emerald-400">GlassmorphicCard</span>&gt;</p>
-                <p className="pl-16 text-gray-400">₹25,000 + E-commerce Integration</p>
-                <p className="pl-12 text-blue-400">&lt;/<span className="text-emerald-400">GlassmorphicCard</span>&gt;</p>
-                <p className="pl-8 text-blue-400">&lt;/<span className="text-emerald-400">div</span>&gt;</p>
-                <p className="pl-4 text-purple-400">);</p>
-                <p className="text-purple-400">{"};"}</p>
-              </div>
-
-              {/* Floating Mockup Overlays */}
-              <div className="absolute top-1/2 -right-6 w-44 rounded-2xl bg-[#0c1a3d]/85 border border-white/10 p-4 shadow-2xl backdrop-blur-md animate-bounce" style={{ animationDuration: "5s" }}>
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="p-1.5 rounded-lg bg-emerald-500/20 text-emerald-400">
-                    <Check className="w-4 h-4" />
+              {/* Sliders Area */}
+              <div className="space-y-5 flex-grow">
+                {/* Traffic Input Slider */}
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center text-xs">
+                    <span className="text-gray-400 font-medium">Monthly Web Traffic</span>
+                    <span className="text-cyan-400 font-bold font-outfit">{traffic.toLocaleString('en-IN')} visitors</span>
                   </div>
-                  <div>
-                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Performance</p>
-                    <p className="text-xs font-bold text-white">99+ Google Score</p>
+                  <div className="relative group/slider flex items-center">
+                    <input 
+                      type="range" 
+                      min="5000" 
+                      max="100000" 
+                      step="5000"
+                      value={traffic}
+                      onChange={(e) => setTraffic(Number(e.target.value))}
+                      className="w-full h-1.5 bg-white/10 rounded-lg appearance-none cursor-pointer accent-cyan-400 focus:outline-none"
+                    />
+                  </div>
+                </div>
+
+                {/* Conversion Rate Input Slider */}
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center text-xs">
+                    <span className="text-gray-400 font-medium">Target Conversion Rate</span>
+                    <span className="text-fuchsia-400 font-bold font-outfit">{convRate.toFixed(1)}%</span>
+                  </div>
+                  <div className="relative group/slider flex items-center">
+                    <input 
+                      type="range" 
+                      min="1.0" 
+                      max="8.0" 
+                      step="0.1"
+                      value={convRate}
+                      onChange={(e) => setConvRate(Number(e.target.value))}
+                      className="w-full h-1.5 bg-white/10 rounded-lg appearance-none cursor-pointer accent-fuchsia-400 focus:outline-none"
+                    />
+                  </div>
+                </div>
+
+                {/* Simulated Lead Results Section */}
+                <div className="grid grid-cols-2 gap-4 mt-6 pt-6 border-t border-white/5">
+                  <div className="bg-white/5 border border-white/5 rounded-2xl p-4 flex flex-col justify-center">
+                    <span className="text-[9px] font-bold text-gray-500 uppercase tracking-widest mb-1">Estimated Leads</span>
+                    <span className="text-3xl font-black text-white font-outfit animate-pulse">
+                      {Math.round((traffic * convRate) / 100)} <span className="text-xs font-semibold text-gray-400">/mo</span>
+                    </span>
+                  </div>
+                  <div className="bg-white/5 border border-white/5 rounded-2xl p-4 flex flex-col justify-center">
+                    <span className="text-[9px] font-bold text-gray-500 uppercase tracking-widest mb-1">Est. Revenue Impact</span>
+                    <span className="text-xl sm:text-2xl font-black text-emerald-400 font-outfit truncate">
+                      {new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(Math.round(((traffic * convRate) / 100) * 0.10 * 15000))}
+                    </span>
                   </div>
                 </div>
               </div>
 
-              <div className="absolute bottom-6 -left-6 w-48 rounded-2xl bg-slate-950/85 border border-purple-500/20 p-4 shadow-2xl backdrop-blur-md animate-bounce" style={{ animationDuration: "6s", animationDelay: "1s" }}>
-                <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-lg bg-purple-500/20 text-purple-400">
-                    <ShoppingBag className="w-4 h-4" />
+              {/* Lead Booster Circle Badge floating widget */}
+              <div className="absolute -top-12 right-6 w-32 rounded-2xl bg-slate-950/95 border border-purple-500/30 p-3 shadow-2xl backdrop-blur-md flex flex-col items-center hover:scale-105 transition-transform duration-300 z-20">
+                <div className="relative w-12 h-12 flex items-center justify-center rounded-full bg-purple-500/10 border border-purple-500/20 mb-2">
+                  <Sparkles className="w-6 h-6 text-purple-400 animate-pulse" />
+                </div>
+                <span className="text-lg font-black text-white font-outfit">{(convRate / 1.0).toFixed(1)}x</span>
+                <span className="text-[8px] font-bold text-gray-400 uppercase tracking-widest text-center mt-1">Conversion Boost</span>
+              </div>
+
+              {/* Graph / Action Bar overlay */}
+              <div className="mt-4 pt-4 border-t border-white/5 flex flex-col gap-4">
+                {/* Dynamically scaling SVG Sparkline */}
+                <div className="relative h-12 bg-white/[0.02] border border-white/5 rounded-2xl p-2.5 overflow-hidden flex items-center justify-between">
+                  <div className="flex flex-col">
+                    <span className="text-[8px] font-bold text-gray-500 uppercase tracking-widest">Lead Growth Trend</span>
+                    <span className="text-[10px] font-bold text-white mt-0.5">Scale: {Math.round(((traffic * convRate) / 100) * 1.2)} max</span>
                   </div>
-                  <div>
-                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Order Confirmed</p>
-                    <p className="text-xs font-bold text-white">₹25,000 Checkout</p>
+                  <div className="w-32 h-full">
+                    <svg className="w-full h-full" viewBox="0 0 100 30" preserveAspectRatio="none">
+                      <path
+                        d={`M0 28 Q25 ${28 - (convRate/8)*22} 50 ${20 - (convRate/8)*18} T100 ${8 - (convRate/8)*6}`}
+                        className="fill-none stroke-cyan-400"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                      />
+                      <path
+                        d={`M0 28 Q25 ${28 - (convRate/8)*22} 50 ${20 - (convRate/8)*18} T100 ${8 - (convRate/8)*6} L100 30 L0 30 Z`}
+                        className="fill-gradient stroke-none opacity-20"
+                        style={{ fill: "url(#lead-glow-gradient)" }}
+                      />
+                      <defs>
+                        <linearGradient id="lead-glow-gradient" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0%" stopColor="#22d3ee" stopOpacity="0.4" />
+                          <stop offset="100%" stopColor="#22d3ee" stopOpacity="0" />
+                        </linearGradient>
+                      </defs>
+                    </svg>
                   </div>
                 </div>
+
+                {/* Direct Action Link */}
+                <button 
+                  onClick={() => handleOpenModal(`Lead Funnel (${traffic.toLocaleString()} Traffic / ${convRate}% Conv)`, `${Math.round((traffic * convRate) / 100)} Estimated Leads`)}
+                  className="w-full py-4.5 rounded-2xl bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white font-bold text-base transition-all active:scale-[0.98] shadow-lg shadow-purple-500/20 text-center flex items-center justify-center gap-3 animate-pulse"
+                >
+                  Setup This Lead Funnel
+                  <ArrowRight className="w-4 h-4" />
+                </button>
               </div>
 
             </div>
           </div>
-
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="features-section py-28 px-6 md:px-12 bg-slate-950/30 border-y border-white/5 relative">
+      <section className="features-section py-16 px-6 md:px-12 bg-slate-950/30 border-y border-white/5 relative">
         <div className="max-w-7xl mx-auto">
           
-          <div className="text-center mb-20">
+          <div className="text-center mb-12">
             <h2 className="text-4xl md:text-6xl font-bold font-outfit mb-6 text-white">
-              Engineered for <span className="bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">Peak Conversion</span>
+              Custom Web Engineering for <span className="bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">Peak Conversion</span>
             </h2>
             <p className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto font-light">
-              We focus on absolute speed, visual aesthetics, and solid search visibility to drive visitors into clients.
+              Our Next.js website design and custom React web development prioritize absolute loading speed, visual aesthetics, and solid SEO coding practices to convert visitors into clients.
             </p>
           </div>
 
@@ -371,17 +464,17 @@ export default function WebsiteDevelopmentClient() {
       </section>
 
       {/* Pricing Plans Section */}
-      <section id="pricing" className="pricing-section py-28 px-6 md:px-12 relative bg-[#020617]">
+      <section id="pricing" className="pricing-section py-16 px-6 md:px-12 relative bg-[#020617]">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-purple-500/5 blur-[120px] rounded-full pointer-events-none" />
         
         <div className="max-w-5xl mx-auto relative z-10">
           
-          <div className="text-center mb-20">
+          <div className="text-center mb-12">
             <h2 className="text-4xl md:text-6xl font-bold font-outfit mb-6 text-white">
-              Transparent, <span className="bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">Flat-Rate Pricing</span>
+              Transparent, <span className="bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">Flat-Rate Web Development Pricing</span>
             </h2>
             <p className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto font-light">
-              No hidden fees, no complicated hourly contracts. Find the plan that matches your structural scope.
+              Affordable packages with no hidden fees or complicated hourly contracts. Choose a web development plan that matches your budget and requirements.
             </p>
           </div>
 
@@ -473,20 +566,19 @@ export default function WebsiteDevelopmentClient() {
       </section>
 
       {/* CTA Lead Generation Section */}
-      <section className="py-24 px-6 md:px-12 relative bg-slate-950/20 border-t border-white/5">
+      <section className="py-16 px-6 md:px-12 relative bg-slate-950/20 border-t border-white/5">
         <div className="max-w-4xl mx-auto">
           
           <div className="relative rounded-[48px] overflow-hidden p-8 md:p-16 border border-white/10 bg-gradient-to-br from-indigo-950/20 to-[#020617] text-center shadow-2xl">
             <div className="absolute top-0 right-0 w-64 h-64 bg-purple-500/10 blur-[80px] rounded-full pointer-events-none" />
             <div className="absolute bottom-0 left-0 w-64 h-64 bg-indigo-500/10 blur-[80px] rounded-full pointer-events-none" />
-            
             <div className="relative z-10">
               <h2 className="text-3xl md:text-5xl font-bold font-outfit mb-6 text-white leading-tight">
-                Ready to Launch Your Website?
+                Ready to Launch Your Custom Website?
               </h2>
               
               <p className="text-gray-400 text-base md:text-lg max-w-xl mx-auto mb-10 leading-relaxed font-light">
-                Request a free strategy consultation today. Our team will review your specifications, map project scopes, and suggest optimal rendering platforms.
+                Request a free web strategy consultation today. Our professional website design and development team will review your specifications, plan user flows, and structure your custom Next.js application.
               </p>
               
               <button 

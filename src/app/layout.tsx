@@ -9,9 +9,9 @@ export const metadata: Metadata = {
   title: "Dviora | Performance-Driven Meta Ads Management",
   description: "Dviora specializes in Meta Ads management for growth-focused brands spending serious budgets. Advanced media buying, scaling systems, and performance-driven execution.",
   icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon.ico",
-    apple: "/icon.png",
+    icon: "/dviora-logo.png",
+    shortcut: "/dviora-logo.png",
+    apple: "/dviora-logo.png",
   },
 };
 

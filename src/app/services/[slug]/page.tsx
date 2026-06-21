@@ -109,7 +109,7 @@ export default function ServiceDetail() {
       </section>
 
       {/* Detailed Content Section */}
-      <section className="py-24 px-6 md:px-12 bg-slate-950/50">
+      <section className="py-16 px-6 md:px-12 bg-slate-950/50">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-16">
             <div className="lg:col-span-2 animate-fade-up">

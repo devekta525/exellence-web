@@ -71,7 +71,7 @@ export default async function CaseStudyPage({ params }: { params: { slug: string
       </section>
 
       {/* Detailed Content Placeholder Section */}
-      <section className="py-24 px-6 md:px-12 bg-white/[0.02] border-y border-white/5">
+      <section className="py-16 px-6 md:px-12 bg-white/[0.02] border-y border-white/5">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-16">
             {study.slug === "shoe-brand-scale" ? (
@@ -775,7 +775,7 @@ export default async function CaseStudyPage({ params }: { params: { slug: string
       </section>
 
       {/* Other Case Studies Slider / Link */}
-      <section className="py-24 px-6 md:px-12">
+      <section className="py-16 px-6 md:px-12">
         <div className="max-w-7xl mx-auto text-center">
           <h2 className="text-4xl font-bold font-outfit mb-4">More Success Stories</h2>
           <p className="text-white/50 mb-12">Explore how we've helped other brands dominate their market.</p>

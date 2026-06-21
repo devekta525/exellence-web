@@ -26,7 +26,7 @@ export default function WhyWeStarted() {
   }, { scope: containerRef });
 
   return (
-    <section id="why-we-started" ref={containerRef} className="py-16 md:py-24 px-6 bg-transparent relative overflow-hidden">
+    <section id="why-we-started" ref={containerRef} className="py-12 md:py-16 px-6 bg-transparent relative overflow-hidden">
       {/* Glow effect */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[radial-gradient(circle,rgba(56,189,248,0.05)_0%,transparent_70%)] rounded-full blur-3xl pointer-events-none" />
 

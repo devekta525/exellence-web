@@ -107,7 +107,7 @@ export default function Process() {
   const Icon = step.icon;
 
   return (
-    <section id="process" className="pt-10 pb-20 md:py-32 bg-transparent relative overflow-hidden">
+    <section id="process" className="pt-10 pb-16 md:py-16 bg-transparent relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 text-center mb-10 md:mb-16">
         <h2 className="text-4xl md:text-7xl font-bold font-outfit mb-6 text-white tracking-tight">
           Our <span className="text-gradient">Process</span>

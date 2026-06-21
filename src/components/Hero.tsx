@@ -11,7 +11,7 @@ export default function Hero() {
   const wordRef = useRef<HTMLSpanElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
-  
+
   const { openContactModal } = useModal();
 
   // Initial load animation for content

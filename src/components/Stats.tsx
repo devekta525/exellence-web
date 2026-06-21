@@ -109,7 +109,7 @@ export default function Stats() {
   }, []);
 
   return (
-    <section ref={containerRef} className="py-24 px-6 md:px-12 bg-transparent relative">
+    <section ref={containerRef} className="py-16 px-6 md:px-12 bg-transparent relative">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-20 stats-header">
           <h2 className="text-4xl md:text-5xl font-bold font-outfit mb-4">
