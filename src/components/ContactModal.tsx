@@ -111,8 +111,8 @@ export default function ContactModal() {
                   {preferredContact === "phone" ? "Phone Number" : "Email Address"} <span className="text-rose-500">*</span>
                 </label>
                 <div className="flex gap-2 bg-[#0c1a3d] border border-white/10 rounded-lg p-0.5">
-                  <button type="button" onClick={() => { setPreferredContact("phone"); setFormData({...formData, email: ""}); }} className={`text-[10px] font-bold uppercase tracking-[0.1em] px-2 py-1 rounded-md transition-colors ${preferredContact === "phone" ? "bg-cyan-500/20 text-cyan-400" : "text-gray-500 hover:text-gray-400"}`}>Phone</button>
-                  <button type="button" onClick={() => { setPreferredContact("email"); setFormData({...formData, phone: ""}); }} className={`text-[10px] font-bold uppercase tracking-[0.1em] px-2 py-1 rounded-md transition-colors ${preferredContact === "email" ? "bg-cyan-500/20 text-cyan-400" : "text-gray-500 hover:text-gray-400"}`}>Email</button>
+                  <button type="button" onClick={() => { setPreferredContact("phone"); setFormData({ ...formData, email: "" }); }} className={`text-[10px] font-bold uppercase tracking-[0.1em] px-2 py-1 rounded-md transition-colors ${preferredContact === "phone" ? "bg-cyan-500/20 text-cyan-400" : "text-gray-500 hover:text-gray-400"}`}>Phone</button>
+                  <button type="button" onClick={() => { setPreferredContact("email"); setFormData({ ...formData, phone: "" }); }} className={`text-[10px] font-bold uppercase tracking-[0.1em] px-2 py-1 rounded-md transition-colors ${preferredContact === "email" ? "bg-cyan-500/20 text-cyan-400" : "text-gray-500 hover:text-gray-400"}`}>Email</button>
                 </div>
               </div>
               {preferredContact === "phone" ? (

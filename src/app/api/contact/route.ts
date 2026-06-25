@@ -3,19 +3,22 @@ import nodemailer from 'nodemailer';
 
 export async function POST(req: Request) {
   try {
-    const { name, phone, email, website, service, revenue, message } = await req.json();
+    const { name, phone, email, website, service, revenue, message, isWebsiteDev } = await req.json();
+
+    const smtpUser = isWebsiteDev ? 'developerekta9@gmail.com' : 'dvioralabs@gmail.com';
+    const smtpPass = isWebsiteDev ? 'owei lcsl uqtb mogc' : 'xvrc ojri wdxq uqpm';
 
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: 'dvioralabs@gmail.com',
-        pass: 'xvrc ojri wdxq uqpm',
+        user: smtpUser,
+        pass: smtpPass,
       },
     });
 
     const mailOptions = {
-      from: 'dvioralabs@gmail.com',
-      to: 'dvioralabs@gmail.com',
+      from: smtpUser,
+      to: smtpUser,
       subject: `New Dviora Lead: ${name} (${service})`,
       html: `
         <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 20px auto; background-color: #020617; color: #ffffff; padding: 40px; border-radius: 24px; border: 1px solid #1e293b; box-shadow: 0 20px 50px rgba(0,0,0,0.5);">
