@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
+import crypto from 'crypto';
 
 export async function POST(req: Request) {
   try {
@@ -78,11 +79,57 @@ export async function POST(req: Request) {
       `,
     };
 
+    // 1. Send the email notification
     await transporter.sendMail(mailOptions);
 
-    return NextResponse.json({ message: 'Email sent successfully' }, { status: 200 });
+    // 2. LinkedIn Conversions API (CAPI) Tracking
+    try {
+      const LINKEDIN_CAPI_TOKEN = "AQXC4DtDoWrgwqJ9eUEAr9cCpWBhrTZXRlKhz7Vh3DiGh52ifVNW-VyXSflbR3nIyUkFzOjp6v5MmaVixboq0x1fFid1dVL9ctUk6e69XBYolxw8umikP93Lu2dkgiQZrd_XhrBhPPSAxAloqkf-YxSzYNBA84wIzAF1IKEs3V7h_MWhiug5CBA74LHcjeH7m2GRV0oE4Q2j8jK1hv8JxFfnWiEBZe_Ywu-t6au2lw9xMAFdrYoCY5PiyIuEr9xFjGzzu3iycOYVBR1BBUMnlho2Jln16X4fqDbqcZgQAbHTnC-cYYJce6IufwranM2mZ3KnXBL5dUlubauNnRFyw6eIQNxBnw";
+      const LINKEDIN_CONVERSION_ID = "28363460"; // Extracted from your screenshot
+
+      const userIds = [];
+      if (email) {
+        userIds.push({
+          idType: "SHA256_EMAIL",
+          idValue: crypto.createHash('sha256').update(email.toLowerCase().trim()).digest('hex')
+        });
+      }
+      
+      const capiPayload = {
+        conversion: `urn:li:conversions:${LINKEDIN_CONVERSION_ID}`,
+        conversionHappenedAt: Date.now(),
+        user: {
+          userIds: userIds,
+          userInfo: {
+            firstName: name ? name.split(' ')[0] : undefined,
+            lastName: name && name.split(' ').length > 1 ? name.split(' ').slice(1).join(' ') : undefined,
+          }
+        }
+      };
+
+      const capiResponse = await fetch('https://api.linkedin.com/rest/conversionEvents', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${LINKEDIN_CAPI_TOKEN}`,
+          'LinkedIn-Version': '2024-01',
+          'X-RestLi-Protocol-Version': '2.0.0',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(capiPayload)
+      });
+      
+      if (!capiResponse.ok) {
+        console.error('LinkedIn CAPI failed:', await capiResponse.text());
+      } else {
+        console.log('LinkedIn CAPI event sent successfully');
+      }
+    } catch (capiError) {
+      console.error('LinkedIn CAPI Error:', capiError);
+    }
+
+    return NextResponse.json({ message: 'Email sent and conversion tracked successfully' }, { status: 200 });
   } catch (error) {
     console.error('Error sending email:', error);
-    return NextResponse.json({ message: 'Error sending email' }, { status: 500 });
+    return NextResponse.json({ message: 'Error processing request' }, { status: 500 });
   }
 }

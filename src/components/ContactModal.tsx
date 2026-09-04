@@ -43,6 +43,7 @@ export default function ContactModal() {
           message: "",
         });
         closeContactModal();
+        sessionStorage.setItem("formSubmitted", "true");
         router.push("/thank-you");
       } else {
         alert("Something went wrong. Please try again.");
