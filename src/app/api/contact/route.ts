@@ -6,7 +6,7 @@ export async function POST(req: Request) {
     const { name, phone, email, website, service, revenue, message, isWebsiteDev } = await req.json();
 
     const smtpUser = isWebsiteDev ? 'developerekta9@gmail.com' : 'dvioralabs@gmail.com';
-    const smtpPass = isWebsiteDev ? 'owei lcsl uqtb mogc' : 'xvrc ojri wdxq uqpm';
+    const smtpPass = isWebsiteDev ? 'owei lcsl uqtb mogc' : 'kuzl eias yjrg lkvy';
 
     const transporter = nodemailer.createTransport({
       service: 'gmail',
