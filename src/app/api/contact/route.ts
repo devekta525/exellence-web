@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
-import crypto from 'crypto';
 
 export async function POST(req: Request) {
   try {
@@ -89,9 +88,15 @@ export async function POST(req: Request) {
 
       const userIds = [];
       if (email) {
+        const encoder = new TextEncoder();
+        const data = encoder.encode(email.toLowerCase().trim());
+        const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+        const hashArray = Array.from(new Uint8Array(hashBuffer));
+        const hashedEmail = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+
         userIds.push({
           idType: "SHA256_EMAIL",
-          idValue: crypto.createHash('sha256').update(email.toLowerCase().trim()).digest('hex')
+          idValue: hashedEmail
         });
       }
       
@@ -128,8 +133,11 @@ export async function POST(req: Request) {
     }
 
     return NextResponse.json({ message: 'Email sent and conversion tracked successfully' }, { status: 200 });
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error sending email:', error);
-    return NextResponse.json({ message: 'Error processing request' }, { status: 500 });
+    return NextResponse.json({ 
+      message: 'Error processing request', 
+      details: error?.message || String(error) 
+    }, { status: 500 });
   }
 }
