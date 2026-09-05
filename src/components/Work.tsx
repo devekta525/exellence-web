@@ -10,14 +10,22 @@ import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 // Register ScrollTrigger
 gsap.registerPlugin(ScrollTrigger);
 
-export default function Work() {
+interface WorkProps {
+  initialData?: any;
+}
+
+export default function Work({ initialData }: WorkProps) {
+  // Use DB data if available, fallback to static file
+  const studies = (initialData?.items && initialData.items.length > 0)
+    ? initialData.items
+    : caseStudies;
   const containerRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const sliderRef = useRef<HTMLDivElement>(null);
   const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
 
   // Triple the items for seamless native loop in both directions
-  const displayStudies = [...caseStudies, ...caseStudies, ...caseStudies];
+  const displayStudies = [...studies, ...studies, ...studies];
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -63,7 +71,7 @@ export default function Work() {
       if (sliderRef.current) {
         const isMobile = window.innerWidth <= 768;
         const scrollAmount = isMobile ? (window.innerWidth * 0.85) + 16 : 504;
-        sliderRef.current.scrollLeft = caseStudies.length * scrollAmount;
+        sliderRef.current.scrollLeft = studies.length * scrollAmount;
       }
     }, 100);
 
@@ -78,7 +86,7 @@ export default function Work() {
       const isMobile = window.innerWidth <= 768;
       const scrollAmount = isMobile ? (window.innerWidth * 0.85) + 16 : 504;
       const slider = sliderRef.current;
-      const totalWidth = (caseStudies.length * scrollAmount);
+      const totalWidth = (studies.length * scrollAmount);
 
       // Handle boundaries for button clicks
       if (direction === 'left' && slider.scrollLeft <= 10) {
@@ -113,7 +121,7 @@ export default function Work() {
       const isMobile = window.innerWidth <= 768;
       const scrollAmount = isMobile ? (window.innerWidth * 0.85) + 16 : 504;
       const slider = sliderRef.current;
-      const totalWidth = caseStudies.length * scrollAmount;
+      const totalWidth = studies.length * scrollAmount;
 
       // Silent jump for native scrolling
       if (slider.scrollLeft >= totalWidth * 2 - 10) {

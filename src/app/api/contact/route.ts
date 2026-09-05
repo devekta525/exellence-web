@@ -1,12 +1,18 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
+import connectToDatabase from '@/lib/mongodb';
+import { Lead } from '@/models/Lead';
 
 export async function POST(req: Request) {
   try {
     const { name, phone, email, website, service, revenue, message, isWebsiteDev } = await req.json();
 
-    const smtpUser = isWebsiteDev ? 'developerekta9@gmail.com' : 'dvioralabs@gmail.com';
-    const smtpPass = isWebsiteDev ? 'owei lcsl uqtb mogc' : 'kuzl eias yjrg lkvy';
+    const smtpUser = process.env.SMTP_USER;
+    const smtpPass = process.env.SMTP_PASS;
+
+    if (!smtpUser || !smtpPass) {
+      throw new Error("SMTP credentials are not configured in environment variables.");
+    }
 
     const transporter = nodemailer.createTransport({
       service: 'gmail',
@@ -83,8 +89,12 @@ export async function POST(req: Request) {
 
     // 2. LinkedIn Conversions API (CAPI) Tracking
     try {
-      const LINKEDIN_CAPI_TOKEN = "AQXC4DtDoWrgwqJ9eUEAr9cCpWBhrTZXRlKhz7Vh3DiGh52ifVNW-VyXSflbR3nIyUkFzOjp6v5MmaVixboq0x1fFid1dVL9ctUk6e69XBYolxw8umikP93Lu2dkgiQZrd_XhrBhPPSAxAloqkf-YxSzYNBA84wIzAF1IKEs3V7h_MWhiug5CBA74LHcjeH7m2GRV0oE4Q2j8jK1hv8JxFfnWiEBZe_Ywu-t6au2lw9xMAFdrYoCY5PiyIuEr9xFjGzzu3iycOYVBR1BBUMnlho2Jln16X4fqDbqcZgQAbHTnC-cYYJce6IufwranM2mZ3KnXBL5dUlubauNnRFyw6eIQNxBnw";
-      const LINKEDIN_CONVERSION_ID = "28363460"; // Extracted from your screenshot
+      const LINKEDIN_CAPI_TOKEN = process.env.LINKEDIN_CAPI_TOKEN;
+      const LINKEDIN_CONVERSION_ID = process.env.LINKEDIN_CONVERSION_ID;
+
+      if (!LINKEDIN_CAPI_TOKEN || !LINKEDIN_CONVERSION_ID) {
+        throw new Error("LinkedIn CAPI credentials are not configured in environment variables.");
+      }
 
       const userIds = [];
       if (email) {
@@ -99,7 +109,7 @@ export async function POST(req: Request) {
           idValue: hashedEmail
         });
       }
-      
+
       const capiPayload = {
         conversion: `urn:li:conversions:${LINKEDIN_CONVERSION_ID}`,
         conversionHappenedAt: Date.now(),
@@ -122,7 +132,7 @@ export async function POST(req: Request) {
         },
         body: JSON.stringify(capiPayload)
       });
-      
+
       if (!capiResponse.ok) {
         console.error('LinkedIn CAPI failed:', await capiResponse.text());
       } else {
@@ -132,12 +142,31 @@ export async function POST(req: Request) {
       console.error('LinkedIn CAPI Error:', capiError);
     }
 
+    // 3. Save to MongoDB
+    try {
+      await connectToDatabase();
+      await Lead.create({
+        name,
+        phone,
+        email,
+        website,
+        service,
+        revenue,
+        message,
+        status: 'New'
+      });
+      console.log('Lead saved to MongoDB successfully');
+    } catch (dbError) {
+      console.error('Error saving lead to MongoDB:', dbError);
+      // We don't throw here to avoid failing the whole request if only DB fails
+    }
+
     return NextResponse.json({ message: 'Email sent and conversion tracked successfully' }, { status: 200 });
   } catch (error: any) {
-    console.error('Error sending email:', error);
-    return NextResponse.json({ 
-      message: 'Error processing request', 
-      details: error?.message || String(error) 
+    console.error('Error processing contact form:', error);
+    return NextResponse.json({
+      message: 'Error processing request',
+      details: error?.message || String(error)
     }, { status: 500 });
   }
 }

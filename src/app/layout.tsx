@@ -8,10 +8,27 @@ import ContactModal from "@/components/ContactModal";
 export const metadata: Metadata = {
   title: "Dviora | Performance-Driven Meta Ads Management",
   description: "Dviora specializes in Meta Ads management for growth-focused brands spending serious budgets. Advanced media buying, scaling systems, and performance-driven execution.",
-  icons: {
-    icon: "/logo-2.png",
-    shortcut: "/logo-2.png",
-    apple: "/logo-2.png",
+  openGraph: {
+    title: "Dviora | Performance-Driven Meta Ads Management",
+    description: "Dviora specializes in Meta Ads management for growth-focused brands spending serious budgets.",
+    url: "https://dviora.com",
+    siteName: "Dviora",
+    images: [
+      {
+        url: "/logo-2.png",
+        width: 800,
+        height: 600,
+        alt: "Dviora Logo",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Dviora | Performance-Driven Meta Ads Management",
+    description: "Dviora specializes in Meta Ads management for growth-focused brands spending serious budgets.",
+    images: ["/logo-2.png"],
   },
 };
 

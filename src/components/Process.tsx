@@ -11,7 +11,7 @@ import {
   CheckCircle2,
 } from "lucide-react";
 
-const processSteps = [
+const DEFAULT_PROCESS_STEPS = [
   {
     id: 1,
     title: "Understanding The Business",
@@ -102,25 +102,53 @@ const processSteps = [
   },
 ];
 
-export default function Process() {
-  const step = processSteps[0]; // Decoding Your Audience
-  const Icon = step.icon;
+const ICON_MAP: Record<string, React.ElementType> = {
+  Map, FileText, Camera, Scissors, Zap, TrendingUp
+};
+
+// Hardcoded step colors by position — always correct regardless of DB
+const STEP_COLORS = [
+  "#06b6d4", // cyan
+  "#d946ef", // pink
+  "#22c55e", // green
+  "#f97316", // orange
+  "#f43f5e", // red
+  "#eab308", // yellow
+];
+
+interface ProcessProps {
+  initialData?: any;
+}
+
+export default function Process({ initialData }: ProcessProps) {
+  const {
+    title = "Our",
+    titleGradient = "Process",
+    subtitle = "A performance-focused Meta Ads framework built to scale profitable growth systematically.",
+    items = DEFAULT_PROCESS_STEPS,
+  } = initialData || {};
 
   return (
     <section id="process" className="pt-10 pb-16 md:py-16 bg-transparent relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 text-center mb-10 md:mb-16">
         <h2 className="text-4xl md:text-7xl font-bold font-outfit mb-6 text-white tracking-tight">
-          Our <span className="text-gradient">Process</span>
+          {title} <span className="text-gradient">{titleGradient}</span>
         </h2>
         <p className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto">
-          A performance-focused Meta Ads framework built to scale profitable growth systematically.
+          {subtitle}
         </p>
       </div>
 
-      <div className="max-w-4xl mx-auto px-6 relative">
-        {/* Single Static Process Card */}
-        <div 
-          className={`relative p-8 md:p-12 rounded-[48px] overflow-hidden bg-gradient-to-br from-cyan-500 to-blue-600 shadow-2xl`}
+      <div className="max-w-4xl mx-auto px-6 relative space-y-8">
+        {items.map((step: any, index: number) => {
+          const Icon = ICON_MAP[step.iconName] || DEFAULT_PROCESS_STEPS[index]?.icon || Map;
+          // Use hardcoded color by position so DB missing hex never breaks UI
+          const hex = STEP_COLORS[index % STEP_COLORS.length];
+          return (
+        <div
+          key={step.id || index}
+          className={`relative p-8 md:p-12 rounded-[48px] overflow-hidden shadow-2xl`}
+          style={{ background: `linear-gradient(135deg, ${hex}cc 0%, ${hex}55 50%, #020617 100%)` }}
         >
           {/* Subtle Texture/Grain */}
           <div className="absolute inset-0 opacity-10 pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
@@ -143,7 +171,7 @@ export default function Process() {
 
             {/* Checkmarks Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5 pt-8 border-t border-white/20">
-              {step.checks.map((check, idx) => (
+              {step.checks?.map((check: string, idx: number) => (
                 <div key={idx} className="flex items-center gap-4 group/item">
                   <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center border border-white/20 group-hover/item:bg-white transition-colors duration-300">
                     <CheckCircle2 className="w-4 h-4 text-white group-hover/item:text-black" />
@@ -156,6 +184,8 @@ export default function Process() {
             </div>
           </div>
         </div>
+          );
+        })}
       </div>
     </section>
   );

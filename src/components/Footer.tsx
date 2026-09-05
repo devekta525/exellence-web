@@ -1,8 +1,17 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { MapPin, Mail, Phone, Share2, Send, Globe, Star } from "lucide-react";
 
 export default function Footer() {
+  const pathname = usePathname();
+  
+  if (pathname.startsWith("/admin")) {
+    return null;
+  }
+
   return (
     <footer id="contact" className="relative border-t border-white/5 pt-12 md:pt-16 pb-10 overflow-hidden">
       <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-[radial-gradient(circle,rgba(56,189,248,0.08)_0%,transparent_70%)] rounded-full blur-3xl pointer-events-none" />
@@ -53,6 +62,7 @@ export default function Footer() {
         <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-gray-500">
           <p>© 2026 <strong className="text-white">Dviora</strong>. All rights reserved.</p>
           <div className="flex gap-6">
+            <Link href="/blogs" className="hover:text-white transition-colors">Blogs</Link>
             <Link href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
             <Link href="/terms-and-conditions" className="hover:text-white transition-colors">Terms of Service</Link>
           </div>

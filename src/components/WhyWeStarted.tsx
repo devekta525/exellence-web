@@ -4,7 +4,30 @@ import React, { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
-export default function WhyWeStarted() {
+interface WhyWeStartedProps {
+  initialData?: any;
+}
+
+export default function WhyWeStarted({ initialData }: WhyWeStartedProps) {
+  const {
+    titleLine1 = "Why We",
+    titleLine2 = "Started",
+    paragraph1 = "We noticed a common pattern across growing D2C brands — companies spending ₹5L, ₹10L, or even more every month on Meta Ads were still struggling to scale profitably.",
+    paragraph2 = "Not because the product was weak.\nNot because the brand lacked potential.",
+    paragraph3 = "But because their ad accounts were being handled by under-skilled freelancers, generic agencies, or media buyers without deep performance expertise.",
+    box1Title = "As a result, brands get stuck questioning:",
+    box1ListItems = [
+      "Why is ROAS unstable?",
+      "Why is scaling breaking performance?",
+      "Where is the ad spend leaking?",
+      "Why are campaigns not converting despite high budgets?"
+    ],
+    box2Title = "That’s the gap we built Dviora to solve.",
+    box2Subtitle = "We don’t operate like a traditional agency.",
+    box2Highlight = "We work as an extension of your internal growth team — bringing strategic thinking, data-driven decision making, advanced media buying execution, and performance-focused scaling systems to your Meta Ads ecosystem.",
+    box2Footer = "Our focus is simple: Build profitable, scalable, and sustainable growth through expert Meta Ads management."
+  } = initialData || {};
+
   const containerRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
@@ -33,43 +56,26 @@ export default function WhyWeStarted() {
       <div className="max-w-4xl mx-auto relative z-10">
         <div className="text-center mb-12 md:mb-16 reveal-text">
           <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold font-outfit mb-6 tracking-tight text-white">
-            Why We <span className="text-gradient">Started</span>
+            {titleLine1} <span className="text-gradient">{titleLine2}</span>
           </h2>
         </div>
 
         <div className="space-y-6 md:space-y-8 text-gray-400 text-lg md:text-xl leading-relaxed font-light">
-          <p className="reveal-text">
-            We noticed a common pattern across growing D2C brands — companies spending ₹5L, ₹10L, or even more every month on Meta Ads were still struggling to scale profitably.
-          </p>
+          <p className="reveal-text">{paragraph1}</p>
           
-          <p className="reveal-text">
-            Not because the product was weak.<br />
-            Not because the brand lacked potential.
-          </p>
+          <p className="reveal-text whitespace-pre-line">{paragraph2}</p>
           
-          <p className="reveal-text">
-            But because their ad accounts were being handled by under-skilled freelancers, generic agencies, or media buyers without deep performance expertise.
-          </p>
+          <p className="reveal-text">{paragraph3}</p>
           
           <div className="reveal-text bg-white/5 p-8 rounded-3xl border border-white/10 my-10">
-            <p className="text-white font-semibold mb-6 text-xl">As a result, brands get stuck questioning:</p>
+            <p className="text-white font-semibold mb-6 text-xl">{box1Title}</p>
             <ul className="space-y-4 list-none text-gray-300">
-              <li className="flex items-start gap-4">
-                <span className="text-rose-500 font-bold mt-1">×</span>
-                <span>Why is ROAS unstable?</span>
-              </li>
-              <li className="flex items-start gap-4">
-                <span className="text-rose-500 font-bold mt-1">×</span>
-                <span>Why is scaling breaking performance?</span>
-              </li>
-              <li className="flex items-start gap-4">
-                <span className="text-rose-500 font-bold mt-1">×</span>
-                <span>Where is the ad spend leaking?</span>
-              </li>
-              <li className="flex items-start gap-4">
-                <span className="text-rose-500 font-bold mt-1">×</span>
-                <span>Why are campaigns not converting despite high budgets?</span>
-              </li>
+              {box1ListItems.map((item: string, index: number) => (
+                <li key={index} className="flex items-start gap-4">
+                  <span className="text-rose-500 font-bold mt-1">×</span>
+                  <span>{item}</span>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -78,19 +84,19 @@ export default function WhyWeStarted() {
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-400 via-fuchsia-500 to-cyan-400" />
             
             <h3 className="text-2xl md:text-3xl font-outfit text-white mb-6 font-bold">
-              That’s the gap we built Dviora to solve.
+              {box2Title}
             </h3>
             
-            <p className="mb-4">We don’t operate like a traditional agency.</p>
+            <p className="mb-4">{box2Subtitle}</p>
             
             <div className="pl-6 border-l-2 border-[var(--color-accent-start)] py-2 my-8">
               <p className="text-white font-medium text-lg md:text-xl leading-relaxed">
-                We work as an extension of your internal growth team — bringing strategic thinking, data-driven decision making, advanced media buying execution, and performance-focused scaling systems to your Meta Ads ecosystem.
+                {box2Highlight}
               </p>
             </div>
             
-            <p className="font-semibold text-white text-xl border-t border-white/10 pt-8 mt-4">
-              Our focus is simple: Build profitable, scalable, and sustainable growth through expert Meta Ads management.
+            <p className="font-semibold text-white text-xl border-t border-white/10 pt-8 mt-4 whitespace-pre-line">
+              {box2Footer}
             </p>
           </div>
         </div>

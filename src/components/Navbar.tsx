@@ -4,11 +4,17 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { ArrowRight, Mail, ChevronRight, X, Menu, Send, Loader2 } from "lucide-react";
 import { useModal } from "@/context/ModalContext";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { openContactModal } = useModal();
+
+  if (pathname.startsWith("/admin")) {
+    return null;
+  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -48,6 +54,9 @@ export default function Navbar() {
           </Link>
 
           <div className="hidden lg:flex items-center gap-10 text-[14px] font-medium text-gray-300">
+            <Link href="/blogs" className="hover:text-white transition-colors">
+              Blogs
+            </Link>
             <Link href="/#work" className="hover:text-white transition-colors">
               Work
             </Link>
@@ -118,6 +127,13 @@ export default function Navbar() {
         <div className="relative h-full flex flex-col justify-center items-center px-6">
           <div className={`flex flex-col gap-8 text-center transition-all duration-500 transform ${isMenuOpen ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
             }`}>
+            <Link
+              href="/blogs"
+              onClick={() => setIsMenuOpen(false)}
+              className="text-3xl font-bold text-white hover:text-[#c5a059] transition-colors font-outfit"
+            >
+              Blogs
+            </Link>
             <Link
               href="/#work"
               onClick={() => setIsMenuOpen(false)}

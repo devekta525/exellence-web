@@ -5,7 +5,20 @@ import gsap from "gsap";
 import { ArrowRight } from "lucide-react";
 import { useModal } from "@/context/ModalContext";
 
-export default function Hero() {
+interface HeroProps {
+  initialData?: {
+    heroTitleLine1?: string;
+    heroTitleLine2?: string;
+    heroDescription?: string;
+  } | null;
+}
+
+export default function Hero({ initialData }: HeroProps) {
+  const { 
+    heroTitleLine1 = "WHO ARE", 
+    heroTitleLine2 = "WE?", 
+    heroDescription = "We specialize exclusively in Meta Ads management for high-spending brands. While you handle your own creatives, we bring laser-focused expertise on strategy, ad management, and scaling. <strong>Our strength is turning big budgets into big returns.</strong>"
+  } = initialData || {};
   const containerRef = useRef<HTMLDivElement>(null);
   const titleContainerRef = useRef<HTMLHeadingElement>(null);
   const wordRef = useRef<HTMLSpanElement>(null);
@@ -63,22 +76,18 @@ export default function Hero() {
             ref={titleContainerRef}
             className="text-[clamp(3rem,13vw,4rem)] sm:text-[6rem] md:text-[8rem] lg:text-[10rem] xl:text-[12rem] font-black italic tracking-tight leading-[0.85] flex flex-col items-start select-none drop-shadow-2xl"
           >
-            <span className="text-gradient inline-block pb-2 pr-6 md:pr-16 whitespace-nowrap">WHO ARE</span>
+            <span className="text-gradient inline-block pb-2 pr-6 md:pr-16 whitespace-nowrap">{heroTitleLine1}</span>
             <span ref={wordRef} className="flex items-baseline whitespace-nowrap">
-              <span className="text-gradient inline-block pb-2 pr-6 md:pr-16">WE?</span>
+              <span className="text-gradient inline-block pb-2 pr-6 md:pr-16">{heroTitleLine2}</span>
             </span>
           </h1>
         </div>
 
-        <p
+        <div
           ref={subtitleRef}
-          className="text-base md:text-xl lg:text-2xl text-white/90 mb-10 max-w-3xl leading-relaxed font-outfit drop-shadow-md"
-        >
-          We specialize exclusively in Meta Ads management for high-spending brands. While you handle your own creatives, we bring laser-focused expertise on strategy, ad management, and scaling.{" "}
-          <span className="text-white font-semibold">
-            Our strength is turning big budgets into big returns.
-          </span>
-        </p>
+          className="text-base md:text-xl lg:text-2xl text-white/90 mb-10 max-w-3xl leading-relaxed font-outfit drop-shadow-md [&>strong]:text-white [&>strong]:font-semibold [&>p]:mb-4"
+          dangerouslySetInnerHTML={{ __html: heroDescription }}
+        />
 
         <div ref={ctaRef} className="flex flex-col sm:flex-row items-start gap-6">
           <button

@@ -4,6 +4,18 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import BookCallButton from "@/components/BookCallButton";
 import { ArrowLeft, ChevronRight, CheckCircle2, Globe, TrendingUp, Target } from "lucide-react";
+import connectToDatabase from "@/lib/mongodb";
+import { Content } from "@/models/Content";
+
+async function getWorkContent() {
+  try {
+    const db = await connectToDatabase();
+    if (!db) return null;
+    const content = await Content.findOne({ section: 'work' });
+    if (content) return content.data;
+  } catch (error) {}
+  return null;
+}
 
 export async function generateStaticParams() {
   return caseStudies.map((cs) => ({
@@ -13,7 +25,12 @@ export async function generateStaticParams() {
 
 export default async function CaseStudyPage({ params }: { params: { slug: string } }) {
   const { slug } = await params;
-  const study = caseStudies.find((s) => s.slug === slug);
+  
+  const workData = await getWorkContent();
+  const studies = workData?.items || caseStudies;
+  
+  const study = studies.find((s: any) => s.slug === slug);
+  const d = study?.details || {};
 
   if (!study) {
     notFound();
@@ -49,7 +66,7 @@ export default async function CaseStudyPage({ params }: { params: { slug: string
               </p>
               
               <div className="flex flex-wrap gap-4">
-                {study.stats?.map((stat, i) => (
+                {study.stats?.map((stat: { value: string | number; label: string }, i: number) => (
                   <div key={i} className="bg-white/5 border border-white/10 backdrop-blur-md rounded-2xl p-6 min-w-[160px]">
                     <p className="text-3xl font-bold font-outfit text-white mb-1">{stat.value}</p>
                     <p className="text-xs font-bold uppercase tracking-wider text-white/40">{stat.label}</p>
@@ -79,10 +96,10 @@ export default async function CaseStudyPage({ params }: { params: { slug: string
                 <div>
                   <h2 className="text-3xl font-bold font-outfit mb-6 flex items-center gap-3">
                     <Target className="text-[var(--color-accent-start)] w-8 h-8" />
-                    The Challenge
+                    {d.s1_title || "The Challenge"}
                   </h2>
                   <p className="text-lg text-white/60 leading-relaxed">
-                    The client — a D2C barefoot footwear brand — had no prior advertising history. No pixel data, no audiences, no creative learnings. They needed a partner to build everything from the ground up and drive online sales profitably.
+                    {d.s1_text || "The client — a D2C barefoot footwear brand — had no prior advertising history. No pixel data, no audiences, no creative learnings. They needed a partner to build everything from the ground up and drive online sales profitably."}
                   </p>
                 </div>
 
@@ -165,10 +182,10 @@ export default async function CaseStudyPage({ params }: { params: { slug: string
                 </div>
 
                 <div>
-                  <h2 className="text-3xl font-bold font-outfit mb-4">The Takeaway</h2>
+                  <h2 className="text-3xl font-bold font-outfit mb-4">{d.s5_title || "The Takeaway"}</h2>
                   <div className="border-l-4 border-[var(--color-accent-start)] pl-6 py-2 bg-white/5 rounded-r-2xl p-6">
                     <p className="text-lg text-white/80 leading-relaxed italic">
-                      "Starting with zero data is a challenge — but also an opportunity to build the right foundation. By structuring the funnel from awareness to conversion, we collected meaningful pixel signals early and used them to scale confidently. A slight ROAS dip during aggressive scaling is expected and healthy — what matters is absolute revenue and purchase volume, both of which grew 4x month-over-month."
+                      "{d.s5_text || "Starting with zero data is a challenge — but also an opportunity to build the right foundation. By structuring the funnel from awareness to conversion, we collected meaningful pixel signals early and used them to scale confidently. A slight ROAS dip during aggressive scaling is expected and healthy — what matters is absolute revenue and purchase volume, both of which grew 4x month-over-month."}"
                     </p>
                   </div>
                 </div>
@@ -334,10 +351,10 @@ export default async function CaseStudyPage({ params }: { params: { slug: string
                 </div>
 
                 <div>
-                  <h2 className="text-3xl font-bold font-outfit mb-4">The Takeaway</h2>
+                  <h2 className="text-3xl font-bold font-outfit mb-4">{d.s5_title || "The Takeaway"}</h2>
                   <div className="border-l-4 border-[var(--color-accent-start)] pl-6 py-2 bg-white/5 rounded-r-2xl p-6">
                     <p className="text-lg text-white/80 leading-relaxed italic">
-                      "A declining Meta account isn't necessarily a demand problem — it's often a strategy problem. By restructuring campaigns, improving creative efficiency, and reducing CPM through better audience targeting, we reversed months of decline and delivered the brand's best-ever month within 60 days of onboarding."
+                      "{d.s5_text || "A declining Meta account isn't necessarily a demand problem — it's often a strategy problem. By restructuring campaigns, improving creative efficiency, and reducing CPM through better audience targeting, we reversed months of decline and delivered the brand's best-ever month within 60 days of onboarding."}"
                     </p>
                   </div>
                 </div>
@@ -520,10 +537,10 @@ export default async function CaseStudyPage({ params }: { params: { slug: string
                 </div>
 
                 <div>
-                  <h2 className="text-3xl font-bold font-outfit mb-4">The Takeaway</h2>
+                  <h2 className="text-3xl font-bold font-outfit mb-4">{d.s5_title || "The Takeaway"}</h2>
                   <div className="border-l-4 border-[var(--color-accent-start)] pl-6 py-2 bg-white/5 rounded-r-2xl p-6">
                     <p className="text-lg text-white/80 leading-relaxed italic">
-                      "Great Meta Ads results aren't just about campaign setup — they're about timing, preparation, and positioning. By onboarding two months before India's pollution season and using that time to build audiences, test creatives, and let the pixel learn, we were ready to capitalise when demand peaked. The result: ₹1.56 Crore in a single month at an 11.58x ROAS that most brands only dream of."
+                      "{d.s5_text || "Great Meta Ads results aren't just about campaign setup — they're about timing, preparation, and positioning. By onboarding two months before India's pollution season and using that time to build audiences, test creatives, and let the pixel learn, we were ready to capitalise when demand peaked. The result: ₹1.56 Crore in a single month at an 11.58x ROAS that most brands only dream of."}"
                     </p>
                   </div>
                 </div>
@@ -706,10 +723,10 @@ export default async function CaseStudyPage({ params }: { params: { slug: string
                 </div>
 
                 <div>
-                  <h2 className="text-3xl font-bold font-outfit mb-4">The Takeaway</h2>
+                  <h2 className="text-3xl font-bold font-outfit mb-4">{d.s5_title || "The Takeaway"}</h2>
                   <div className="border-l-4 border-[var(--color-accent-start)] pl-6 py-2 bg-white/5 rounded-r-2xl p-6">
                     <p className="text-lg text-white/80 leading-relaxed italic">
-                      "Scaling a brand globally on Meta isn't just a budget game — it's a data game. Over 9 months, 32.65 Crore impressions, and 15,299 purchases, we proved that a footwear brand with the right funnel and market-specific strategy can generate ₹9.47 Crore in revenue without a single wasted market. Every country in this account was profitable."
+                      "{d.s5_text || "Scaling a brand globally on Meta isn't just a budget game — it's a data game. Over 9 months, 32.65 Crore impressions, and 15,299 purchases, we proved that a footwear brand with the right funnel and market-specific strategy can generate ₹9.47 Crore in revenue without a single wasted market. Every country in this account was profitable."}"
                     </p>
                   </div>
                 </div>
@@ -781,7 +798,7 @@ export default async function CaseStudyPage({ params }: { params: { slug: string
           <p className="text-white/50 mb-12">Explore how we've helped other brands dominate their market.</p>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {caseStudies.filter(cs => cs.slug !== slug).slice(0, 3).map((item) => (
+            {studies.filter((cs: any) => cs.slug !== slug).slice(0, 3).map((item: any) => (
               <Link 
                 key={item.id} 
                 href={`/case-studies/${item.slug}`}

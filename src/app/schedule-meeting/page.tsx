@@ -6,23 +6,8 @@ import { ArrowLeft, CalendarCheck } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-export default function ThankYouPage() {
+export default function ScheduleMeetingPage() {
   const router = useRouter();
-  const [isAuthorized, setIsAuthorized] = useState(false);
-
-  useEffect(() => {
-    const submitted = sessionStorage.getItem("formSubmitted");
-    if (!submitted) {
-      router.replace("/");
-    } else {
-      setIsAuthorized(true);
-    }
-  }, [router]);
-
-  if (!isAuthorized) {
-    return <div className="min-h-screen bg-[#020617]"></div>;
-  }
-
   return (
     <div className="min-h-screen bg-[#020617] flex items-center justify-center pt-32 lg:pt-40 pb-20 px-4 sm:px-6 relative overflow-hidden">
       {/* Background glowing gradients */}
@@ -38,16 +23,16 @@ export default function ThankYouPage() {
           </div>
           
           <h1 className="text-5xl md:text-6xl font-bold mb-6 font-outfit bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">
-            Thank You!
+            Let's Talk Growth.
           </h1>
           
           <p className="text-gray-400 text-lg mb-6 leading-relaxed">
-            Your message has been successfully received. Our team is already analyzing your request and will get back to you shortly.
+            Pick a time from the calendar that works best for you. We'll hop on a quick 30-minute discovery call to discuss your goals and how Dviora can help scale your brand to new heights.
           </p>
           
           <div className="inline-block px-6 py-3 bg-cyan-500/10 border border-cyan-500/20 rounded-2xl mb-10">
             <p className="text-cyan-400 text-lg font-medium">
-              Want to skip the wait? Schedule a direct strategy call with us right now 👉
+              Select a slot on the calendar 👉
             </p>
           </div>
 
@@ -62,11 +47,11 @@ export default function ThankYouPage() {
           <div className="relative w-full rounded-[32px] p-[2px] bg-gradient-to-b from-white/15 to-transparent shadow-2xl">
             <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/30 to-fuchsia-500/30 rounded-[32px] blur-xl opacity-50"></div>
             
-            <div className="relative bg-[#0c1a3d] rounded-[30px] p-2 md:p-6 overflow-hidden flex items-center justify-center border border-white/5">
+            <div className="relative bg-white rounded-[30px] p-2 md:p-6 overflow-hidden flex items-center justify-center border border-white/5">
               {/* Calendly inline widget begin */}
               <div 
                 className="calendly-inline-widget w-full rounded-2xl overflow-hidden" 
-                data-url="https://calendly.com/dvioralabs/30min?background_color=0c1a3d&text_color=ffffff&primary_color=22d3ee" 
+                data-url="https://calendly.com/dvioralabs/30min" 
                 style={{ minWidth: '320px', height: '750px' }}
               ></div>
               <Script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async />

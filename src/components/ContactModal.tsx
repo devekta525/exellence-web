@@ -44,7 +44,7 @@ export default function ContactModal() {
         });
         closeContactModal();
         sessionStorage.setItem("formSubmitted", "true");
-        router.push("/thank-you");
+        router.push("/schedule-meeting");
       } else {
         alert("Something went wrong. Please try again.");
       }
