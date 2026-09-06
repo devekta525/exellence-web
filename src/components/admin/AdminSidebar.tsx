@@ -11,7 +11,8 @@ import {
   Lightbulb, 
   Wrench, 
   Workflow,
-  FileText
+  FileText,
+  Code
 } from "lucide-react";
 
 export default function AdminSidebar() {
@@ -26,6 +27,7 @@ export default function AdminSidebar() {
     { name: "Services",        href: "/admin/services",     icon: Wrench },
     { name: "Process",         href: "/admin/process",      icon: Workflow },
     { name: "Blogs",           href: "/admin/blogs",        icon: FileText },
+    { name: "SEO & Scripts",   href: "/admin/scripts",      icon: Code },
   ];
 
   return (
