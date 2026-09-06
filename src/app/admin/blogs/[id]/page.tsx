@@ -226,13 +226,16 @@ export default function EditBlogPage() {
               
               <div className="space-y-4">
                 {formData.coverImage ? (
-                  <div className="relative aspect-video rounded-xl overflow-hidden border border-white/10 group">
+                  <div className="relative aspect-video rounded-xl overflow-hidden border border-white/10 group bg-slate-900">
                     <img src={formData.coverImage} alt="Cover" className="w-full h-full object-cover" />
-                    <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex items-center justify-center gap-2 transition-opacity">
                       <label className="cursor-pointer bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-lg text-sm font-medium backdrop-blur-sm transition-colors flex items-center gap-2">
                         <Upload className="w-4 h-4" /> Change Image
                         <input type="file" accept="image/*" className="hidden" onChange={handleImageUpload} disabled={uploading} />
                       </label>
+                      <button type="button" onClick={() => setFormData(prev => ({ ...prev, coverImage: "" }))} className="bg-red-500/20 hover:bg-red-500/40 text-red-300 border border-red-500/30 px-3 py-2 rounded-lg text-sm font-medium transition-colors">
+                        Remove
+                      </button>
                     </div>
                   </div>
                 ) : (
@@ -246,6 +249,14 @@ export default function EditBlogPage() {
                     <input type="file" accept="image/*" className="hidden" onChange={handleImageUpload} disabled={uploading} />
                   </label>
                 )}
+                <input 
+                  type="text" 
+                  name="coverImage" 
+                  value={formData.coverImage} 
+                  onChange={handleChange} 
+                  placeholder="Or enter Image URL (https://...)" 
+                  className="w-full bg-[#020617] border border-white/10 rounded-xl py-2 px-3 text-xs text-white placeholder:text-slate-600 focus:border-cyan-500/50 outline-none"
+                />
               </div>
             </div>
 

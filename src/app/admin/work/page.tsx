@@ -2,13 +2,14 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Save, Loader2, Plus, Trash2, Pencil, ArrowLeft, Image as ImageIcon, ChevronLeft, ChevronRight } from "lucide-react";
+import { Save, Loader2, Plus, Trash2, Pencil, ArrowLeft, Image as ImageIcon, ChevronLeft, ChevronRight, Upload } from "lucide-react";
 
 export default function AdminWorkPage() {
   const router = useRouter();
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [loading, setLoading]   = useState(true);
   const [saving, setSaving]     = useState(false);
+  const [uploading, setUploading] = useState(false);
   const [message, setMessage]   = useState({ text: "", type: "" });
   const [formData, setFormData] = useState<any>({ items: [] });
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
@@ -55,6 +56,34 @@ export default function AdminWorkPage() {
     const next = [...formData.items];
     next[editingIndex] = { ...next[editingIndex], [key]: val };
     setFormData({ ...formData, items: next });
+  };
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files || e.target.files.length === 0) return;
+    
+    const file = e.target.files[0];
+    const uploadData = new FormData();
+    uploadData.append("file", file);
+
+    setUploading(true);
+    try {
+      const res = await fetch("/api/upload", {
+        method: "POST",
+        body: uploadData,
+      });
+      
+      const data = await res.json();
+      if (res.ok) {
+        updateItem("image", data.url);
+        setMessage({ text: "Image uploaded successfully!", type: "success" });
+      } else {
+        setMessage({ text: data.error || "Upload failed.", type: "error" });
+      }
+    } catch (err) {
+      setMessage({ text: "Error uploading image.", type: "error" });
+    }
+    setUploading(false);
+    setTimeout(() => setMessage({ text: "", type: "" }), 3000);
   };
 
   const updateDetail = (key: string, val: any) => {
@@ -224,11 +253,47 @@ export default function AdminWorkPage() {
               </div>
               <div className="space-y-2"><label className="text-xs font-medium text-slate-400 uppercase">Description (Card)</label>
                 <textarea rows={3} value={currentItem.body} onChange={(e) => updateItem("body", e.target.value)} className="w-full bg-[#020617] border border-white/10 rounded-xl py-2 px-4 text-sm text-white resize-none" /></div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="space-y-2"><label className="text-xs font-medium text-slate-400 uppercase">Image URL</label>
-                  <input type="text" value={currentItem.image} onChange={(e) => updateItem("image", e.target.value)} className="w-full bg-[#020617] border border-white/10 rounded-xl py-2 px-4 text-sm text-white" /></div>
-                <div className="space-y-2"><label className="text-xs font-medium text-slate-400 uppercase">URL Slug (Must match website layout)</label>
-                  <input type="text" value={currentItem.slug} onChange={(e) => updateItem("slug", e.target.value)} className="w-full bg-[#020617] border border-white/10 rounded-xl py-2 px-4 text-sm text-white" /></div>
+              <div className="space-y-3">
+                <label className="text-xs font-medium text-slate-400 uppercase block">Cover Image & Preview</label>
+                {currentItem.image ? (
+                  <div className="relative aspect-video max-h-56 rounded-xl overflow-hidden border border-white/10 group bg-slate-900">
+                    <img src={currentItem.image} alt="Cover Preview" className="w-full h-full object-cover" />
+                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex items-center justify-center gap-3 transition-opacity">
+                      <label className="cursor-pointer bg-cyan-500 hover:bg-cyan-400 text-slate-900 font-bold px-4 py-2 rounded-xl text-xs flex items-center gap-1.5 transition-colors">
+                        {uploading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Upload className="w-4 h-4" />}
+                        {uploading ? "Uploading..." : "Change Image"}
+                        <input type="file" accept="image/*" className="hidden" onChange={handleImageUpload} disabled={uploading} />
+                      </label>
+                      <button
+                        type="button"
+                        onClick={() => updateItem("image", "")}
+                        className="bg-red-500/20 hover:bg-red-500/40 text-red-300 border border-red-500/30 px-3 py-2 rounded-xl text-xs font-medium transition-colors"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <label className={`relative aspect-video max-h-48 rounded-xl border-2 border-dashed ${uploading ? 'border-cyan-500/50 bg-cyan-500/5' : 'border-white/10 hover:border-white/20 bg-white/5 hover:bg-white/10'} flex flex-col items-center justify-center cursor-pointer transition-colors`}>
+                    {uploading ? (
+                      <Loader2 className="w-8 h-8 text-cyan-400 animate-spin mb-2" />
+                    ) : (
+                      <ImageIcon className="w-8 h-8 text-slate-500 mb-2" />
+                    )}
+                    <span className="text-sm font-medium text-slate-400">{uploading ? 'Uploading Image...' : 'Click to Upload Cover Image'}</span>
+                    <input type="file" accept="image/*" className="hidden" onChange={handleImageUpload} disabled={uploading} />
+                  </label>
+                )}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
+                  <div className="space-y-1">
+                    <label className="text-[10px] text-slate-500 uppercase font-medium">Image URL String</label>
+                    <input type="text" value={currentItem.image || ""} onChange={(e) => updateItem("image", e.target.value)} className="w-full bg-[#020617] border border-white/10 rounded-xl py-2 px-4 text-xs text-white" placeholder="https://..." />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-[10px] text-slate-500 uppercase font-medium">URL Slug (Must match website layout)</label>
+                    <input type="text" value={currentItem.slug} onChange={(e) => updateItem("slug", e.target.value)} className="w-full bg-[#020617] border border-white/10 rounded-xl py-2 px-4 text-xs text-white" />
+                  </div>
+                </div>
               </div>
               <div className="space-y-4 pt-4 border-t border-white/10">
                 <div className="flex items-center justify-between">

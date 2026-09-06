@@ -77,12 +77,6 @@ const DEFAULT_SERVICES = [
     ],
   },
   {
-    id: "social",
-    title: "Social Media Management",
-    description: "Building community and brand authority through consistent, high-quality content and strategic engagement across all major social platforms.",
-    features: ["Content Calendar Strategy", "Community Engagement", "Influencer Partnerships", "Trend-Responsive Content"],
-  },
-  {
     id: "website",
     title: "Website Designing",
     description: "High-converting, cinematic websites that combine stunning aesthetics with seamless UX to turn your visitors into loyal customers.",
@@ -201,29 +195,50 @@ export default function Services({ initialData }: ServicesProps) {
           </div>
         </div>
 
-        {/* Desktop: 3-Card Grid */}
-        <div className="hidden md:grid grid-cols-3 gap-8">
+        {/* Desktop: Dynamic Card Grid */}
+        <div className={`hidden md:grid gap-8 ${
+          items.length === 2 
+            ? "grid-cols-1 md:grid-cols-2 max-w-5xl mx-auto" 
+            : items.length === 1 
+            ? "grid-cols-1 max-w-2xl mx-auto" 
+            : "grid-cols-1 md:grid-cols-3 max-w-7xl mx-auto"
+        }`}>
           {items.map((service: any, idx: number) => {
             const s = getStyle(service.id, idx);
             const SIcon = s.Icon;
+            const isFeatured = service.id === "performance" || service.title.toLowerCase().includes("meta ads");
+
             return (
               <div
                 key={service.id}
-                className="service-card group relative p-10 rounded-[48px] border hover:-translate-y-1 transition-all duration-500 flex flex-col h-full"
-                style={{ background: "rgba(255,255,255,0.05)", borderColor: "rgba(255,255,255,0.1)", boxShadow: "0 20px 50px -10px rgba(0,0,0,0.3)" }}
+                className={`service-card group relative p-10 rounded-[48px] border transition-all duration-500 flex flex-col h-full ${
+                  isFeatured ? "shadow-2xl hover:-translate-y-1.5" : "hover:-translate-y-1"
+                }`}
+                style={{
+                  background: isFeatured ? "linear-gradient(180deg, rgba(6,182,212,0.12) 0%, rgba(2,6,23,0.7) 100%)" : "rgba(255,255,255,0.05)",
+                  borderColor: isFeatured ? "rgba(6,182,212,0.4)" : "rgba(255,255,255,0.1)",
+                  boxShadow: isFeatured ? "0 25px 50px -10px rgba(6,182,212,0.15)" : "0 20px 50px -10px rgba(0,0,0,0.3)"
+                }}
                 onMouseEnter={(e) => {
                   const el = e.currentTarget as HTMLElement;
-                  el.style.background = s.hoverBg;
-                  el.style.borderColor = s.hoverBorder;
-                  el.style.boxShadow = s.hoverShadow;
+                  el.style.background = isFeatured ? "linear-gradient(180deg, rgba(6,182,212,0.2) 0%, rgba(2,6,23,0.8) 100%)" : s.hoverBg;
+                  el.style.borderColor = isFeatured ? "rgba(6,182,212,0.6)" : s.hoverBorder;
+                  el.style.boxShadow = isFeatured ? "0 30px 65px -10px rgba(6,182,212,0.25)" : s.hoverShadow;
                 }}
                 onMouseLeave={(e) => {
                   const el = e.currentTarget as HTMLElement;
-                  el.style.background = "rgba(255,255,255,0.05)";
-                  el.style.borderColor = "rgba(255,255,255,0.1)";
-                  el.style.boxShadow = "0 20px 50px -10px rgba(0,0,0,0.3)";
+                  el.style.background = isFeatured ? "linear-gradient(180deg, rgba(6,182,212,0.12) 0%, rgba(2,6,23,0.7) 100%)" : "rgba(255,255,255,0.05)";
+                  el.style.borderColor = isFeatured ? "rgba(6,182,212,0.4)" : "rgba(255,255,255,0.1)";
+                  el.style.boxShadow = isFeatured ? "0 25px 50px -10px rgba(6,182,212,0.15)" : "0 20px 50px -10px rgba(0,0,0,0.3)";
                 }}
               >
+                {/* Featured Badge */}
+                {isFeatured && (
+                  <div className="absolute -top-3.5 right-8 px-4 py-1.5 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 border border-cyan-300/30 text-white text-[10px] font-extrabold uppercase tracking-widest animate-pulse z-20 shadow-lg shadow-cyan-500/25">
+                    Most Popular
+                  </div>
+                )}
+
                 <div className="relative z-10 flex flex-col h-full">
                   <div className="w-20 h-20 rounded-[28px] flex items-center justify-center text-white shadow-2xl mb-10 group-hover:scale-110 transition-transform duration-500" style={{ background: s.gradient }}>
                     <SIcon className="w-10 h-10" />
@@ -240,10 +255,10 @@ export default function Services({ initialData }: ServicesProps) {
                   </div>
                   <button
                     onClick={openContactModal}
-                    className="w-full py-5 rounded-2xl font-bold text-lg flex items-center justify-center gap-4 border border-white/10 text-white transition-all duration-500 mt-auto"
-                    style={{ background: "rgba(255,255,255,0.05)" }}
+                    className="w-full py-5 rounded-2xl font-bold text-lg flex items-center justify-center gap-4 text-white transition-all duration-500 mt-auto shadow-xl"
+                    style={{ background: isFeatured ? s.gradient : "rgba(255,255,255,0.05)" }}
                     onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = s.gradient; }}
-                    onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.05)"; }}
+                    onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = isFeatured ? s.gradient : "rgba(255,255,255,0.05)"; }}
                   >
                     Book a Call
                     <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />

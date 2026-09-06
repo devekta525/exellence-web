@@ -48,10 +48,33 @@ export default function AdminServicesPage() {
       {
         id: "performance",
         title: "Meta Ads Management",
-        description: "We work with brands that already have in-house creatives and content production...",
-        iconName: "Zap",
+        description: "We work with brands that already have in-house creatives and content production. Our focus is purely on media buying, campaign scaling, funnel optimization, and maximizing ROAS through advanced Meta Ads execution.",
+        iconName: "BarChart2",
         color: "from-cyan-500 to-blue-600",
-        features: ["High-Spend Meta Ads Scaling"]
+        features: [
+          "High-Spend Meta Ads Scaling",
+          "Advanced Campaign Structure",
+          "ROAS & MER Optimization",
+          "Full Funnel Media Buying",
+          "Retargeting & Customer Journey Optimization",
+          "Conversion API & Pixel Tracking",
+          "Budget Scaling Without Efficiency Drop",
+          "Creative Strategy Direction",
+          "Data-Driven Decision Making"
+        ]
+      },
+      {
+        id: "website",
+        title: "Website Designing",
+        description: "High-converting, cinematic websites that combine stunning aesthetics with seamless UX to turn your visitors into loyal customers.",
+        iconName: "Globe",
+        color: "from-orange-500 to-red-600",
+        features: [
+          "Conversion-Optimized UX",
+          "Premium Brand Aesthetics",
+          "Responsive Performance",
+          "SEO-Friendly Architecture"
+        ]
       }
     ]
   });

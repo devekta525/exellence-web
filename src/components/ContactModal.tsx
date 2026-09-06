@@ -155,7 +155,6 @@ export default function ContactModal() {
                 className="w-full bg-white/5 border border-white/10 rounded-xl pl-4 pr-10 py-3 text-base md:text-sm text-white focus:outline-none focus:border-cyan-500/50 transition-all appearance-none cursor-pointer focus:bg-white/[0.08]"
               >
                 <option className="bg-[#0c1a3d]" value="Meta Ads Management">Meta Ads Management</option>
-                <option className="bg-[#0c1a3d]" value="Social Media Management">Social Media Management</option>
                 <option className="bg-[#0c1a3d]" value="Website Designing">Website Designing</option>
               </select>
               <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500 group-focus-within:text-cyan-500 transition-colors">

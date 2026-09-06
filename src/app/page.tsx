@@ -5,7 +5,6 @@ import WhyWeStarted from "@/components/WhyWeStarted";
 import Services from "@/components/Services";
 import Process from "@/components/Process";
 import ScrollToTop from "@/components/ScrollToTop";
-import SplashScreen from "@/components/SplashScreen";
 import connectToDatabase from "@/lib/mongodb";
 import { Content } from "@/models/Content";
 
@@ -68,7 +67,6 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen">
-      <SplashScreen />
       <Hero initialData={heroData} />
       <Work initialData={workData} />
       <WhyWeStarted initialData={whyWeStartedData} />
