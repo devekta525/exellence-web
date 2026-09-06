@@ -8,7 +8,6 @@ import { useModal } from "@/context/ModalContext";
 export default function ContactModal() {
   const { isContactModalOpen, closeContactModal } = useModal();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [preferredContact, setPreferredContact] = useState<"phone" | "email">("phone");
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -107,43 +106,26 @@ export default function ContactModal() {
               />
             </div>
             <div className="relative">
-              <div className="flex items-center justify-between mb-1.5 ml-1">
-                <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em]">
-                  {preferredContact === "phone" ? "Phone Number" : "Email Address"} <span className="text-rose-500">*</span>
-                </label>
-                <div className="flex gap-2 bg-[#0c1a3d] border border-white/10 rounded-lg p-0.5">
-                  <button type="button" onClick={() => { setPreferredContact("phone"); setFormData({ ...formData, email: "" }); }} className={`text-[10px] font-bold uppercase tracking-[0.1em] px-2 py-1 rounded-md transition-colors ${preferredContact === "phone" ? "bg-cyan-500/20 text-cyan-400" : "text-gray-500 hover:text-gray-400"}`}>Phone</button>
-                  <button type="button" onClick={() => { setPreferredContact("email"); setFormData({ ...formData, phone: "" }); }} className={`text-[10px] font-bold uppercase tracking-[0.1em] px-2 py-1 rounded-md transition-colors ${preferredContact === "email" ? "bg-cyan-500/20 text-cyan-400" : "text-gray-500 hover:text-gray-400"}`}>Email</button>
-                </div>
-              </div>
-              {preferredContact === "phone" ? (
-                <div className="relative flex items-center">
-                  <span className="absolute left-4 text-gray-400 text-base md:text-sm font-medium">+91</span>
-                  <input
-                    type="tel"
-                    required
-                    pattern="[0-9]{10}"
-                    maxLength={10}
-                    title="Please enter exactly 10 digits"
-                    value={formData.phone}
-                    onChange={(e) => {
-                      const value = e.target.value.replace(/\D/g, "");
-                      setFormData({ ...formData, phone: value });
-                    }}
-                    className="w-full bg-white/5 border border-white/10 rounded-xl pl-12 pr-4 py-3 text-base md:text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-cyan-500/50 transition-all focus:bg-white/[0.08]"
-                    placeholder="9876543210"
-                  />
-                </div>
-              ) : (
+              <label className="block text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em] mb-1.5 ml-1">
+                Phone Number <span className="text-rose-500">*</span>
+              </label>
+              <div className="relative flex items-center">
+                <span className="absolute left-4 text-gray-400 text-base md:text-sm font-medium">+91</span>
                 <input
-                  type="email"
+                  type="tel"
                   required
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-base md:text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-cyan-500/50 transition-all focus:bg-white/[0.08]"
-                  placeholder="john@example.com"
+                  pattern="[0-9]{10}"
+                  maxLength={10}
+                  title="Please enter exactly 10 digits"
+                  value={formData.phone}
+                  onChange={(e) => {
+                    const value = e.target.value.replace(/\D/g, "");
+                    setFormData({ ...formData, phone: value });
+                  }}
+                  className="w-full bg-white/5 border border-white/10 rounded-xl pl-12 pr-4 py-3 text-base md:text-sm text-white placeholder:text-gray-600 focus:outline-none focus:border-cyan-500/50 transition-all focus:bg-white/[0.08]"
+                  placeholder="9876543210"
                 />
-              )}
+              </div>
             </div>
           </div>
 
