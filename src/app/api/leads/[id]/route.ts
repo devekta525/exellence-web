@@ -3,12 +3,13 @@ import connectToDatabase from '@/lib/mongodb';
 import { Lead } from '@/models/Lead';
 
 // UPDATE a lead
-export async function PUT(req: Request, { params }: { params: { id: string } }) {
+export async function PUT(req: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const { id } = await params;
     const data = await req.json();
     await connectToDatabase();
     
-    const updatedLead = await Lead.findByIdAndUpdate(params.id, data, { new: true });
+    const updatedLead = await Lead.findByIdAndUpdate(id, data, { new: true });
     
     if (!updatedLead) {
       return NextResponse.json({ message: 'Lead not found' }, { status: 404 });
@@ -22,10 +23,11 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
 }
 
 // DELETE a lead
-export async function DELETE(req: Request, { params }: { params: { id: string } }) {
+export async function DELETE(req: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const { id } = await params;
     await connectToDatabase();
-    const deletedLead = await Lead.findByIdAndDelete(params.id);
+    const deletedLead = await Lead.findByIdAndDelete(id);
     
     if (!deletedLead) {
       return NextResponse.json({ message: 'Lead not found' }, { status: 404 });

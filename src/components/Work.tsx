@@ -216,7 +216,7 @@ export default function Work({ initialData }: WorkProps) {
                   {/* Stats Tags (on top of image) */}
                   {project.stats && (
                     <div className="absolute top-6 left-6 flex flex-wrap gap-2 z-10">
-                      {project.stats.slice(0, 1).map((stat, idx) => (
+                      {project.stats.slice(0, 1).map((stat: { value: string | number; label: string }, idx: number) => (
                         <span key={idx} className="px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-bold text-white shadow-xl">
                           {stat.value} {stat.label}
                         </span>

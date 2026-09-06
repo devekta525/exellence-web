@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next";
+import { NextRequest, NextResponse } from "next/server";
 import { v2 as cloudinary } from "cloudinary";
 
 cloudinary.config({

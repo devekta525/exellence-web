@@ -8,7 +8,7 @@ import { ArrowLeft, Calendar, User, Tag } from "lucide-react";
 import BookCallButton from "@/components/BookCallButton";
 
 type Props = {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 };
 
 export async function generateMetadata(

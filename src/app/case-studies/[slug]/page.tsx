@@ -23,7 +23,7 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function CaseStudyPage({ params }: { params: { slug: string } }) {
+export default async function CaseStudyPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   
   const workData = await getWorkContent();

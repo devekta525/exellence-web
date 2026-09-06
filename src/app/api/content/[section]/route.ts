@@ -19,7 +19,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ section:
     
     return NextResponse.json(sectionContent.data, { status: 200 });
   } catch (error) {
-    console.error(`Error fetching ${params.section} content:`, error);
+    console.error('Error fetching content:', error);
     return NextResponse.json({ message: 'Error fetching content' }, { status: 500 });
   }
 }
@@ -44,7 +44,7 @@ export async function PUT(req: Request, { params }: { params: Promise<{ section:
     
     return NextResponse.json(updatedContent.data, { status: 200 });
   } catch (error) {
-    console.error(`Error updating ${params.section} content:`, error);
+    console.error('Error updating content:', error);
     return NextResponse.json({ message: 'Error updating content' }, { status: 500 });
   }
 }

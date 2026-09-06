@@ -3,7 +3,7 @@ import connectToDatabase from "@/lib/mongodb";
 import { Blog } from "@/models/Blog";
 
 type Props = {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 };
 
 export async function GET(req: NextRequest, { params }: Props) {
